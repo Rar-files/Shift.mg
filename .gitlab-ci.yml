@@ -25,4 +25,3 @@ deploy_heroku_production:
     url: https://kiwano-frontend.herokuapp.com/
   only:
     - main
-    - merge_requests
