@@ -1,9 +1,11 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+import { Html, Head, Main, NextScript} from 'next/document'
 
 export default function Document() {
   return (
     <Html>
-      <Head />
+      <Head>
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+      </Head>
       <body>
         <Main />
         <NextScript />
