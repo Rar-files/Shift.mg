@@ -6,7 +6,7 @@ import useDarkMode from "use-dark-mode";
 const ModeToggler = styled.button`
     background-color: transparent;
     border: none;
-    color: #fff;
+    color: ${props => props.theme.app.foreground};
     cursor: pointer;
     font-size: 1.5rem;
     font-weight: bold;
@@ -15,11 +15,10 @@ const ModeToggler = styled.button`
     outline: none;
     transition: all 0.2s ease-in-out;
     &:hover {
-        color: #000;
+        color: ${props => props.theme.app.foregroundVariant};
     }
 `;
 
-//FIXME: This is a temporary solution to the problem of the dark mode not work correctly after load page with saved selected mode as dark.
 const DarkModeToggleBtn : FC = () => {
     const darkMode = useDarkMode();
     const icon = darkMode.value ? "ic:outline-dark-mode" : "ic:outline-light-mode";

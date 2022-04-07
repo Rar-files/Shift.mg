@@ -1,20 +1,23 @@
 import { FC } from "react";
 import styled from "styled-components";
-import MenuBar from "./MenuBar";
 
-const Page = styled.div`
+import MenuBar from "./MenuBar";
+import Views from "./Views";
+
+const Page = styled.section`
+    position: fixed;
     background-color: ${props => props.theme.app.background};
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    height: 100%;
     min-width: 100%;
+    display: flex;
+    align-items: flex-start;
 `;
 
 const Layout : FC = () => {
   return (
     <Page>
       <MenuBar/>
+      <Views/>
     </Page>
   );
 }
