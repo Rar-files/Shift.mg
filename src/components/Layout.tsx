@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
-import MenuBar from "../components/MenuBar";
+import MenuBar from "./MenuBar";
 
 const Page = styled.div`
     background-color: ${props => props.theme.app.background};

@@ -19,6 +19,7 @@ const ModeToggler = styled.button`
     }
 `;
 
+//FIXME: This is a temporary solution to the problem of the dark mode not work correctly after load page with saved selected mode as dark.
 const DarkModeToggleBtn : FC = () => {
     const darkMode = useDarkMode();
     const icon = darkMode.value ? "ic:outline-dark-mode" : "ic:outline-light-mode";

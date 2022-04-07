@@ -4,7 +4,7 @@ const light = {
         backgroundVariant: '#36393B',
         foreground: '#CBC7D1',
         foregroundVariant: '#AFAAB9',
-        seperator: '#AFAAB9',
+        separator: '#AFAAB9',
     },
     text: {
         primary: '#FFFFFF',
@@ -21,7 +21,7 @@ const dark = {
         backgroundVariant: '#36393B',
         foreground: '#CBC7D1',
         foregroundVariant: '#AFAAB9',
-        seperator: '#AFAAB9',
+        separator: '#AFAAB9',
     },
     text: {
         primary: '#FFFFFF',
@@ -39,7 +39,7 @@ const defaultTheme = {
         primaryLight: '#A5F3D8',
         accent: '#F8BD7F',
     },
-    pallete: {
+    pallette: {
         warmLow: '#F8BD7F',
         warmMid: '#E9724C',
         warmHigh: '#BB4430',
