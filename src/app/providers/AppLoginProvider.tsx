@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 
-import Login from "../../components/Auth/Login";
+import Login from "../../components/Auth/LoginBtn";
 
 type Props = {
     children?: React.ReactNode;
@@ -11,11 +11,12 @@ const AppLoginProvider : FC<Props> = ({ children }) => {
     const [loginData, setLoginData] = useState(null);
 
     useEffect(() => {
-        setLoginData(
-            localStorage.getItem("loginData")
-                ? JSON.parse(localStorage.getItem("loginData")!)
-            : null
-        )
+        const loginData = localStorage.getItem("loginData");
+        if(loginData){
+            setLoginData(          
+                JSON.parse(localStorage.getItem("loginData")!)
+            )
+        }
     }, []);
 
         
