@@ -34,7 +34,7 @@ const dark = {
     
 const defaultTheme = {
     static: {
-        primary: '#F8BD7F',
+        primary: '#1DD694',
         primaryDark: '#16A271',
         primaryLight: '#A5F3D8',
         accent: '#F8BD7F',

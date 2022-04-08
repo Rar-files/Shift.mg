@@ -9,7 +9,7 @@ type Props = {
 const GoogleBtn = styled.button`
     border-radius: 5px;
     border: none;
-    background-color: ${props => props.theme.static.primaryDark};
+    background-color: ${props => props.theme.static.primary};
     color: ${props => props.theme.app.background};
     padding: 10px;
     text-align: center;
@@ -17,7 +17,11 @@ const GoogleBtn = styled.button`
     display: inline-block;
     font-size: 16px;
     cursor: pointer;
-    width: 100%;
+    width: 160px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    &:hover {
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px inset;
+    }
 `;
 
 
