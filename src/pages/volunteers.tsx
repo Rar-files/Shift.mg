@@ -1,14 +1,14 @@
 import type { NextPage } from 'next'
 import Layout from '../components/Layout'
 
-const Home: NextPage = () => {
+const Volunteers: NextPage = () => {
   return (
     <main>
       <Layout>
-        <h1>Home</h1>
+        <h1>Volunteers</h1>
       </Layout>
     </main>
   )
 }
 
-export default Home
+export default Volunteers

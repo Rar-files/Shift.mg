@@ -7,10 +7,10 @@ type Props = {
 }
 
 const GoogleBtn = styled.button`
-    background-color: #4285f4;
     border-radius: 5px;
     border: none;
-    color: white;
+    background-color: ${props => props.theme.static.primaryDark};
+    color: ${props => props.theme.app.background};
     padding: 10px;
     text-align: center;
     text-decoration: none;
@@ -18,7 +18,7 @@ const GoogleBtn = styled.button`
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-    width: 100%;
+    width: 20%;
 `;
 
 
@@ -45,8 +45,6 @@ const LoginBtn: FC<Props> = ({setLoginData}) => {
         setLoginData(data);
     };
 
-    console.log(process.env.GOOGLE_CLIENT_ID as string);
-
     const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string;
 
     const {signIn} = useGoogleLogin({
@@ -58,7 +56,9 @@ const LoginBtn: FC<Props> = ({setLoginData}) => {
     });
 
     return (
-        <GoogleBtn onClick={signIn}/>
+        <GoogleBtn onClick={signIn}>
+            Login with Google
+        </GoogleBtn>
     );
 }
 

@@ -2,22 +2,35 @@ import { FC } from "react";
 import styled from "styled-components";
 
 import MenuBar from "./MenuBar";
-import Views from "./Views";
 
 const Page = styled.section`
-    position: fixed;
-    background-color: ${props => props.theme.app.background};
-    height: 100%;
-    min-width: 100%;
-    display: flex;
-    align-items: flex-start;
+  position: fixed;
+  background-color: ${props => props.theme.app.background};
+  height: 100%;
+  min-width: 100%;
+  display: flex;
+  align-items: flex-start;
 `;
 
-const Layout : FC = () => {
+const Content = styled.div`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+`;
+
+type Props = {
+  children: React.ReactNode;
+};
+
+const Layout : FC<Props> = ({children}) => {
   return (
     <Page>
       <MenuBar/>
-      <Views/>
+      <Content>
+        {children}
+      </Content>
     </Page>
   );
 }

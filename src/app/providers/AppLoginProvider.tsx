@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 
-import Login from "../../components/Auth/LoginBtn";
+import Login from "../../components/Auth/LoginPage";
 
 type Props = {
     children?: React.ReactNode;
