@@ -1,4 +1,5 @@
-import { FC } from "react";
+import { useRouter } from "next/router";
+import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import MenuBar from "./MenuBar";
@@ -25,6 +26,23 @@ type Props = {
 };
 
 const Layout : FC<Props> = ({children}) => {
+
+  const router = useRouter();
+
+  const [loginData, setLoginData] = useState(null);
+
+  useEffect(() => {
+      const loginData = localStorage.getItem("loginData");
+      if(loginData){
+          setLoginData(          
+              JSON.parse(localStorage.getItem("loginData")!)
+          )
+      }
+      if(!loginData){
+        router.push("/login");
+    }
+  }, [loginData, router]);
+
   return (
     <Page>
       <MenuBar/>

@@ -16,9 +16,8 @@ const GoogleBtn = styled.button`
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
     cursor: pointer;
-    width: 20%;
+    width: 100%;
 `;
 
 
@@ -41,7 +40,6 @@ const LoginBtn: FC<Props> = ({setLoginData}) => {
         });
     
         const data = await response.json();
-        localStorage.setItem("loginData", JSON.stringify(data));
         setLoginData(data);
     };
 
