@@ -5,8 +5,11 @@ export default function Document() {
     <Html>
       <Head>
         <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-        {/* <meta httpEquiv='Content-Security-Policy' content="script-src *" />
-        <meta httpEquiv='Content-Security-Policy' content="style-src *" /> */}
+        <style>{`
+          html, body, #__next {
+            height: 100%;
+          }
+        `}</style>
       </Head>
       <body>
         <Main />

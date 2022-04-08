@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 
-import Login from "../../components/Auth/LoginBtn";
+import Login from "../../pages/login";
 
 type Props = {
     children?: React.ReactNode;
@@ -34,7 +34,6 @@ const AppLoginProvider : FC<Props> = ({ children }) => {
                     </>
                 ) : (
                     <>
-                        <Login setLoginData={setLoginData}/>
                     </>
                 )
             }

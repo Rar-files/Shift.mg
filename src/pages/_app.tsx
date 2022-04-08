@@ -6,9 +6,7 @@ import AppLoginProvider from '../app/providers/AppLoginProvider';
 
 const App: FC<AppProps> = ({ Component, pageProps }) => (
   <AppThemeProvider>
-      <AppLoginProvider>
         <Component {...pageProps} />
-      </AppLoginProvider>
   </AppThemeProvider>
 )
 
