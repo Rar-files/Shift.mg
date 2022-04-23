@@ -7,6 +7,8 @@ import Link from "next/link";
 import Menu from "./Menu";
 import UserPanel from "./UserPanel";
 
+import logoIcon from "./Icon.png"
+
 const Content = styled.div`
     background-color: ${props => props.theme.app.backgroundVariant};
     padding: 10px;
@@ -29,13 +31,15 @@ const Logo = styled(Image)`
 const MenuBar: FC = () => {
     return (
         <Content>
-            <Link href="/" passHref>
-                <Logo src="/images/Icon.png" alt="logo" width={48} height={52}/>
+            <Link href="/">
+                <>
+                    <Logo src={logoIcon} alt="logo" width={48} height={52}/>
+                </>
             </Link>
             <Menu/>
             <UserPanel/>
         </Content>
     )
 };
-  
+
 export default MenuBar

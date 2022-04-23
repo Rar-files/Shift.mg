@@ -1,8 +1,10 @@
-import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
+import {FC, useEffect} from "react";
 import styled from "styled-components";
 
+import {AuthStatus, checkIsTokenStored} from "../features/authSlice";
+
 import MenuBar from "./MenuBar";
+import {useAppDispatch, useAppSelector} from "../app";
 
 const Page = styled.section`
   position: fixed;
@@ -21,34 +23,17 @@ const Content = styled.div`
   min-height: 100vh;
 `;
 
-type Props = {
-  children: React.ReactNode;
-};
-
-const Layout : FC<Props> = ({children}) => {
-
-  const router = useRouter();
-
-  const [loginData, setLoginData] = useState(null);
-
-  useEffect(() => {
-      const loginData = localStorage.getItem("loginData");
-      if(loginData){
-          setLoginData(          
-              JSON.parse(localStorage.getItem("loginData")!)
-          )
-      }
-      if(!loginData){
-        router.push("/login");
-    }
-  }, [loginData, router]);
+const Layout : FC = ({children}) => {
+  const authState = useAppSelector(state => state.auth);
 
   return (
     <Page>
-      <MenuBar/>
-      <Content>
-        {children}
-      </Content>
+        {authState.status === AuthStatus.AUTHORIZED &&
+            <MenuBar/>
+        }
+        <Content>
+            {children}
+        </Content>
     </Page>
   );
 }
