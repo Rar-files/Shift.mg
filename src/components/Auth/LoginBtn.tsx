@@ -1,6 +1,9 @@
 import {FC, Dispatch, SetStateAction} from 'react';
 import {useGoogleLogin} from 'react-google-login';
 import styled from 'styled-components';
+import {auth} from "../../services/AuthService";
+import {useAppDispatch} from "../../app";
+import {authorize} from "../../features/authSlice";
 
 type Props = {
     setLoginData: Dispatch<SetStateAction<any>>
@@ -24,27 +27,15 @@ const GoogleBtn = styled.button`
     }
 `;
 
-
-
-const LoginBtn: FC<Props> = ({setLoginData}) => {
+const LoginBtn = () => {
+    const dispatch = useAppDispatch();
 
     const onFailure = (result : any) => {
         console.log(result);
     };
-    
+
     const onSuccess = async (googleData : any) => {
-        const response = await fetch("https://kiwano-backend.herokuapp.com/api/auth/login", {
-            method: "POST",
-            body: JSON.stringify({
-                authorization_code: googleData.code,
-            }),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-    
-        const data = await response.json();
-        setLoginData(data);
+        dispatch(authorize(googleData.code));
     };
 
     const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string;

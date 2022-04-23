@@ -4,7 +4,6 @@ export default function Document() {
   return (
     <Html>
       <Head>
-        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
         <style>{`
           html, body, #__next {
             height: 100%;

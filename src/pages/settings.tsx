@@ -4,11 +4,16 @@ import Layout from '../components/Layout'
 const Settings: NextPage = () => {
   return (
     <main>
-      <Layout>
         <h1>Settings</h1>
-      </Layout>
     </main>
   )
 }
 
+export async function getStaticProps() {
+    return {
+        props: {
+            protected: true,
+        },
+    }
+}
 export default Settings

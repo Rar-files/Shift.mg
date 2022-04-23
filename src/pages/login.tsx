@@ -1,9 +1,11 @@
-import type { NextPage } from 'next'
-import { useRouter } from 'next/router';
-import {Dispatch, SetStateAction, useEffect, useState} from 'react';
+import type {NextPage} from 'next'
 import styled from 'styled-components';
 import LoginBtn from '../components/Auth/LoginBtn';
 import Image from "next/image";
+import {useAppSelector} from "../app";
+import {useEffect} from "react";
+import {AuthStatus} from "../features/authSlice";
+import {useRouter} from "next/router";
 
 const Background = styled.div`
     background-color: ${props => props.theme.app.background};
@@ -44,35 +46,30 @@ const Logo = styled(Image)`
 `;
 
 const Login: NextPage = () => {
-
     const router = useRouter();
-    
-    const [loginData, setLoginData] = useState(null);
+    const authState = useAppSelector(state => state.auth);
 
     useEffect(() => {
-        const LSLoginData = localStorage.getItem("loginData");
-        if(LSLoginData){
-            setLoginData(          
-                JSON.parse(localStorage.getItem("loginData")!)
-            )
-        }
-        if(loginData){
-            localStorage.setItem("loginData", JSON.stringify(loginData));
+        if (authState.status === AuthStatus.AUTHORIZED) {
             router.push("/");
         }
-    }, [loginData, router]);
+    }, [authState.status])
 
     return (
-        <Background>
-            <Content>
-                <GridMember>
-                    <Logo src="/images/IconWithName.svg" alt="logo" width={128} height={128}/>
-                </GridMember>
-                <GridMember>
-                    <LoginBtn setLoginData={setLoginData}/>
-                </GridMember>
-            </Content>
-        </Background>
+        <>
+            {authState.status === AuthStatus.UNAUTHORIZED &&
+                    <Background>
+                        <Content>
+                            <GridMember>
+                                <Logo src="/images/IconWithName.svg" alt="logo" width={128} height={128}/>
+                            </GridMember>
+                            <GridMember>
+                                <LoginBtn/>
+                            </GridMember>
+                        </Content>
+                    </Background>
+            }
+        </>
     )
 }
 
