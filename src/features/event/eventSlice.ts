@@ -1,4 +1,6 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {AnyAction, createSlice, PayloadAction, ThunkAction} from "@reduxjs/toolkit";
+import { TAppState, TDispatch } from "../../app";
+import { EventService } from "../../services";
 
 export interface Event {
     id: number;
@@ -17,14 +19,14 @@ export interface Event {
 
 interface EventState {
     loaded: boolean;
-    data: Event | null;
+    data: Event[] | null;
 }
 
 const eventSlice = createSlice({
     name: 'events',
     initialState: {loaded: false} as EventState,
     reducers: {
-        setEventData(state, action: PayloadAction<Event>) {
+        setEventData(state, action: PayloadAction<Event[]>) {
             state.loaded = true;
             state.data = action.payload;
         }
@@ -34,3 +36,17 @@ const eventSlice = createSlice({
 const { actions, reducer } = eventSlice;
 export const { setEventData } = actions;
 export default reducer;
+
+export const loadEventsData = (): ThunkAction<Promise<void>, TAppState, any, AnyAction> => {
+    return async (dispatch: TDispatch): Promise<void> => {
+        return new Promise<void>((resolve) => {
+            EventService.getEvents().then((value) => {
+                if (value.succeeded) {
+                    dispatch(setEventData(value.data!));
+                } else {
+                }
+            })
+            .finally(() => resolve());
+        })
+    }
+}

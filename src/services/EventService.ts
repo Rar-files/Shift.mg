@@ -15,7 +15,7 @@ export async function getEvents(): Promise<GetEventsPromise> {
 
     await getApiClient().request(
         'GET',
-        `/event/`,
+        `/events/`,
         {},
         undefined,
         {
@@ -25,7 +25,7 @@ export async function getEvents(): Promise<GetEventsPromise> {
         .then((response) => {
             getEventsPromise.succeeded = true;
             getEventsPromise.data = response.data;
-            console.log(response.data);
+            console.log("Recived events: ");
         })
         .catch((error) => {
             getEventsPromise.succeeded = false;

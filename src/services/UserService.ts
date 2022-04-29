@@ -24,7 +24,6 @@ export async function getUser(id: string): Promise<GetUserPromise> {
         .then((response) => {
             getUserPromise.succeeded = true;
             getUserPromise.data = response.data;
-            console.log(response.data);
         })
         .catch((error) => {
             getUserPromise.succeeded = false;
@@ -55,7 +54,6 @@ export async function getUserNotify(id: string): Promise<GetUserNotifyPromise> {
         .then((response) => {
             getUserNotifyPromise.succeeded = true;
             getUserNotifyPromise.data = response.data;
-            console.log(response.data);
         })
         .catch((error) => {
             getUserNotifyPromise.succeeded = false;
