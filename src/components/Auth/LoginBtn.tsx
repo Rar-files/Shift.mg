@@ -46,6 +46,7 @@ const LoginBtn = () => {
         clientId,
         responseType: 'code',
         accessType: 'offline',
+        prompt: 'consent',
     });
 
     return (

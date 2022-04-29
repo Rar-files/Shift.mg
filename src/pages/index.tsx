@@ -7,7 +7,7 @@ const Home: NextPage = () => {
     return (
         <main>
             {userState.loaded &&
-                <h1>Witaj, {userState.data?.displayName} ({userState.data?.username})</h1>
+                <h1>Welcome, {userState.data?.displayName} ({userState.data?.username})</h1>
             }
         </main>
     )

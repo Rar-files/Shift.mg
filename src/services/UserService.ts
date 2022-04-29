@@ -1,8 +1,9 @@
-import getApiClient, {IViolation} from "./ApiClient";
+import getApiClient from "./ApiClient";
+import {User} from "../features/userSlice";
+import {Notify} from "../features/notifySlice";
 
-import {setUserData, User} from "../features/userSlice";
-import {store} from "../app";
 
+//Get
 interface GetUserPromise {
     succeeded: boolean;
     data: User | null;
@@ -33,48 +34,33 @@ export async function getUser(id: string): Promise<GetUserPromise> {
     return new Promise<GetUserPromise>(resolve => resolve(getUserPromise as GetUserPromise));
 }
 
-export interface UserUpdateProps {
-    user: User;
-    newData: object;
-}
-
-interface UserUpdatePromise {
+//Get user notifications
+interface GetUserNotifyPromise {
     succeeded: boolean;
-    violations: IViolation[];
+    data: Notify[] | null;
 }
 
-export async function updateUser(props: UserUpdateProps): Promise<UserUpdatePromise> {
-    let userUpdatePromise = {} as UserUpdatePromise;
+export async function getUserNotify(id: string): Promise<GetUserNotifyPromise> {
+    let getUserNotifyPromise = {succeeded: false} as GetUserNotifyPromise;
 
     await getApiClient().request(
-        'PUT',
-        `/user/${props.user.id}`,
-        parseUserPutIriUrls({
-            ...props.user,
-            ...props.newData
-        }),
+        'GET',
+        `/user/${id}/notifications`,
+        {},
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/ld+json'
         }
     )
         .then((response) => {
-            userUpdatePromise.succeeded = true;
-            store.dispatch(setUserData(response.data));
+            getUserNotifyPromise.succeeded = true;
+            getUserNotifyPromise.data = response.data;
+            console.log(response.data);
         })
         .catch((error) => {
-            userUpdatePromise.succeeded = false;
-            userUpdatePromise.violations = getApiClient().parseViolations(error.response.data);
+            getUserNotifyPromise.succeeded = false;
         })
     ;
 
-    return new Promise<UserUpdatePromise>(resolve => resolve(userUpdatePromise as UserUpdatePromise));
-}
-
-
-function parseUserPutIriUrls(user: User): object
-{
-    // TODO
-    return user;
+    return new Promise<GetUserNotifyPromise>(resolve => resolve(getUserNotifyPromise as GetUserNotifyPromise));
 }

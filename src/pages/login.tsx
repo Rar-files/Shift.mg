@@ -53,7 +53,7 @@ const Login: NextPage = () => {
         if (authState.status === AuthStatus.AUTHORIZED) {
             router.push("/");
         }
-    }, [authState.status])
+    }, [authState.status, router])
 
     return (
         <>
