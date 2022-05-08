@@ -1,4 +1,4 @@
-import {AuthCredentials} from "../features/authSlice";
+import {AuthCredentials} from "../../features/authSlice";
 import getApiClient from "./ApiClient";
 
 import jwt_decode from "jwt-decode"

@@ -1,7 +1,7 @@
-import getApiClient, {IViolation} from "./ApiClient";
+import getApiClient, {IViolation} from "../ApiClient";
 
-import {setEventData, Event} from "../features/event/eventSlice";
-import {store} from "../app";
+import {setEventData, Event} from "../../../features/event/eventSlice";
+import {store} from "../..";
 
 
 //Get
@@ -25,7 +25,6 @@ export async function getEvents(): Promise<GetEventsPromise> {
         .then((response) => {
             getEventsPromise.succeeded = true;
             getEventsPromise.data = response.data;
-            console.log("Recived events: ");
         })
         .catch((error) => {
             getEventsPromise.succeeded = false;

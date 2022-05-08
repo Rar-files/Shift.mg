@@ -1,7 +1,7 @@
 import {FC, Dispatch, SetStateAction} from 'react';
 import {useGoogleLogin} from 'react-google-login';
 import styled from 'styled-components';
-import {auth} from "../../services/AuthService";
+import {auth} from "../../app/services/AuthService";
 import {useAppDispatch} from "../../app";
 import {authorize} from "../../features/authSlice";
 

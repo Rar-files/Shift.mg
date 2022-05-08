@@ -20,10 +20,10 @@ const Content = styled.div`
     align-items: center;    
 `;
 
+const LogoDiv = styled.div`
+`;
+
 const Logo = styled(Image)`
-    width: 100%;
-    height: auto;
-    margin-bottom: 10px;
     cursor: pointer;
 `;
 
@@ -33,7 +33,7 @@ const MenuBar: FC = () => {
         <Content>
             <Link href="/">
                 <>
-                    <Logo src={logoIcon} alt="logo" width={48} height={52}/>
+                    <Logo src={logoIcon} alt="logo" width={46} height={52}/>
                 </>
             </Link>
             <Menu/>

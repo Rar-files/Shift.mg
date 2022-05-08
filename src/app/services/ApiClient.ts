@@ -1,6 +1,6 @@
 import axios, {AxiosResponse, Method} from "axios";
-import {store} from "../app";
-import {AuthStatus, logout, refreshAuth} from "../features/authSlice";
+import {store} from "..";
+import {AuthStatus, logout, refreshAuth} from "../../features/authSlice";
 import jwt_decode from "jwt-decode";
 import {JwtTokenData} from "./AuthService";
 
