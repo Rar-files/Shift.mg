@@ -1,6 +1,6 @@
 import {AnyAction, createSlice, PayloadAction, ThunkAction} from "@reduxjs/toolkit";
 import { TAppState, TDispatch } from "../../app";
-import { EventService } from "../../services";
+import { EventService } from "../../app/services";
 
 export interface Event {
     id: number;

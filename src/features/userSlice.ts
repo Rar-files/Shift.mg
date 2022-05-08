@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction, ThunkAction} from "@reduxjs/toolkit";
 import {TAppState, TDispatch} from "../app";
 import {AnyAction} from "redux";
-import {UserService} from "../services";
+import {UserService} from "../app/services";
 import {logout} from "./authSlice";
 
 export interface User {

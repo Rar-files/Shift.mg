@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction, ThunkAction} from "@reduxjs/toolkit";
 import {TAppState, TDispatch} from "../app";
 import {AnyAction} from "redux";
-import {AuthService} from "../services";
+import {AuthService} from "../app/services";
 
 export enum AuthStatus {
     UNDEFINED,

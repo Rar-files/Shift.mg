@@ -1,6 +1,6 @@
 import getApiClient from "./ApiClient";
-import {User} from "../features/userSlice";
-import {Notify} from "../features/notifySlice";
+import {User} from "../../features/userSlice";
+import {Notify} from "../../features/notifySlice";
 
 
 //Get
