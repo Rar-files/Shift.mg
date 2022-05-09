@@ -9,6 +9,9 @@ export default function Document() {
             height: 100%;
           }
         `}</style>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Alata&display=swap"
+            rel="stylesheet"/>
       </Head>
       <body>
         <Main />

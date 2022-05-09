@@ -1,10 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-
-export interface MediaObject {
-    id: string;
-    contentUrl: string;
-    createdAt: Date;
-}
+import {IMediaObject as MediaObject} from "../interfaces/IMediaObject";
 
 interface MediaObjectState {
     loaded: boolean;

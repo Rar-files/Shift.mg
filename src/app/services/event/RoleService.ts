@@ -1,6 +1,7 @@
 import getApiClient, {IViolation} from "../ApiClient";
 
-import {setRoleData, Role} from "../../../features/event/roleSlice";
+import {setRoleData} from "../../../features/event/roleSlice";
+import {IRole as Role} from "../../../interfaces/IRole";
 import {store} from "../..";
 
 

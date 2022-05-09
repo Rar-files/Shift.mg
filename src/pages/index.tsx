@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import {useAppSelector} from "../app";
+import EventBlock from '../components/Events/EventBlock';
 
 const Home: NextPage = () => {
     const userState = useAppSelector(state => state.user)

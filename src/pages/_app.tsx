@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, useEffect} from 'react'
 import type {AppProps} from 'next/app'
 
 import AppThemeProvider from '../app/providers/AppThemeProvider';
@@ -17,6 +17,7 @@ const SafeHydrate: FC = ({ children }) => {
 }
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
+
     return (
         <SafeHydrate>
         <Provider store={store}>

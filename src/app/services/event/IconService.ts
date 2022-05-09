@@ -1,6 +1,7 @@
 import getApiClient, {IViolation} from "../ApiClient";
 
-import {setIconData, Icon} from "../../../features/event/iconSlice";
+import {setIconData} from "../../../features/event/iconSlice";
+import { IIcon as Icon } from "../../../interfaces/IIcon";
 import {store} from "../..";
 
 

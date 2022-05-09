@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../app'
 import EventsList from '../components/Events/EventsList'
 import Loading from '../components/Loading'
 import { loadEventsData } from '../features/event/eventSlice'
+import { IEvent } from '../interfaces/IEvent'
 
 const EventsPage = styled.div``;
 
@@ -21,7 +22,7 @@ const Events: NextPage = () => {
     <main>
         {eventState.loaded == true 
           ? <EventsPage>
-              <EventsList events={eventState.data as Event[] | null} />
+              <EventsList events={eventState.data as IEvent[] | null} />
           </EventsPage>
           : <Loading/>
         }

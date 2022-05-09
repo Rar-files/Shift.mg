@@ -1,11 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-
-export interface Role {
-    id: string;
-    name: string;
-    permissions: string[];
-    owner: string;
-}
+import {IRole as Role} from "../../interfaces/IRole";
 
 interface RoleState {
     loaded: boolean;

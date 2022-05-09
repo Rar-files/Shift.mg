@@ -1,14 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-
-export interface Shift {
-    id: string;
-    name: string;
-    code: string;
-    startDate: Date;
-    endDate: Date;
-    event: string;
-    members: string[];
-}
+import {IShift as Shift} from "../../interfaces/IShift";
 
 interface ShiftState {
     loaded: boolean;

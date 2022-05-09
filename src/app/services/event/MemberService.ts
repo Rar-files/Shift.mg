@@ -1,6 +1,7 @@
 import getApiClient, {IViolation} from "../ApiClient";
 
-import {setMemberData, Member} from "../../../features/event/memberSlice";
+import {setMemberData} from "../../../features/event/memberSlice";
+import {IMember as Member} from "../../../interfaces/IMember";
 import {store} from "../..";
 
 

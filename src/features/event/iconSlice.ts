@@ -1,13 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-
-export interface Icon {
-    id: number;
-    name: string;
-    iconObject: {
-        id: string;
-        contentUrl: string;
-    }
-}
+import {IIcon as Icon} from "../../interfaces/IIcon";
 
 interface IconState {
     loaded: boolean;

@@ -1,6 +1,7 @@
 import getApiClient, {IViolation} from "./ApiClient";
 
-import {setNotifyData, Notify} from "../../features/notifySlice";
+import {setNotifyData} from "../../features/notifySlice";
+import {INotify as Notify} from "../../interfaces/INotify";
 import {store} from "../";
 
 

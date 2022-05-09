@@ -3,12 +3,7 @@ import {TAppState, TDispatch} from "../app";
 import {AnyAction} from "redux";
 import {UserService} from "../app/services";
 import {logout} from "./authSlice";
-
-export interface User {
-    id: number;
-    username: string;
-    displayName: string;
-}
+import {IUser as User} from "../interfaces/IUser";
 
 interface UserState {
     loaded: boolean;

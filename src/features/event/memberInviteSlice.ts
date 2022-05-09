@@ -1,14 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-
-export interface MemberInvite {
-    id: number;
-    memberInvite: string;
-    user: string;
-    role: string;
-    status: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
+import {IMemberInvite as MemberInvite} from "../../interfaces/IMemberInvite";
 
 interface MemberInviteState {
     loaded: boolean;
