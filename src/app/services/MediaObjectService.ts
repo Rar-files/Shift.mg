@@ -1,6 +1,7 @@
 import getApiClient, {IViolation} from "./ApiClient";
 
-import {setMediaObjectData, MediaObject} from "../../features/mediaObjectSlice";
+import {setMediaObjectData} from "../../features/mediaObjectSlice";
+import {IMediaObject as MediaObject} from "../../interfaces/IMediaObject";
 import {store} from "../";
 
 

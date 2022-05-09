@@ -10,8 +10,6 @@ const Home: NextPage = () => {
             {userState.loaded &&
                 <h1>Welcome, {userState.data?.displayName} ({userState.data?.username})</h1>
             }
-
-            <EventBlock/>
         </main>
     )
 }

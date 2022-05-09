@@ -57,8 +57,9 @@ const defaultTheme = {
         '18px', // 3
         '32px', // 4
         '36px', // 5
-        '48px', // 6
-        '146px', // 7
+        '52px', // 6
+        '64px', // 7
+        '146px', // 8
     ],
     fontWeights: {
         body: 400,

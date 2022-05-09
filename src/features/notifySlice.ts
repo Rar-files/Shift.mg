@@ -1,14 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-
-export interface Notify {
-    id: number;
-    user: string;
-    type: string;
-    subject: string;
-    message: string;
-    createdAt: Date;
-    seenAt: Date;
-}
+import {INotify as Notify} from "../interfaces/INotify";
 
 interface NotifyState {
     loaded: boolean;

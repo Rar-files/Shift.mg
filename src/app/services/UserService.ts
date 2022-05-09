@@ -1,6 +1,6 @@
 import getApiClient from "./ApiClient";
-import {User} from "../../features/userSlice";
-import {Notify} from "../../features/notifySlice";
+import {IUser as User} from "../../interfaces/IUser";
+import {INotify as Notify} from "../../interfaces/INotify";
 
 
 //Get

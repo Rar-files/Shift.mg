@@ -1,11 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-
-export interface ShiftMember {
-    id: string;
-    shift: string;
-    shiftMemberMember: string;
-    joinedAt: Date;
-}
+import {IShiftMember as ShiftMember} from "../../interfaces/IShiftMember";
 
 interface ShiftMemberState {
     loaded: boolean;

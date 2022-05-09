@@ -1,6 +1,7 @@
 import getApiClient, {IViolation} from "../ApiClient";
 
-import {setShiftMemberData, ShiftMember} from "../../../features/event/shiftMemberSlice";
+import {setShiftMemberData} from "../../../features/event/shiftMemberSlice";
+import {IShiftMember as ShiftMember} from "../../../interfaces/IShiftMember";
 import {store} from "../..";
 
 

@@ -1,6 +1,6 @@
 import useDarkMode from "use-dark-mode";
 import { ThemeProvider } from "styled-components";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 
 import { darkTheme, lightTheme } from "../../styles/Theme";
 import {Reset} from "styled-reset";

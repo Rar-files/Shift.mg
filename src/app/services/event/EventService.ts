@@ -1,6 +1,7 @@
 import getApiClient, {IViolation} from "../ApiClient";
 
-import {setEventData, Event} from "../../../features/event/eventSlice";
+import {setEventData} from "../../../features/event/eventSlice";
+import { IEvent as Event } from "../../../interfaces/IEvent";
 import {store} from "../..";
 
 
