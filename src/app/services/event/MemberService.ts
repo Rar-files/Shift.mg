@@ -20,7 +20,7 @@ export async function getMembers(): Promise<GetMembersPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -51,7 +51,7 @@ export async function getMember(id: string): Promise<GetMemberPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -83,8 +83,8 @@ export async function CreateMember(member: Member): Promise<CreateMemberPromise>
         member,
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     )
         .then((response) => {
@@ -130,8 +130,8 @@ export async function updateMember(props: UpdateMemberProps): Promise<UpdateMemb
         }),
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     )
         .then((response) => {
@@ -163,7 +163,7 @@ export async function deleteMember(id: string): Promise<DeleteMemberPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {

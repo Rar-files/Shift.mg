@@ -1,18 +1,19 @@
 import {AnyAction, createSlice, PayloadAction, ThunkAction} from "@reduxjs/toolkit";
 import { TAppState, TDispatch } from "../../app";
 import { EventService } from "../../app/services";
-import { IEvent } from "../../interfaces/IEvent";
+import {IEvent as Event, IEvent} from "../../interfaces/IEvent";
+import IPaginableResponse from "../../app/services/IPaginableResponse";
 
 interface EventState {
     loaded: boolean;
-    data: IEvent[] | null;
+    data: IPaginableResponse<Event>;
 }
 
 const eventSlice = createSlice({
     name: 'events',
     initialState: {loaded: false} as EventState,
     reducers: {
-        setEventData(state, action: PayloadAction<IEvent[]>) {
+        setEventsData(state, action: PayloadAction<IPaginableResponse<Event>>) {
             state.loaded = true;
             state.data = action.payload;
         }
@@ -20,15 +21,15 @@ const eventSlice = createSlice({
 });
 
 const { actions, reducer } = eventSlice;
-export const { setEventData } = actions;
+export const { setEventsData } = actions;
 export default reducer;
 
-export const loadEventsData = (): ThunkAction<Promise<void>, TAppState, any, AnyAction> => {
+export const loadEventsForUser = (userId: string): ThunkAction<Promise<void>, TAppState, any, AnyAction> => {
     return async (dispatch: TDispatch): Promise<void> => {
         return new Promise<void>((resolve) => {
-            EventService.getEvents().then((value) => {
+            EventService.getUserEvents(userId).then((value) => {
                 if (value.succeeded) {
-                    dispatch(setEventData(value.data!));
+                    dispatch(setEventsData(value.data));
                 } else {
                 }
             })

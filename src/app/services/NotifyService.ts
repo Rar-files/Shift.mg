@@ -20,7 +20,7 @@ export async function getNotify(id: string): Promise<GetNotifyPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -66,8 +66,8 @@ export async function updateNotify(props: UpdateNotifyProps): Promise<UpdateNoti
         }),
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     )
         .then((response) => {
