@@ -20,7 +20,7 @@ export async function getShifts(): Promise<GetShiftsPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -51,7 +51,7 @@ export async function getShift(id: string): Promise<GetShiftPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -83,8 +83,8 @@ export async function CreateShift(shift: Shift): Promise<CreateShiftPromise> {
         shift,
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     )
         .then((response) => {
@@ -130,8 +130,8 @@ export async function updateShift(props: UpdateShiftProps): Promise<UpdateShiftP
         }),
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     )
         .then((response) => {
@@ -163,7 +163,7 @@ export async function deleteShift(id: string): Promise<DeleteShiftPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {

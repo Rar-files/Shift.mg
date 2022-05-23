@@ -20,7 +20,7 @@ export async function getRoles(): Promise<GetRolesPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -51,7 +51,7 @@ export async function getRole(id: string): Promise<GetRolePromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -83,8 +83,8 @@ export async function CreateRole(role: Role): Promise<CreateRolePromise> {
         role,
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     )
         .then((response) => {
@@ -130,8 +130,8 @@ export async function updateRole(props: UpdateRoleProps): Promise<UpdateRoleProm
         }),
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     )
         .then((response) => {
@@ -163,7 +163,7 @@ export async function deleteRole(id: string): Promise<DeleteRolePromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {

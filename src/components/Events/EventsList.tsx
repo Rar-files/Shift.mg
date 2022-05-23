@@ -4,6 +4,7 @@ import {FixedSizeList} from "react-window";
 import EventListElement from "./EventListElement";
 import EventBlock from "./EventBlock";
 import { IEvent as Event } from "../../interfaces/IEvent";
+import IPaginableResponse from "../../app/services/IPaginableResponse";
 
 const List = styled(FixedSizeList)`
     width: 100%;
@@ -13,38 +14,19 @@ const List = styled(FixedSizeList)`
 `;
 
 type EventListProps = {
-    events: Event[] | null;
+    events: IPaginableResponse<Event>;
 };
 
-const EventsList: FC<EventListProps> = (EventListProps) => {
-
-    if (EventListProps.events !== null) {
-        const dataList = EventListProps.events as Event[]
-
-        return (
-            <List
-                height={Math.max(
-                    document.documentElement.clientHeight,
-                    window.innerHeight || 0
-                )}
-                itemCount={1000}
-                itemSize={366}
-                width="100%"
-            >
-                {({index}) => 
-                    // <EventListElement event={dataList[index]}/>
-                    <EventBlock event={dataList[index]}/>
-                }
-                
-            </List>
-
-        );
-    }
-
+const EventsList: FC<EventListProps> = (props) => {
     return (
-        <h1>
-            Null
-        </h1>
+        <>
+            <h1>
+                Null
+            </h1>
+            {props.events.items.length > 0 && props.events.items.map((element) => (
+                <EventBlock event={element}/>
+            ))}
+        </>
     )
 }
 
