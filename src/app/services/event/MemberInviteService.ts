@@ -26,7 +26,6 @@ export async function getMemberInvite(id: string): Promise<GetMemberInvitePromis
         .then((response) => {
             getMemberInvitePromise.succeeded = true;
             getMemberInvitePromise.data = response.data;
-            console.log(response.data);
         })
         .catch((error) => {
             getMemberInvitePromise.succeeded = false;

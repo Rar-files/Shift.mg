@@ -12,7 +12,6 @@ const EventsPage = styled.div``;
 const Events: NextPage = () => {
   const dispatch = useAppDispatch();
   const eventState = useAppSelector(state => state.event)
-  console.log(eventState)
 
   useEffect(() => { 
     dispatch(loadEventsData())

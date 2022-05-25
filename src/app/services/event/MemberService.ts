@@ -57,7 +57,6 @@ export async function getMember(id: string): Promise<GetMemberPromise> {
         .then((response) => {
             getMemberPromise.succeeded = true;
             getMemberPromise.data = response.data;
-            console.log(response.data);
         })
         .catch((error) => {
             getMemberPromise.succeeded = false;
@@ -168,7 +167,6 @@ export async function deleteMember(id: string): Promise<DeleteMemberPromise> {
     )
         .then((response) => {
             deleteMemberPromise.succeeded = true;
-            console.log(response.data);
         })
         .catch((error) => {
             deleteMemberPromise.succeeded = false;

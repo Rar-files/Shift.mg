@@ -1,5 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
+import { IEvent as Event } from "../../interfaces/IEvent";
 
 const Element = styled.div`
     background-color: none;

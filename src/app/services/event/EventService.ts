@@ -57,7 +57,6 @@ export async function getEvent(id: string): Promise<GetEventPromise> {
         .then((response) => {
             getEventPromise.succeeded = true;
             getEventPromise.data = response.data;
-            console.log(response.data);
         })
         .catch((error) => {
             getEventPromise.succeeded = false;
@@ -168,7 +167,6 @@ export async function deleteEvent(id: string): Promise<DeleteEventPromise> {
     )
         .then((response) => {
             deleteEventPromise.succeeded = true;
-            console.log(response.data);
         })
         .catch((error) => {
             deleteEventPromise.succeeded = false;

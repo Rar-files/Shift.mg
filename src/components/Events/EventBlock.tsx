@@ -2,7 +2,7 @@ import { FC, useContext } from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import { ThemeContext } from "styled-components";
-import { IEvent } from "../../interfaces/IEvent";
+import { IEvent as Event} from "../../interfaces/IEvent";
 
 const Block = styled.div`
     background-color: ${props => props.theme.app.backgroundVariant};
@@ -125,14 +125,18 @@ const Description = styled.div`
 `;
 
 type EventBlockProps = {
-    event: IEvent;
+    event: Event;
 };
 
 const EventBlock: FC<EventBlockProps> = (props) => {
 
     const theme = useContext(ThemeContext);
 
-    const color : string = props.event.color;
+    // console.log(props.event);
+
+    // const color : string = props.event.color;
+
+    const color : string = "red"
 
     const date = props.event.startDate;
 

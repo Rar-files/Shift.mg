@@ -2,8 +2,9 @@ import { FC } from "react";
 import styled from "styled-components";
 import {FixedSizeList} from "react-window";
 import EventListElement from "./EventListElement";
-import EventBlock from "./EventBlock";
+// import EventBlock from "./EventBlock";
 import { IEvent as Event } from "../../interfaces/IEvent";
+import Loading from "../Loading";
 
 const List = styled(FixedSizeList)`
     width: 100%;
@@ -22,29 +23,30 @@ const EventsList: FC<EventListProps> = (EventListProps) => {
         const dataList = EventListProps.events as Event[]
 
         return (
-            <List
-                height={Math.max(
-                    document.documentElement.clientHeight,
-                    window.innerHeight || 0
-                )}
-                itemCount={1000}
-                itemSize={366}
-                width="100%"
-            >
-                {({index}) => 
-                    // <EventListElement event={dataList[index]}/>
-                    <EventBlock event={dataList[index]}/>
-                }
-                
-            </List>
+            <>
+                {EventListProps.events.length > 0 && 
+                    <List
+                        height={Math.max(
+                            document.documentElement.clientHeight,
+                            window.innerHeight || 0
+                        )}
+                        itemCount={1000}
+                        itemSize={366}
+                        width="100%">
 
+                        {({index}) => 
+                            // <EventListElement event={dataList[index]}/>
+                            <EventListElement event={dataList[index]}/>
+                        }
+                        
+                    </List>
+                }
+            </>
         );
     }
 
     return (
-        <h1>
-            Null
-        </h1>
+        <Loading/>
     )
 }
 

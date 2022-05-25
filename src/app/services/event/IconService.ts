@@ -57,7 +57,6 @@ export async function getIcon(id: string): Promise<GetIconPromise> {
         .then((response) => {
             getIconPromise.succeeded = true;
             getIconPromise.data = response.data;
-            console.log(response.data);
         })
         .catch((error) => {
             getIconPromise.succeeded = false;
@@ -168,7 +167,6 @@ export async function deleteIcon(id: string): Promise<DeleteIconPromise> {
     )
         .then((response) => {
             deleteIconPromise.succeeded = true;
-            console.log(response.data);
         })
         .catch((error) => {
             deleteIconPromise.succeeded = false;
