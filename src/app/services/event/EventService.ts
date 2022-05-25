@@ -1,26 +1,26 @@
 import getApiClient, {IViolation} from "../ApiClient";
 
-import {setEventData} from "../../../features/event/eventSlice";
 import { IEvent as Event } from "../../../interfaces/IEvent";
 import {store} from "../..";
+import IPaginableResponse from "../IPaginableResponse";
 
 
 //Get
 interface GetEventsPromise {
     succeeded: boolean;
-    data: Event[] | null;
+    data: IPaginableResponse<Event>;
 }
 
-export async function getEvents(): Promise<GetEventsPromise> {
+export async function getUserEvents(userId: string): Promise<GetEventsPromise> {
     let getEventsPromise = {succeeded: false} as GetEventsPromise;
 
     await getApiClient().request(
         'GET',
-        `/events/`,
+        `/user/${userId}/events`,
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -51,7 +51,7 @@ export async function getEvent(id: string): Promise<GetEventPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -82,13 +82,14 @@ export async function CreateEvent(event: Event): Promise<CreateEventPromise> {
         event,
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     )
         .then((response) => {
             eventCreatePromise.succeeded = true;
-            store.dispatch(setEventData(response.data));
+            // todo dispatch getUserEvents with userId
+            //store.dispatch(setEventsData(response.data));
         })
         .catch((error) => {
             eventCreatePromise.succeeded = false;
@@ -129,13 +130,14 @@ export async function updateEvent(props: UpdateEventProps): Promise<UpdateEventP
         }),
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     )
         .then((response) => {
             eventUpdatePromise.succeeded = true;
-            store.dispatch(setEventData(response.data));
+            // todo dispatch getUserEvents with userId
+            //store.dispatch(setEventData(response.data));
         })
         .catch((error) => {
             eventUpdatePromise.succeeded = false;
@@ -162,7 +164,7 @@ export async function deleteEvent(id: string): Promise<DeleteEventPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {

@@ -20,7 +20,7 @@ export async function getIcons(): Promise<GetIconsPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -51,7 +51,7 @@ export async function getIcon(id: string): Promise<GetIconPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -82,8 +82,8 @@ export async function CreateIcon(icon: Icon): Promise<CreateIconPromise> {
         icon,
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     )
         .then((response) => {
@@ -129,8 +129,8 @@ export async function updateIcon(props: UpdateIconProps): Promise<UpdateIconProm
         }),
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     )
         .then((response) => {
@@ -162,7 +162,7 @@ export async function deleteIcon(id: string): Promise<DeleteIconPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {

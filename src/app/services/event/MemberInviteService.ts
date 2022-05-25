@@ -20,7 +20,7 @@ export async function getMemberInvite(id: string): Promise<GetMemberInvitePromis
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -65,8 +65,8 @@ export async function updateMemberInvite(props: UpdateMemberInviteProps): Promis
         }),
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     )
         .then((response) => {

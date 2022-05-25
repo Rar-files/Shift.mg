@@ -20,7 +20,7 @@ export async function getMediaObject(id: string): Promise<GetMediaObjectPromise>
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -51,8 +51,8 @@ export async function CreateMediaObject(mediaObject: MediaObject): Promise<Creat
         mediaObject,
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     )
         .then((response) => {

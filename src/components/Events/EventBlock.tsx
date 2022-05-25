@@ -159,12 +159,12 @@ const EventBlock: FC<EventBlockProps> = (props) => {
                 <SecondRow>
                     <LeftColumn>
                         <Date color={theme.pallette[color]}>
-                            <Day>
-                                {date.getDay()}
-                            </Day>
-                            <RestOfDate>
-                                {date.getMonth()}.{date.getFullYear()}
-                            </RestOfDate>
+                            {/*<Day>*/}
+                            {/*    {date.getDay()}*/}
+                            {/*</Day>*/}
+                            {/*<RestOfDate>*/}
+                            {/*    {date.getMonth()}.{date.getFullYear()}*/}
+                            {/*</RestOfDate>*/}
                         </Date>
                     </LeftColumn>
                     <RightColumn>

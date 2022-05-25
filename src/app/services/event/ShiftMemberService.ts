@@ -20,7 +20,7 @@ export async function getShiftMembers(): Promise<GetShiftMembersPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -51,7 +51,7 @@ export async function getShiftMember(id: string): Promise<GetShiftMemberPromise>
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -82,8 +82,8 @@ export async function CreateShiftMember(shiftMember: ShiftMember): Promise<Creat
         shiftMember,
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     )
         .then((response) => {
@@ -129,8 +129,8 @@ export async function updateShiftMember(props: UpdateShiftMemberProps): Promise<
         }),
         undefined,
         {
-            Accept: 'application/ld+json',
-            'Content-Type': 'application/ld+json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         }
     )
         .then((response) => {
@@ -162,7 +162,7 @@ export async function deleteShiftMember(id: string): Promise<DeleteShiftMemberPr
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {

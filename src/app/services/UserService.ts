@@ -18,7 +18,7 @@ export async function getUser(id: string): Promise<GetUserPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
@@ -48,7 +48,7 @@ export async function getUserNotify(id: string): Promise<GetUserNotifyPromise> {
         {},
         undefined,
         {
-            Accept: 'application/ld+json'
+            Accept: 'application/json'
         }
     )
         .then((response) => {
