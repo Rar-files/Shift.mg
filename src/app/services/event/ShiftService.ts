@@ -57,7 +57,6 @@ export async function getShift(id: string): Promise<GetShiftPromise> {
         .then((response) => {
             getShiftPromise.succeeded = true;
             getShiftPromise.data = response.data;
-            console.log(response.data);
         })
         .catch((error) => {
             getShiftPromise.succeeded = false;
@@ -168,7 +167,6 @@ export async function deleteShift(id: string): Promise<DeleteShiftPromise> {
     )
         .then((response) => {
             deleteShiftPromise.succeeded = true;
-            console.log(response.data);
         })
         .catch((error) => {
             deleteShiftPromise.succeeded = false;

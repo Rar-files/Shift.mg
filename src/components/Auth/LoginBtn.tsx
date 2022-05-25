@@ -31,7 +31,6 @@ const LoginBtn = () => {
     const dispatch = useAppDispatch();
 
     const onFailure = (result : any) => {
-        console.log(result);
     };
 
     const onSuccess = async (googleData : any) => {

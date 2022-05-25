@@ -26,7 +26,6 @@ export async function getNotify(id: string): Promise<GetNotifyPromise> {
         .then((response) => {
             getNotifyPromise.succeeded = true;
             getNotifyPromise.data = response.data;
-            console.log(response.data);
         })
         .catch((error) => {
             getNotifyPromise.succeeded = false;

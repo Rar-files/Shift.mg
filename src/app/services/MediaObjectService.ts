@@ -26,7 +26,6 @@ export async function getMediaObject(id: string): Promise<GetMediaObjectPromise>
         .then((response) => {
             getMediaObjectPromise.succeeded = true;
             getMediaObjectPromise.data = response.data;
-            console.log(response.data);
         })
         .catch((error) => {
             getMediaObjectPromise.succeeded = false;

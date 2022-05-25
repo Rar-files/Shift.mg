@@ -2,7 +2,7 @@ import { FC } from "react";
 import styled from "styled-components";
 import {FixedSizeList} from "react-window";
 import EventListElement from "./EventListElement";
-import EventBlock from "./EventBlock";
+// import EventBlock from "./EventBlock";
 import { IEvent as Event } from "../../interfaces/IEvent";
 import IPaginableResponse from "../../app/services/IPaginableResponse";
 

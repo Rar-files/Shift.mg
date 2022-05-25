@@ -57,7 +57,6 @@ export async function getRole(id: string): Promise<GetRolePromise> {
         .then((response) => {
             getRolePromise.succeeded = true;
             getRolePromise.data = response.data;
-            console.log(response.data);
         })
         .catch((error) => {
             getRolePromise.succeeded = false;
@@ -168,7 +167,6 @@ export async function deleteRole(id: string): Promise<DeleteRolePromise> {
     )
         .then((response) => {
             deleteRolePromise.succeeded = true;
-            console.log(response.data);
         })
         .catch((error) => {
             deleteRolePromise.succeeded = false;

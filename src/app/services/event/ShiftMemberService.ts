@@ -57,7 +57,6 @@ export async function getShiftMember(id: string): Promise<GetShiftMemberPromise>
         .then((response) => {
             getShiftMemberPromise.succeeded = true;
             getShiftMemberPromise.data = response.data;
-            console.log(response.data);
         })
         .catch((error) => {
             getShiftMemberPromise.succeeded = false;
@@ -168,7 +167,6 @@ export async function deleteShiftMember(id: string): Promise<DeleteShiftMemberPr
     )
         .then((response) => {
             deleteShiftMemberPromise.succeeded = true;
-            console.log(response.data);
         })
         .catch((error) => {
             deleteShiftMemberPromise.succeeded = false;

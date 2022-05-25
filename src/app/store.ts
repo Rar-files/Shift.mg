@@ -1,10 +1,10 @@
 import {AnyAction, Store} from "redux";
 import thunkMiddleware, {ThunkDispatch} from 'redux-thunk';
-import { createLogger } from 'redux-logger';
+// import { createLogger } from 'redux-logger';
 import rootReducer from "../features";
 import {configureStore} from "@reduxjs/toolkit";
 
-const loggerMiddleware = createLogger();
+// const loggerMiddleware = createLogger();
 
 export const store = configureStore({
     reducer: rootReducer,
@@ -14,7 +14,7 @@ export const store = configureStore({
                 thunkMiddleware
             )
             .prepend(
-                loggerMiddleware
+                // loggerMiddleware
             )
 });
 
