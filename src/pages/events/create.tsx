@@ -1,9 +1,11 @@
 import type { NextPage } from 'next'
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components'
 import { CreateEvent } from '../../app/services/event/EventService';
 import { CreateIcon } from '../../app/services/event/IconService';
 import { CreateMediaObject } from '../../app/services/MediaObjectService';
+import IconPicker from '../../components/Icons/IconPicker';
 import { IEvent } from '../../interfaces/IEvent';
 import { IIcon } from '../../interfaces/IIcon';
 
@@ -13,40 +15,32 @@ const CreateEventPage = styled.div``;
 const Event: NextPage = () => {
     const { register, handleSubmit} = useForm();
 
+    const [icon, setIcon] = useState<IIcon>();
+    const [pickLoaded, setPickLoaded] = useState<boolean>(false);
+
     const onSubmit = (data : any) => {
-        // var formData = new FormData();
-        // formData.append("file", data.file);
-        // CreateMediaObject(formData).then(resMediaObj => {
-            const icon : IIcon= {
+        if(icon != undefined) { 
+            const event : IEvent = {
                 id: "",
                 name: data.name,
-                iconObject: {
-                    id: "1ecdc8ce-f891-688a-8452-77555e6ab543",
-                    contentUrl: "http://127.0.0.1:6101//media/628ecd515d4a0_1644438712533.png",
-                    createdAt: new Date("2022-05-26T02:44:01+02:00")
-                }
+                slug: data.slug,
+                owner: "test",
+                color: data.color,
+                shiftsEnabled: data.shifts,
+                description: data.description,
+                icon: icon,
+                startDate: data.startDate,
+                endDate: data.endDate,
+                location: data.location,
+                shifts: [],
             }
-            CreateIcon(icon).then(resIcon => {
-                const event : IEvent = {
-                    id: "",
-                    name: data.name,
-                    slug: data.slug,
-                    owner: "test",
-                    color: data.color,
-                    shiftsEnabled: data.shifts,
-                    description: data.description,
-                    icon: resIcon.data,
-                    startDate: data.startDate,
-                    endDate: data.endDate,
-                    location: data.location,
-                    shifts: [],
-                }
-                CreateEvent(event).then(resEvent => {
-                    console.log(resEvent);
-                })
-            })
-        // })
-        
+            CreateEvent(event).then(resEvent => {
+                console.log(resEvent);
+            }) 
+        }
+        else {
+            console.log("No icon selected");
+        }
     }
 
     return (
@@ -66,7 +60,7 @@ const Event: NextPage = () => {
                     <input type="color" {... register("color")}/>
                     <br/>
                     Icon:
-                    <input type="file" {... register("icon")}/>
+                    <input type="button" value={icon ? icon.name : "Select Icon"} onClick={() => setPickLoaded(true)}/>
                     <br/>
                     Location:
                     <input {... register("location")}/>
@@ -84,6 +78,8 @@ const Event: NextPage = () => {
 
                     <input type={'submit'}/>
                 </form>
+
+                {pickLoaded && <IconPicker setIcon={setIcon} setPickLoaded={setPickLoaded}/>}
 
             </CreateEventPage>
         </main>

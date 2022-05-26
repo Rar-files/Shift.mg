@@ -4,12 +4,13 @@ import {setIconData} from "../../../features/event/iconSlice";
 import { IIcon as Icon, IIcon } from "../../../interfaces/IIcon";
 import {store} from "../..";
 import { IconDto, ToIconDto } from "../../../Dtos/IconDto";
+import IPaginableResponse from "../IPaginableResponse";
 
 
 //Get
 interface GetIconsPromise {
     succeeded: boolean;
-    data: Icon[] | null;
+    data: IPaginableResponse<Icon>;
 }
 
 export async function getIcons(): Promise<GetIconsPromise> {
