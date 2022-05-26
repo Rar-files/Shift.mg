@@ -1,8 +1,9 @@
 import getApiClient, {IViolation} from "../ApiClient";
 
 import {setIconData} from "../../../features/event/iconSlice";
-import { IIcon as Icon } from "../../../interfaces/IIcon";
+import { IIcon as Icon, IIcon } from "../../../interfaces/IIcon";
 import {store} from "../..";
+import { IconDto, ToIconDto } from "../../../Dtos/IconDto";
 
 
 //Get
@@ -16,7 +17,7 @@ export async function getIcons(): Promise<GetIconsPromise> {
 
     await getApiClient().request(
         'GET',
-        `/event_icons/`,
+        `/event_icons`,
         {},
         undefined,
         {
@@ -69,17 +70,20 @@ export async function getIcon(id: string): Promise<GetIconPromise> {
 
 //Create
 interface CreateIconPromise {
+    data: Icon;
     succeeded: boolean;
     violations: IViolation[];
 }
 
-export async function CreateIcon(icon: Icon): Promise<CreateIconPromise> {
+export async function CreateIcon(icon: IIcon): Promise<CreateIconPromise> {
     let iconCreatePromise = {} as CreateIconPromise;
+
+    const iconDto = ToIconDto(icon);
 
     await getApiClient().request(
         'POST',
-        `/event_icons/`,
-        icon,
+        `/event_icons`,
+        iconDto,
         undefined,
         {
             Accept: 'application/json',
@@ -88,6 +92,7 @@ export async function CreateIcon(icon: Icon): Promise<CreateIconPromise> {
     )
         .then((response) => {
             iconCreatePromise.succeeded = true;
+            iconCreatePromise.data = response.data;
             store.dispatch(setIconData(response.data));
         })
         .catch((error) => {

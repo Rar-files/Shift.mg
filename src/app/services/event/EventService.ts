@@ -1,8 +1,10 @@
 import getApiClient, {IViolation} from "../ApiClient";
 
-import { IEvent as Event } from "../../../interfaces/IEvent";
+import { IEvent as Event, IEvent } from "../../../interfaces/IEvent";
 import {store} from "../..";
 import IPaginableResponse from "../IPaginableResponse";
+import { EventDto, ToEventDto } from "../../../Dtos/EventDto";
+import { CreateIcon } from "./IconService";
 
 
 //Get
@@ -47,7 +49,7 @@ export async function getEvent(id: string): Promise<GetEventPromise> {
 
     await getApiClient().request(
         'GET',
-        `/event/${id}`,
+        `/events/${id}`,
         {},
         undefined,
         {
@@ -69,17 +71,20 @@ export async function getEvent(id: string): Promise<GetEventPromise> {
 
 //Create
 interface CreateEventPromise {
+    id: string;
     succeeded: boolean;
     violations: IViolation[];
 }
 
-export async function CreateEvent(event: Event): Promise<CreateEventPromise> {
+export async function CreateEvent(event: IEvent): Promise<CreateEventPromise> {
     let eventCreatePromise = {} as CreateEventPromise;
+
+    const eventDto = ToEventDto(event);
 
     await getApiClient().request(
         'POST',
-        `/event/`,
-        event,
+        `/events`,
+        eventDto,
         undefined,
         {
             Accept: 'application/json',
@@ -88,6 +93,7 @@ export async function CreateEvent(event: Event): Promise<CreateEventPromise> {
     )
         .then((response) => {
             eventCreatePromise.succeeded = true;
+            eventCreatePromise.id = response.data.id;
             // todo dispatch getUserEvents with userId
             //store.dispatch(setEventsData(response.data));
         })
@@ -123,7 +129,7 @@ export async function updateEvent(props: UpdateEventProps): Promise<UpdateEventP
 
     await getApiClient().request(
         'PUT',
-        `/event/${props.event.id}`,
+        `/events/${props.event.id}`,
         parseEventToRequest({
             ...props.event,
             ...props.newData
@@ -160,7 +166,7 @@ export async function deleteEvent(id: string): Promise<DeleteEventPromise> {
 
     await getApiClient().request(
         'DELETE',
-        `/delete/${id}`,
+        `/events/${id}`,
         {},
         undefined,
         {
