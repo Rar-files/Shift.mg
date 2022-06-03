@@ -1,86 +1,52 @@
 import type { NextPage } from 'next'
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import styled from 'styled-components'
-import { CreateEvent } from '../../app/services/event/EventService';
-import { CreateIcon } from '../../app/services/event/IconService';
-import { CreateMediaObject } from '../../app/services/MediaObjectService';
-import IconPicker from '../../components/Icons/IconPicker';
-import { IEvent } from '../../interfaces/IEvent';
-import { IIcon } from '../../interfaces/IIcon';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import TextInput from '../../components/Forms/controls/TextInput';
+import SubmitButton from '../../components/Forms/SubmitButton';
+import CheckBoxInput from '../../components/Forms/controls/CheckBoxInput';
 
+const schema = yup.object().shape({
+    name: yup.string().required().min(5),
+    // slug: yup.string().required(),
+    // color: yup.string().required(),
+    shifts: yup.boolean().required(),
+    // description: yup.string().required(),
+    // startDate: yup.string().required(),
+    // endDate: yup.string().required(),
+    // location: yup.string().required(),
+});
+
+interface IFormEvent {
+    name: string
+    shifts: boolean
+}
 
 const CreateEventPage = styled.div``;
 
 const Event: NextPage = () => {
-    const { register, handleSubmit} = useForm();
+    const methods = useForm<IFormEvent>({
+        resolver: yupResolver(schema),
+    });
 
-    const [icon, setIcon] = useState<IIcon>();
-    const [pickLoaded, setPickLoaded] = useState<boolean>(false);
-
-    const onSubmit = (data : any) => {
-        if(icon != undefined) { 
-            const event : IEvent = {
-                id: "",
-                name: data.name,
-                slug: data.slug,
-                owner: "test",
-                color: data.color,
-                shiftsEnabled: data.shifts,
-                description: data.description,
-                icon: icon,
-                startDate: data.startDate,
-                endDate: data.endDate,
-                location: data.location,
-                shifts: [],
-            }
-            CreateEvent(event).then(resEvent => {
-                console.log(resEvent);
-            }) 
-        }
-        else {
-            console.log("No icon selected");
-        }
+    const onSubmit = (data : IFormEvent) => {
     }
+
+    // console.log(methods.watch('name'));
 
     return (
         <main>
             <CreateEventPage>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    Name:
-                    <input {... register("name")}/>
-                    <br/>
-                    StartDate:
-                    <input type="date" {... register("startDate")}/>
-                    <br/>
-                    EndDate:
-                    <input type="date" {... register("endDate")}/>
-                    <br/>
-                    Color:
-                    <input type="color" {... register("color")}/>
-                    <br/>
-                    Icon:
-                    <input type="button" value={icon ? icon.name : "Select Icon"} onClick={() => setPickLoaded(true)}/>
-                    <br/>
-                    Location:
-                    <input {... register("location")}/>
-                    <br/>
-                    Shifts:
-                    <input type="checkbox" {... register("shifts")}/>
-                    <br/>
-                    Slug:
-                    <input {... register("slug")}/>
-                    <br/>
-                    Description:
-                    <input {... register("description")}/>
-                    <br/>
-
-
-                    <input type={'submit'}/>
-                </form>
-
-                {pickLoaded && <IconPicker setIcon={setIcon} setPickLoaded={setPickLoaded}/>}
-
+                <FormProvider {...methods}>
+                    <form onSubmit={methods.handleSubmit(onSubmit)}>
+                        <TextInput name='name' label='test'/>
+                        <br/>
+                        <CheckBoxInput name='shifts' label='shifts'/>
+                        <br/>
+                        <SubmitButton/>
+                    </form>
+                </FormProvider>
             </CreateEventPage>
         </main>
     )

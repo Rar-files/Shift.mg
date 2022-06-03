@@ -1,5 +1,6 @@
 import useDarkMode from "use-dark-mode";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider as SCThemeProvider} from "styled-components";
+import { ThemeProvider as MuiThemeProvider} from "@material-ui/core";
 import { FC } from "react";
 
 import { darkTheme, lightTheme } from "../../styles/Theme";
@@ -14,10 +15,12 @@ const AppThemeProvider : FC<Props> = ({ children }) => {
     const theme = darkMode.value ? darkTheme : lightTheme;
     
     return (
-        <ThemeProvider theme={theme}>
-            <Reset/>
-            {children}
-        </ThemeProvider>
+        <MuiThemeProvider theme={theme}>
+            <SCThemeProvider theme={theme}>
+                <Reset/>
+                {children}
+            </SCThemeProvider>
+        </MuiThemeProvider>
     );
 }
 
