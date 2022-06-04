@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import TextInput from '../../components/Forms/controls/TextInput';
 import SubmitButton from '../../components/Forms/SubmitButton';
 import CheckBoxInput from '../../components/Forms/controls/CheckBoxInput';
+import DateInput from '../../components/Forms/controls/DateInput';
 
 const schema = yup.object().shape({
     name: yup.string().required().min(5),
@@ -13,7 +14,7 @@ const schema = yup.object().shape({
     // color: yup.string().required(),
     shifts: yup.boolean().required(),
     // description: yup.string().required(),
-    // startDate: yup.string().required(),
+    startDate: yup.string().required(),
     // endDate: yup.string().required(),
     // location: yup.string().required(),
 });
@@ -21,6 +22,7 @@ const schema = yup.object().shape({
 interface IFormEvent {
     name: string
     shifts: boolean
+    startDate: Date
 }
 
 const CreateEventPage = styled.div``;
@@ -43,6 +45,8 @@ const Event: NextPage = () => {
                         <TextInput name='name' label='test'/>
                         <br/>
                         <CheckBoxInput name='shifts' label='shifts'/>
+                        <br/>
+                        <DateInput name='startDate' label='startDate'/>
                         <br/>
                         <SubmitButton/>
                     </form>

@@ -1,6 +1,8 @@
 import { FC } from "react";
 import styled from "styled-components";
 import {Fab} from "@material-ui/core";
+import Button from "@material-ui/core/button";
+import Arrow from '@material-ui/icons/ArrowRight';
 
 const SButton = styled(Fab)``;
 
@@ -12,9 +14,10 @@ const SubmitButton: FC<Props> = ({label}) => {
 
 
     return (
-        <SButton variant="extended" >
+        <Button variant="contained" color="primary" size="medium" aria-label="submit">
             {label ? label : "Submit"}
-        </SButton>
+            <Arrow fontSize="small" />
+        </Button>
     );
 };
 

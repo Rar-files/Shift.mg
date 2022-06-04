@@ -22,6 +22,24 @@ const darkTheme = createTheme({
     },
     divider: '#AFAAB9',
   },
+  typography: {
+    h1: {
+      fontSize: '9.125rem',
+    },
+    h5: {
+      fontSize: '2rem',
+    },
+    h4: {
+      fontSize: '2.25rem',
+    },
+    h3: {
+      fontSize: '3.25rem',
+    },
+    h2: {
+      fontSize: '4rem',
+    },
+    fontFamily: '"Alata","Helvetica" , "Arial", sans-serif',
+  },
     eventPalette: {
         warmLow: '#F8BD7F',
         warmMid: '#E9724C',
@@ -55,7 +73,25 @@ const lightTheme = createTheme({
         default: '#45484A',
         paper: '#36393B',
       },
-      divider: '#AFAAB9',
+      divider: '#AFAAB9'
+    },
+    typography: {
+      h1: {
+        fontSize: '9.125rem',
+      },
+      h5: {
+        fontSize: '2rem',
+      },
+      h4: {
+        fontSize: '2.25rem',
+      },
+      h3: {
+        fontSize: '3.25rem',
+      },
+      h2: {
+        fontSize: '4rem',
+      },
+      fontFamily: '"Alata","Helvetica" , "Arial", sans-serif',
     },
     eventPalette: {
         warmLow: '#F8BD7F',
@@ -73,6 +109,7 @@ const lightTheme = createTheme({
   export { darkTheme, lightTheme };
 
   declare module '@material-ui/core/styles' {
+
     interface Theme {
     eventPalette?: {
         warmLow: string,

@@ -5,7 +5,7 @@ import { ThemeContext } from "styled-components";
 import { IEvent as Event} from "../../interfaces/IEvent";
 
 const Block = styled.div`
-    background-color: ${props => props.theme.app.backgroundVariant};
+    background-color: ${props => props.theme.palette.background.paper};
     height: 99%;
     width: 280px;
     display: flex;
@@ -55,7 +55,7 @@ const Column = styled.div`
 
 const LeftColumn = styled(Column)`
     width: 24%;
-    border-right: 1px solid ${props => props.theme.app.background};
+    border-right: 1px solid ${props => props.theme.palette.divider};
 `;
 
 const RightColumn = styled(Column)`
@@ -64,7 +64,7 @@ const RightColumn = styled(Column)`
 
 const FirstRow = styled(Row)`
     height: 38%;
-    border-bottom: 1px solid ${props => props.theme.app.background};
+    border-bottom: 1px solid ${props => props.theme.palette.divider};
 `;
 
 const SecondRow = styled(Row)`
@@ -117,10 +117,10 @@ const Description = styled.div`
     padding: 0px;
     width: 100%;
     height: 100%;
-    color: ${props => props.theme.app.text};
+    color: ${props => props.theme.palette.text.secondary};
     font-weight: 400;
     font-family: "Alata", sans-serif;
-    background-color: ${props => props.theme.app.background};
+    background-color: ${props => props.theme.palette.background.paper};
     overflow: clip;
 `;
 
@@ -148,7 +148,7 @@ const EventBlock: FC<EventBlockProps> = (props) => {
             <Content>
                 <FirstRow>
                     <LeftColumn>
-                        <EventIcon icon={props.event.icon} color={theme.pallette[color]}/>
+                        <EventIcon icon={props.event.icon.name} color={theme.pallette[color]}/>
                     </LeftColumn>
                     <RightColumn>
                         <Title color={theme.pallette[color]}>

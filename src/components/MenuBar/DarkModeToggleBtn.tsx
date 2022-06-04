@@ -6,7 +6,7 @@ import useDarkMode from "use-dark-mode";
 const ModeToggler = styled.button`
     background-color: transparent;
     border: none;
-    color: ${props => props.theme.app.foreground};
+    color: ${props => props.theme.palette.text.secondary};
     cursor: pointer;
     font-size: 1.5rem;
     font-weight: bold;
@@ -15,7 +15,7 @@ const ModeToggler = styled.button`
     outline: none;
     transition: all 0.2s ease-in-out;
     &:hover {
-        color: ${props => props.theme.app.foregroundVariant};
+        color: ${props => props.theme.palette.text.hint};
     }
 `;
 

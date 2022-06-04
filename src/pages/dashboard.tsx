@@ -1,9 +1,14 @@
 import type { NextPage } from 'next'
+import styled from 'styled-components';
+
+const Sh1 = styled.h1`
+  font-size: 1rem;
+`;
 
 const Dashboard: NextPage = () => {
   return (
     <main>
-        <h1>Dashboard</h1>
+        <Sh1> Dashboard</Sh1>
     </main>
   )
 }
