@@ -1,56 +1,55 @@
 import type { NextPage } from 'next'
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import styled from 'styled-components'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import TextInput from '../../components/Forms/controls/TextInput';
-import SubmitButton from '../../components/Forms/SubmitButton';
-import CheckBoxInput from '../../components/Forms/controls/CheckBoxInput';
-import DateInput from '../../components/Forms/controls/DateInput';
+import {Form, useMethods, TextInput, CheckBoxInput, DateRangeInput, SubmitButton} from '../../components/Form'
+// import TextInput from '../../components/Forms/controls/TextInput';
+// import SubmitButton from '../../components/Forms/SubmitButton';
+// import CheckBoxInput from '../../components/Forms/controls/CheckBoxInput';
+// import DateInput from '../../components/Forms/controls/DateInput';
 
 const schema = yup.object().shape({
-    name: yup.string().required().min(5),
-    // slug: yup.string().required(),
-    // color: yup.string().required(),
-    shifts: yup.boolean().required(),
-    // description: yup.string().required(),
-    startDate: yup.string().required(),
-    // endDate: yup.string().required(),
-    // location: yup.string().required(),
+    name: yup.string().label('Name').required().min(5),
+    slug: yup.string().required(),
+    color: yup.string().required(),
+    shifts: yup.boolean(),
+    description: yup.string().required(),
+    startDate: yup.string().label('Start date').nullable().required(),
+    endDate: yup.string().label('End date').nullable().required(),
+    location: yup.string().required(),
 });
 
-interface IFormEvent {
+type IFormEvent = {
     name: string
     shifts: boolean
     startDate: Date
+    endDate: Date
+    location: string
+    description: string
+    slug: string
+    color: string
 }
 
 const CreateEventPage = styled.div``;
 
 const Event: NextPage = () => {
-    const methods = useForm<IFormEvent>({
-        resolver: yupResolver(schema),
-    });
+    const methods = useMethods(schema);
 
     const onSubmit = (data : IFormEvent) => {
     }
 
-    // console.log(methods.watch('name'));
-
     return (
         <main>
             <CreateEventPage>
-                <FormProvider {...methods}>
-                    <form onSubmit={methods.handleSubmit(onSubmit)}>
-                        <TextInput name='name' label='test'/>
-                        <br/>
-                        <CheckBoxInput name='shifts' label='shifts'/>
-                        <br/>
-                        <DateInput name='startDate' label='startDate'/>
-                        <br/>
-                        <SubmitButton/>
-                    </form>
-                </FormProvider>
+                <Form methods={methods} onSubmit={onSubmit}>
+                    <TextInput name='name' label='Event name'/>
+                    <TextInput name='slug' label='Slug?'/>
+                    
+                    <CheckBoxInput name='shifts' label='Shifts'/>
+                    <DateRangeInput startName='startDate' endName='endDate' label='Event Time: '/>
+                    <SubmitButton/>
+                </Form>
             </CreateEventPage>
         </main>
     )

@@ -12,6 +12,7 @@ const darkTheme = createTheme({
       main: '#F8BD7F',
     },
     text: {
+      primary: '#fff',
       secondary: '#E5E5E5',
       hint: '#CBC7D1',
       disabled: '#807f84',
@@ -41,15 +42,18 @@ const darkTheme = createTheme({
     fontFamily: '"Alata","Helvetica" , "Arial", sans-serif',
   },
     eventPalette: {
-        warmLow: '#F8BD7F',
-        warmMid: '#E9724C',
-        warmHigh: '#BB4430',
-        neonCyan: '#88D9E6',
-        neonPink: '#FF34AE',
-        neonLime: '#B5EF8A',
-        nightDirt: '#8B635C',
-        nightTree: '#526760',
-        nightSky: '#336699'
+      warmLow: '#F8BD7F',
+      warmMid: '#E9724C',
+      warmHigh: '#BB4430',
+      themeLight: '#a5f3d8',
+      themeMid: '#1DD694',
+      themeDark: '#16a271',
+      neonCyan: '#88D9E6',
+      neonPink: '#FF34AE',
+      neonLime: '#B5EF8A',
+      nightDirt: '#8B635C',
+      nightTree: '#526760',
+      nightSky: '#336699'
   }
 })
 
@@ -97,6 +101,9 @@ const lightTheme = createTheme({
         warmLow: '#F8BD7F',
         warmMid: '#E9724C',
         warmHigh: '#BB4430',
+        themeLight: '#a5f3d8',
+        themeMid: '#1DD694',
+        themeDark: '#16a271',
         neonCyan: '#88D9E6',
         neonPink: '#FF34AE',
         neonLime: '#B5EF8A',
@@ -115,12 +122,15 @@ const lightTheme = createTheme({
         warmLow: string,
         warmMid: string,
         warmHigh: string,
+        themeLight: string,
+        themeMid: string,
+        themeDark: string
         neonCyan: string,
         neonPink: string,
         neonLime: string,
         nightDirt: string,
         nightTree: string,
-        nightSky: string
+        nightSky: string,
     };
     }
     interface ThemeOptions {
@@ -128,6 +138,9 @@ const lightTheme = createTheme({
         warmLow: string,
         warmMid: string,
         warmHigh: string,
+        themeLight: string,
+        themeMid: string,
+        themeDark: string
         neonCyan: string,
         neonPink: string,
         neonLime: string,

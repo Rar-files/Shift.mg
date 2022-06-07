@@ -1,9 +1,13 @@
-import React, {useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "../app";
-import {AuthStatus} from "../features/authSlice";
-import {loadUserData} from "../features/userSlice";
+import {FC, useEffect} from "react";
+import {useAppDispatch, useAppSelector} from "..";
+import {AuthStatus} from "../../features/authSlice";
+import {loadUserData} from "../../features/userSlice";
 
-const UserProvider = () => {
+type Props = {
+    children?: React.ReactNode;
+};
+
+const UserProvider : FC<Props> = ({ children }) => {
     const authState = useAppSelector(state => state.auth);
     const dispatch = useAppDispatch();
 
@@ -17,6 +21,7 @@ const UserProvider = () => {
 
     return (
         <>
+            {children}
         </>
     );
 };

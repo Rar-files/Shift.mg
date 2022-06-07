@@ -11,6 +11,9 @@ const HrefIcon = styled(Icon)`
     width: 34px;
     color: ${props => props.theme.palette.divider};
     cursor: pointer;
+    &:hover {
+        color: ${props => props.theme.palette.text.hint};
+    }
 `;
 
 type Props = {

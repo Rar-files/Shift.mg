@@ -2,8 +2,9 @@ import { FC } from "react";
 import { useFormContext, Controller, FieldValue, Control } from "react-hook-form";
 import styled from "styled-components";
 import {TextField} from "@material-ui/core";
+import InputContainer from "./InputContainer";
 
-const TXTInput = styled(TextField)``;
+const TxtInput = styled(TextField)``;
 
 type Props = {
     name: string;
@@ -22,15 +23,17 @@ const TextInput: FC<Props> = ({name, label}) => {
             control={control}
             defaultValue=""
             render={({ field: { ref, ...field } }) => (
-                <TXTInput 
-                    {...field}
-                    label={label}
-                    id={name}
-                    autoComplete={name}
-                    fullWidth
-                    error={!!errors.name}
-                    helperText={errors.name?.message}
-                />
+                <InputContainer>
+                    <TxtInput 
+                        {...field}
+                        label={label}
+                        id={name}
+                        autoComplete={name}
+                        fullWidth
+                        error={!!errors[name]}
+                        helperText={errors[name]?.message}
+                    />
+                </InputContainer>
             )}
         />
     );

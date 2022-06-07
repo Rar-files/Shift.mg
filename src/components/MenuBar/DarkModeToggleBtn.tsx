@@ -6,7 +6,7 @@ import useDarkMode from "use-dark-mode";
 const ModeToggler = styled.button`
     background-color: transparent;
     border: none;
-    color: ${props => props.theme.palette.text.secondary};
+    color: ${props => props.theme.palette.divider};
     cursor: pointer;
     font-size: 1.5rem;
     font-weight: bold;
