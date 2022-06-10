@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
-import Button from "@material-ui/core/button";
+import Button from "@material-ui/core/Button";
 import Arrow from '@material-ui/icons/ArrowRight';
 import InputContainer from "./InputContainer";
 

@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../app'
 import EventsList from '../../components/Events/EventsList'
 import Loading from '../../components/Loading'
 import {loadEventsForUser} from '../../features/event/eventSlice'
-import Button from "@material-ui/core/button";
+import Button from "@material-ui/core/Button";
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import router from 'next/router'
 
