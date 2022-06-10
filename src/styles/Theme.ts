@@ -41,19 +41,19 @@ const darkTheme = createTheme({
     },
     fontFamily: '"Alata","Helvetica" , "Arial", sans-serif',
   },
-    eventPalette: {
-      warmLow: '#F8BD7F',
-      warmMid: '#E9724C',
-      warmHigh: '#BB4430',
-      themeLight: '#a5f3d8',
-      themeMid: '#1DD694',
-      themeDark: '#16a271',
-      neonCyan: '#88D9E6',
-      neonPink: '#FF34AE',
-      neonLime: '#B5EF8A',
-      nightDirt: '#8B635C',
-      nightTree: '#526760',
-      nightSky: '#336699'
+  eventPalette: {
+    warmLow: '#F8BD7F',
+    warmMid: '#E9724C',
+    warmHigh: '#BB4430',
+    themeLight: '#a5f3d8',
+    themeMid: '#1DD694',
+    themeDark: '#16a271',
+    neonCyan: '#88D9E6',
+    neonPink: '#FF34AE',
+    neonLime: '#B5EF8A',
+    nightDirt: '#8B635C',
+    nightTree: '#526760',
+    nightSky: '#336699'
   }
 })
 

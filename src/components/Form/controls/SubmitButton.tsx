@@ -4,7 +4,10 @@ import Button from "@material-ui/core/button";
 import Arrow from '@material-ui/icons/ArrowRight';
 import InputContainer from "./InputContainer";
 
-const SButton = styled(Button)``;
+const ButtonInputDiv = styled(InputContainer)`
+    margin: 1.4rem 0 0 0;
+    justify-content: center;
+`;
 
 type Props = {
 
@@ -14,12 +17,12 @@ type Props = {
 const SubmitButton: FC<Props> = ({label}) => {
 
     return (
-        <InputContainer>
-            <SButton type="submit" variant="contained" color="primary" size="medium" aria-label="submit">
+        <ButtonInputDiv>
+            <Button type="submit" variant="contained" color="primary" size="medium" aria-label="submit">
                 {label ? label : "Submit"}
                 <Arrow fontSize="small" />
-            </SButton>
-        </InputContainer>
+            </Button>
+        </ButtonInputDiv>
     );
 };
 

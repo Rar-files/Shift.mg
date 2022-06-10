@@ -9,9 +9,10 @@ const TxtInput = styled(TextField)``;
 type Props = {
     name: string;
     label: string;
+    multiline?: boolean;
 }
 
-const TextInput: FC<Props> = ({name, label}) => {
+const TextInput: FC<Props> = (props) => {
     const { 
         control,
         formState: {errors}
@@ -19,20 +20,34 @@ const TextInput: FC<Props> = ({name, label}) => {
 
     return (
         <Controller
-            name={name}
+            name={props.name}
             control={control}
             defaultValue=""
             render={({ field: { ref, ...field } }) => (
                 <InputContainer>
-                    <TxtInput 
-                        {...field}
-                        label={label}
-                        id={name}
-                        autoComplete={name}
-                        fullWidth
-                        error={!!errors[name]}
-                        helperText={errors[name]?.message}
-                    />
+                    {props.multiline
+                        ? <TxtInput 
+                            {...field}
+                            label={props.label}
+                            id={props.name}
+                            autoComplete={props.name}
+                            fullWidth
+                            multiline
+                            variant="filled"
+                            rows={4}
+                            error={!!errors[props.name]}
+                            helperText={errors[props.name]?.message}
+                        />
+                        : <TxtInput 
+                            {...field}
+                            label={props.label}
+                            id={props.name}
+                            autoComplete={props.name}
+                            fullWidth
+                            error={!!errors[props.name]}
+                            helperText={errors[props.name]?.message}
+                        />
+                    }
                 </InputContainer>
             )}
         />

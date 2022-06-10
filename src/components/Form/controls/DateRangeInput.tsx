@@ -20,7 +20,7 @@ const DateRangeInput: FC<Props> = ({startName, endName, label}) => {
     return (
         <DateRangeContainer>
             <DateInput name={startName} label={label} placeholder='Start'/>
-            <DateInput name={endName} label='to ' placeholder='End'/>
+            <DateInput name={endName} label='to: ' placeholder='End'/>
         </DateRangeContainer>
     );
 };

@@ -18,7 +18,7 @@ const AppThemeProvider : FC<Props> = ({ children }) => {
         <MuiThemeProvider theme={theme}>
             <SCThemeProvider theme={theme}>
                 <Reset/>
-                {children}
+                    {children}
             </SCThemeProvider>
         </MuiThemeProvider>
     );

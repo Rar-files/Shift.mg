@@ -11,6 +11,14 @@ const DateLabel = styled.div`
     color: ${props => props.theme.palette.text.primary};
 `;
 
+const DateInputDiv = styled(InputContainer)`
+    margin-right: 0.6rem;
+`;
+
+const DataPicker = styled(KeyboardDatePicker)`
+    width: 60%;
+`;
+
 type Props = {
     name: string;
     label: string;
@@ -30,13 +38,13 @@ const DateInput: FC<Props> = ({name, label, placeholder}) => {
                 control={control}
                 defaultValue=""
                 render={({ field: { ref, ...field } }) => (
-                    <InputContainer>
+                    <DateInputDiv>
                         <FormLabel>
                             <DateLabel>
                                 {label}
                             </DateLabel>
                         </FormLabel>
-                        <KeyboardDatePicker
+                        <DataPicker
                             {...field}
                             disableToolbar={true}
                             placeholder={placeholder ? placeholder : "dd/mm/yyyy"}
@@ -45,7 +53,7 @@ const DateInput: FC<Props> = ({name, label, placeholder}) => {
                             error={!!errors[name]}
                             helperText={errors[name]?.message}
                         />
-                    </InputContainer>
+                    </DateInputDiv>
                 )}
             />
         </MuiPickersUtilsProvider>

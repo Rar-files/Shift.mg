@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const InputContainer = styled.div`
-    margin: 0 0 0.2rem 0.6rem;
+    margin: 0.4rem 0 0.4rem 0;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
