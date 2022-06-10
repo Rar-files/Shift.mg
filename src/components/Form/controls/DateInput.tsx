@@ -23,9 +23,10 @@ type Props = {
     name: string;
     label: string;
     placeholder?: string;
+    date?: Date;
 }
 
-const DateInput: FC<Props> = ({name, label, placeholder}) => {
+const DateInput: FC<Props> = ({name, label, placeholder, date}) => {
     const { 
         control,
         formState: {errors}
@@ -48,7 +49,7 @@ const DateInput: FC<Props> = ({name, label, placeholder}) => {
                             {...field}
                             disableToolbar={true}
                             placeholder={placeholder ? placeholder : "dd/mm/yyyy"}
-                            minDate={new Date()}
+                            minDate={date ? date : new Date()}
                             format="DD/MM/yyyy"
                             error={!!errors[name]}
                             helperText={errors[name]?.message}
