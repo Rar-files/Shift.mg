@@ -6,6 +6,8 @@ import { FormLabel, Dialog, DialogTitle, DialogContent} from "@material-ui/core"
 import { loadIcons } from "../../../features/event/iconSlice";
 import InputContainer from "./InputContainer";
 import { ThemeContext } from "styled-components";
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import router from "next/router";
 
 const IconInputWithErrorDiv = styled(InputContainer)`
     display: flex;
@@ -128,6 +130,7 @@ const IconPickerInput: FC<Props> = ({ name, label }) => {
                                             setShowPicker(false);
                                         }}/>
                                     ))}
+                                    <Icon color={theme.palette.primary} src={"https://i.imgur.com/xOSbQsS.png"} onClick={() => router.push("/events/iconCreate")}/>
                                  </Picker>
                             </DialogContent>
                         </Dialog>}

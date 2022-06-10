@@ -6,14 +6,14 @@ import IPaginableResponse from "../../app/services/IPaginableResponse";
 
 interface EventState {
     loaded: boolean;
-    data: IPaginableResponse<Event>;
+    data: Event[];
 }
 
 const eventSlice = createSlice({
     name: 'events',
     initialState: {loaded: false} as EventState,
     reducers: {
-        setEventsData(state, action: PayloadAction<IPaginableResponse<Event>>) {
+        setEventsData(state, action: PayloadAction<Event[]>) {
             state.loaded = true;
             state.data = action.payload;
         }

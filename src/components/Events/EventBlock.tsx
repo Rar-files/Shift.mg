@@ -1,8 +1,10 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import { ThemeContext } from "styled-components";
 import { IEvent as Event} from "../../interfaces/IEvent";
+import { useAppDispatch, useAppSelector } from "../../app";
+import { loadIcons } from "../../features/event/iconSlice";
 
 const Block = styled.div`
     background-color: ${props => props.theme.palette.background.paper};
@@ -35,6 +37,7 @@ const Content = styled.div`
     align-items: center;
     padding: 10px 0px;
     margin: 0px;
+    font-family: ${props => props.theme.typography.fontFamily};
 `;
 
 const Row = styled.div`
@@ -71,12 +74,14 @@ const SecondRow = styled(Row)`
     height: 62%;
 `;
 
-const EventIcon = styled(Icon)<{
+const EventIcon = styled.img<{
     color: string;
 }>`
     height: auto;
     width: 64%;
     color: ${props => props.color};
+    cursor: pointer;
+    filter: opacity(0.5) drop-shadow(0em 0 3px ${props => props.color});
 `;
 
 const Title = styled.h1<{
@@ -87,8 +92,6 @@ const Title = styled.h1<{
     padding: 0px;
     width: 100%;
     color: ${props => props.color};
-    font-weight: 700;
-    font-family: "Alata", sans-serif;
 `;
 
 const Date = styled.div<{
@@ -99,27 +102,23 @@ const Date = styled.div<{
     width: 100%;
     height: 100%;
     color: ${props => props.color};
-    font-weight: 400;
-    font-family: "Alata", sans-serif;
     text-align: center;
 `;
 
 const Day = styled.div`
-    font-size: ${props => props.theme.fontSizes[6]};
+    font-size: ${props => props.theme.typography.h5};
 `;
 
 const RestOfDate = styled.div`
-    font-size: ${props => props.theme.fontSizes[0]};
+    font-size: ${props => props.theme.typography.h6};
 `;
 
 const Description = styled.div`
-    margin: 0px;
+    margin: 0.2rem 0.4rem;
     padding: 0px;
     width: 100%;
     height: 100%;
     color: ${props => props.theme.palette.text.secondary};
-    font-weight: 400;
-    font-family: "Alata", sans-serif;
     background-color: ${props => props.theme.palette.background.paper};
     overflow: clip;
 `;
@@ -129,42 +128,49 @@ type EventBlockProps = {
 };
 
 const EventBlock: FC<EventBlockProps> = (props) => {
+    const dispatch = useAppDispatch();
+    const iconState = useAppSelector(state => state.eventIcon)
 
-    const theme = useContext(ThemeContext);
-
-    // console.log(props.event);
-
-    // const color : string = props.event.color;
+    console.log(iconState)
+    console.log(props.event);
 
     const color : string = "red"
 
     const date = props.event.startDate;
 
+    useEffect(() => {
+        if (iconState.data === undefined) {
+            return;
+        }
+  
+        dispatch(loadIcons())
+    }, [dispatch, iconState.data])
+
     return (
         <Block>
-            <Bar color={theme.pallette[color]}>
+            <Bar color={color}>
 
             </Bar>
             <Content>
                 <FirstRow>
                     <LeftColumn>
-                        <EventIcon icon={props.event.icon.name} color={theme.pallette[color]}/>
+                        {/* <EventIcon src={props.event.icon.iconObject.contentUrl} color={color}/> */}
                     </LeftColumn>
                     <RightColumn>
-                        <Title color={theme.pallette[color]}>
+                        <Title color={color}>
                             {props.event.name}
                         </Title>
                     </RightColumn>
                 </FirstRow>
                 <SecondRow>
                     <LeftColumn>
-                        <Date color={theme.pallette[color]}>
-                            {/*<Day>*/}
-                            {/*    {date.getDay()}*/}
-                            {/*</Day>*/}
-                            {/*<RestOfDate>*/}
-                            {/*    {date.getMonth()}.{date.getFullYear()}*/}
-                            {/*</RestOfDate>*/}
+                        <Date color={color}>
+                            <Day>
+                                {date.getDay}
+                            </Day>
+                            <RestOfDate>
+                                {date.getMonth}.{date.getFullYear}
+                            </RestOfDate>
                         </Date>
                     </LeftColumn>
                     <RightColumn>

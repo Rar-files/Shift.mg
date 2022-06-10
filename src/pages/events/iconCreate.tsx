@@ -1,17 +1,12 @@
-import { Moment } from 'moment';
 import type { NextPage } from 'next'
 import router from 'next/router';
 import styled from 'styled-components'
 import * as yup from 'yup';
-import { useAppSelector } from '../../app';
-import { CreateEvent } from '../../app/services/event/EventService';
 import { CreateIcon } from '../../app/services/event/IconService';
 import { CreateMediaObject } from '../../app/services/MediaObjectService';
-import {Form, useMethods, TextInput, CheckBoxInput, DateRangeInput, SubmitButton, ColorPickerInput, IconPickerInput} from '../../components/Form'
+import {Form, useMethods, TextInput, SubmitButton } from '../../components/Form'
 import FileInput from '../../components/Form/controls/FileInput';
-import { IEvent } from '../../interfaces/IEvent';
 import { IIcon } from '../../interfaces/IIcon';
-import { IMediaObject } from '../../interfaces/IMediaObject';
 
 const schema = yup.object().shape({
     name: yup.string().label('Name').required().min(5),
@@ -39,7 +34,7 @@ const IconCreate: NextPage = () => {
                 name: data.name,
                 iconObject: response.data
             }
-            CreateIcon(eventIcon).then(() => router.push("/events"))
+            CreateIcon(eventIcon).then(() => router.push("/events/create"))
         }
         )
     }

@@ -10,7 +10,7 @@ import { CreateIcon } from "./IconService";
 //Get
 interface GetEventsPromise {
     succeeded: boolean;
-    data: IPaginableResponse<Event>;
+    data: Event[];
 }
 
 export async function getUserEvents(userId: string): Promise<GetEventsPromise> {
@@ -18,7 +18,7 @@ export async function getUserEvents(userId: string): Promise<GetEventsPromise> {
 
     await getApiClient().request(
         'GET',
-        `/user/${userId}/events`,
+        `/events`,
         {},
         undefined,
         {
