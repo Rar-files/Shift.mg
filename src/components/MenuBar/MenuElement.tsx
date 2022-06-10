@@ -9,8 +9,11 @@ const Content = styled.div`
 const HrefIcon = styled(Icon)`
     height: 34px;
     width: 34px;
-    color: ${props => props.theme.app.foregroundVariant};
+    color: ${props => props.theme.palette.divider};
     cursor: pointer;
+    &:hover {
+        color: ${props => props.theme.palette.text.hint};
+    }
 `;
 
 type Props = {

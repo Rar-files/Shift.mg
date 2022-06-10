@@ -1,5 +1,5 @@
 export interface INotify {
-    id: number;
+    id: string;
     user: string;
     type: string;
     subject: string;

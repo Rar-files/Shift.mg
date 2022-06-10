@@ -17,7 +17,7 @@ const Links = styled.div`
     width: 100%;
     height: 100%;
     padding: 10px 0;
-    border-color: ${props => props.theme.app.separator};
+    border-color: ${props => props.theme.palette.divider};
     border-style: solid;
     border-width: 1px 0;
     display: flex;

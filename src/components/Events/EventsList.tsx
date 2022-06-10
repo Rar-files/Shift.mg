@@ -2,7 +2,7 @@ import { FC } from "react";
 import styled from "styled-components";
 import {FixedSizeList} from "react-window";
 import EventListElement from "./EventListElement";
-// import EventBlock from "./EventBlock";
+import EventBlock from "./EventBlock";
 import { IEvent as Event } from "../../interfaces/IEvent";
 import IPaginableResponse from "../../app/services/IPaginableResponse";
 
@@ -14,17 +14,20 @@ const List = styled(FixedSizeList)`
 `;
 
 type EventListProps = {
-    events: IPaginableResponse<Event>;
+    events: Event[];
 };
 
 const EventsList: FC<EventListProps> = (props) => {
+
+    console.log(props.events);
+
     return (
         <>
-            <h1>
-                Null
-            </h1>
-            {props.events.items.length > 0 && props.events.items.map((element) => (
-                <EventBlock event={element}/>
+            { props.events.length > 0 && props.events.map((element) => (
+                // eslint-disable-next-line react/jsx-key
+                <>
+                    {element && <EventBlock event={element}/>}
+                </>
             ))}
         </>
     )

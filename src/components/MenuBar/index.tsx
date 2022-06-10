@@ -10,7 +10,7 @@ import UserPanel from "./UserPanel";
 import logoIcon from "./Icon.png"
 
 const Content = styled.div`
-    background-color: ${props => props.theme.app.backgroundVariant};
+    background-color: ${props => props.theme.palette.background.paper};
     padding: 10px;
     height: 99%;
     min-width: 50px;

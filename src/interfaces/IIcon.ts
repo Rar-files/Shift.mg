@@ -1,8 +1,7 @@
+import { IMediaObject } from "./IMediaObject";
+
 export interface IIcon {
-    id: number;
+    id: string;
     name: string;
-    iconObject: {
-        id: string;
-        contentUrl: string;
-    }
+    iconObject: IMediaObject;
 }

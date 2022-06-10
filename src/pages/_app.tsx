@@ -6,7 +6,7 @@ import {Provider} from "react-redux";
 import {store} from "../app";
 import Layout from "../components/Layout";
 import Firewall from "../components/Auth/Firewall";
-import UserProvider from "../components/UserProvider";
+import UserProvider from "../app/providers/UserProvider";
 
 const SafeHydrate: FC = ({ children }) => {
     return (
@@ -22,12 +22,13 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
         <SafeHydrate>
         <Provider store={store}>
             <AppThemeProvider>
-                <Firewall protected={pageProps.protected ?? false}>
-                    <UserProvider />
-                    <Layout>
-                        <Component {...pageProps} />
-                    </Layout>
-                </Firewall>
+                <UserProvider>
+                    <Firewall protected={pageProps.protected ?? false}>
+                        <Layout>
+                            <Component {...pageProps} />
+                        </Layout>
+                    </Firewall>
+                </UserProvider>
             </AppThemeProvider>
         </Provider>
         </SafeHydrate>

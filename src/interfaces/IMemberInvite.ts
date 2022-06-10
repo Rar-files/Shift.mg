@@ -1,5 +1,5 @@
 export interface IMemberInvite {
-    id: number;
+    id: string;
     memberInvite: string;
     user: string;
     role: string;

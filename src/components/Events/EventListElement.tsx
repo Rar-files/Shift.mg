@@ -7,7 +7,7 @@ const Element = styled.div`
     display: flex;
     flex-direction: column;
     padding: 16px;
-    border-color: ${props => props.theme.app.separator};
+    border-color: ${props => props.theme.palette.divider};
     border-style: solid;
     border-width: 0 0 1px 0;
 `;

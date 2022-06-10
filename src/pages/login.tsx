@@ -8,7 +8,7 @@ import {AuthStatus} from "../features/authSlice";
 import {useRouter} from "next/router";
 
 const Background = styled.div`
-    background-color: ${props => props.theme.app.background};
+    background-color: ${props => props.theme.palette.background.default};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,7 +19,7 @@ const Background = styled.div`
 `;
 
 const Content = styled.div`
-    background-color: ${props => props.theme.app.backgroundVariant};
+    background-color: ${props => props.theme.palette.background.paper};
     display: flex;
     flex-direction: column;
     justify-content: center;

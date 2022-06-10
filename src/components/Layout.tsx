@@ -8,7 +8,7 @@ import {useAppDispatch, useAppSelector} from "../app";
 
 const Page = styled.section`
   position: fixed;
-  background-color: ${props => props.theme.app.background};
+  background-color: ${props => props.theme.palette.background.default};
   height: 100%;
   min-width: 100%;
   display: flex;
@@ -21,6 +21,7 @@ const Content = styled.div`
   align-items: center;
   width: 100%;
   min-height: 100vh;
+  font-family: &{props => props.theme.typography.fontFamily};
 `;
 
 const Layout : FC = ({children}) => {

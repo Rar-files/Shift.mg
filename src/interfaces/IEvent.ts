@@ -1,12 +1,14 @@
+import { IIcon } from "./IIcon";
+
 export interface IEvent {
-    id: number;
+    id: string;
     name: string;
     slug: string;
     owner: string;
     startDate: Date;
     endDate: Date;
     location: string;
-    icon: string;
+    icon: IIcon;
     color: string;
     shiftsEnabled: boolean;
     description: string;

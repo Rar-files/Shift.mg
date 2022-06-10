@@ -1,8 +1,9 @@
 import getApiClient, {IViolation} from "./ApiClient";
 
 import {setMediaObjectData} from "../../features/mediaObjectSlice";
-import {IMediaObject as MediaObject} from "../../interfaces/IMediaObject";
+import {IMediaObject, IMediaObject as MediaObject} from "../../interfaces/IMediaObject";
 import {store} from "../";
+import { MediaObjectDto } from "../../Dtos/MediaObjectDto";
 
 
 //Get{Id}
@@ -39,28 +40,31 @@ export async function getMediaObject(id: string): Promise<GetMediaObjectPromise>
 //Create
 interface CreateMediaObjectPromise {
     succeeded: boolean;
+    data: MediaObject;
     violations: IViolation[];
 }
 
-export async function CreateMediaObject(mediaObject: MediaObject): Promise<CreateMediaObjectPromise> {
+export async function CreateMediaObject(mediaObjectDto: MediaObjectDto): Promise<CreateMediaObjectPromise> {
     let mediaObjectCreatePromise = {} as CreateMediaObjectPromise;
 
     await getApiClient().request(
         'POST',
-        `/media_objects/`,
-        mediaObject,
+        `/media_objects`,
+        mediaObjectDto,
         undefined,
         {
             Accept: 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'multipart/form-data'
         }
     )
         .then((response) => {
             mediaObjectCreatePromise.succeeded = true;
+            mediaObjectCreatePromise.data = response.data;
             store.dispatch(setMediaObjectData(response.data));
         })
         .catch((error) => {
             mediaObjectCreatePromise.succeeded = false;
+            console.log(error);
             mediaObjectCreatePromise.violations = getApiClient().parseViolations(error.response.data);
         })
     ;

@@ -12,8 +12,8 @@ type Props = {
 const GoogleBtn = styled.button`
     border-radius: 5px;
     border: none;
-    background-color: ${props => props.theme.static.primary};
-    color: ${props => props.theme.app.background};
+    background-color: ${props => props.theme.palette.primary};
+    color: ${props => props.theme.palette.background.default};
     padding: 10px;
     text-align: center;
     text-decoration: none;
