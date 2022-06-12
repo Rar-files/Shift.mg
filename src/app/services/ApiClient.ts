@@ -8,6 +8,17 @@ export interface RequestConfig {
     noAuth?: boolean;
 }
 
+export interface IListMetadata {
+    total: number;
+    pages: number;
+    itemsPerPage: number;
+}
+
+export interface IListResponse<T> {
+    items: T[];
+    metadata: IListMetadata;
+}
+
 export interface IViolation {
     code: string;
     message: string;

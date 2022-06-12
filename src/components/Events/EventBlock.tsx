@@ -131,9 +131,6 @@ const EventBlock: FC<EventBlockProps> = (props) => {
     const dispatch = useAppDispatch();
     const iconState = useAppSelector(state => state.eventIcon)
 
-    console.log(iconState)
-    console.log(props.event);
-
     const color : string = "red"
 
     const date = props.event.startDate;
@@ -142,7 +139,7 @@ const EventBlock: FC<EventBlockProps> = (props) => {
         if (iconState.data === undefined) {
             return;
         }
-  
+
         dispatch(loadIcons())
     }, [dispatch, iconState.data])
 

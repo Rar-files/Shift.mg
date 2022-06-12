@@ -3,17 +3,18 @@ import { TAppState, TDispatch } from "../../app";
 import { EventService } from "../../app/services";
 import {IEvent as Event, IEvent} from "../../interfaces/IEvent";
 import IPaginableResponse from "../../app/services/IPaginableResponse";
+import {IListResponse} from "../../app/services/ApiClient";
 
 interface EventState {
     loaded: boolean;
-    data: Event[];
+    data: IListResponse<Event>;
 }
 
 const eventSlice = createSlice({
     name: 'events',
     initialState: {loaded: false} as EventState,
     reducers: {
-        setEventsData(state, action: PayloadAction<Event[]>) {
+        setEventsData(state, action: PayloadAction<IListResponse<Event>>) {
             state.loaded = true;
             state.data = action.payload;
         }

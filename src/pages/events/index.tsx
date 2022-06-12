@@ -7,6 +7,7 @@ import Loading from '../../components/Loading'
 import {loadEventsForUser} from '../../features/event/eventSlice'
 import Button from "@material-ui/core/Button";
 import AddBoxIcon from '@material-ui/icons/AddBox';
+import SearchIcon from '@material-ui/icons/Search'
 import router from 'next/router'
 
 const EventsPage = styled.div`
@@ -20,10 +21,15 @@ const CreateButtonDiv = styled.div`
     justify-content: flex-start;
     align-items: flex-end;
     height: 40px;
+    gap: 10px;
 `;
 
 const CreateButton = styled(Button)`
 `;
+
+const SearchButton = styled(Button)`
+`;
+
 
 const Events: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -46,10 +52,14 @@ const Events: NextPage = () => {
                 <CreateButtonDiv>
                     <CreateButton variant="contained" color="primary" size="small" aria-label="Create" onClick={() => router.push("/events/create")}>
                         <AddBoxIcon fontSize="small" />
-                        {"Create"}
+                        Create
                     </CreateButton>
+                    <SearchButton variant="contained" color="primary" size="small" aria-label="Create" onClick={() => router.push("/events/search")}>
+                        <SearchIcon fontSize="small" />
+                        Search
+                    </SearchButton>
                 </CreateButtonDiv>
-                <EventsList events={eventState.data} />
+                <EventsList events={eventState.data.items} />
             </>
             : <Loading/>
             }

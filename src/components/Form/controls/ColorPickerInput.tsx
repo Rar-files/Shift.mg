@@ -33,13 +33,13 @@ const ColorTrigger = styled.div<{
     margin: 2px;
     padding: 10px;
     width: 2rem;
-    height: 0.4rem;
+    height: 1em;
     background: ${props => props.color};
     border-radius: 10%;
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     font-size: ${props => props.theme.typography.caption.fontSize};
 `;
@@ -63,7 +63,7 @@ type Props = {
 }
 
 const ColorPickerInput: FC<Props> = ({ name, label }) => {
-    const { 
+    const {
         control,
         formState: {errors}
     } = useFormContext();
@@ -75,7 +75,7 @@ const ColorPickerInput: FC<Props> = ({ name, label }) => {
             name={name}
             control={control}
             defaultValue=""
-            render={({ field: { ref, ...field } }) => (
+            render={({ field }) => (
                 <ColorInputWithErrorDiv>
                     <ColorInputDiv>
                         <FormLabel>
@@ -96,14 +96,14 @@ const ColorPickerInput: FC<Props> = ({ name, label }) => {
                                 <ColorPicker onChange={(change) => field.onChange(change)} />
                             </DialogContent>
                             <DialogActions>
-                                <SaveButton onClick={() => setShowPicker(false)} color="primary">save</SaveButton>  
+                                <SaveButton onClick={() => setShowPicker(false)} color="primary">save</SaveButton>
                             </DialogActions>
                         </Dialog>}
                         <ColorTrigger color={field.value} onClick={() => setShowPicker(!showPicker)}>
                             {!field.value && "Pick"}
                         </ColorTrigger>
                     </ColorInputDiv>
-                    
+
                     <ErrorLabel>
                         {errors[name] && errors[name]?.message}
                     </ErrorLabel>

@@ -10,10 +10,11 @@ type Props = {
     name: string;
     label: string;
     multiline?: boolean;
+    disabled?: boolean;
 }
 
 const TextInput: FC<Props> = (props) => {
-    const { 
+    const {
         control,
         formState: {errors}
     } = useFormContext();
@@ -26,7 +27,7 @@ const TextInput: FC<Props> = (props) => {
             render={({ field: { ref, ...field } }) => (
                 <InputContainer>
                     {props.multiline
-                        ? <TxtInput 
+                        ? <TxtInput
                             {...field}
                             label={props.label}
                             id={props.name}
@@ -34,16 +35,18 @@ const TextInput: FC<Props> = (props) => {
                             fullWidth
                             multiline
                             variant="filled"
-                            rows={4}
+                            minRows={4}
+                            disabled={props.disabled}
                             error={!!errors[props.name]}
                             helperText={errors[props.name]?.message}
                         />
-                        : <TxtInput 
+                        : <TxtInput
                             {...field}
                             label={props.label}
                             id={props.name}
                             autoComplete={props.name}
                             fullWidth
+                            disabled={props.disabled}
                             error={!!errors[props.name]}
                             helperText={errors[props.name]?.message}
                         />
