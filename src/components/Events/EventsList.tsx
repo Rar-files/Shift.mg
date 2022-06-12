@@ -1,10 +1,8 @@
 import { FC } from "react";
 import styled from "styled-components";
 import {FixedSizeList} from "react-window";
-import EventListElement from "./EventListElement";
 import EventBlock from "./EventBlock";
-import { IEvent as Event } from "../../interfaces/IEvent";
-import IPaginableResponse from "../../app/services/IPaginableResponse";
+import {IEvent} from "../../interfaces/IEvent";
 
 const List = styled(FixedSizeList)`
     width: 100%;
@@ -14,20 +12,14 @@ const List = styled(FixedSizeList)`
 `;
 
 type EventListProps = {
-    events: Event[];
+    events: IEvent[];
 };
 
 const EventsList: FC<EventListProps> = (props) => {
-
-    console.log(props.events);
-
     return (
         <>
-            { props.events.length > 0 && props.events.map((element) => (
-                // eslint-disable-next-line react/jsx-key
-                <>
-                    {element && <EventBlock event={element}/>}
-                </>
+            { props.events.length > 0 && props.events.map((element, index) => (
+                <EventBlock key={index} event={element}/>
             ))}
         </>
     )

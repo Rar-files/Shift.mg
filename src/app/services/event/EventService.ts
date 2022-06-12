@@ -1,16 +1,12 @@
-import getApiClient, {IViolation} from "../ApiClient";
+import getApiClient, {IListResponse, IViolation} from "../ApiClient";
 
 import { IEvent as Event, IEvent } from "../../../interfaces/IEvent";
-import {store} from "../..";
-import IPaginableResponse from "../IPaginableResponse";
-import { EventDto, ToEventDto } from "../../../Dtos/EventDto";
-import { CreateIcon } from "./IconService";
+import { ToEventDto } from "../../../Dtos/EventDto";
 
-
-//Get
+//Get for user
 interface GetEventsPromise {
     succeeded: boolean;
-    data: Event[];
+    data: IListResponse<Event>;
 }
 
 export async function getUserEvents(userId: string): Promise<GetEventsPromise> {
@@ -18,7 +14,32 @@ export async function getUserEvents(userId: string): Promise<GetEventsPromise> {
 
     await getApiClient().request(
         'GET',
-        `/events`,
+        `/user/${userId}/events`,
+        {},
+        undefined,
+        {
+            Accept: 'application/json'
+        }
+    )
+        .then((response) => {
+            getEventsPromise.succeeded = true;
+            getEventsPromise.data = response.data;
+        })
+        .catch((error) => {
+            getEventsPromise.succeeded = false;
+        })
+    ;
+
+    return new Promise<GetEventsPromise>(resolve => resolve(getEventsPromise as GetEventsPromise));
+}
+
+//Get search
+export async function getEvents(keyword : string | null = null): Promise<GetEventsPromise> {
+    let getEventsPromise = {succeeded: false} as GetEventsPromise;
+
+    await getApiClient().request(
+        'GET',
+        keyword != null ? `/events?keyword=${keyword}` : '/events',
         {},
         undefined,
         {

@@ -1,5 +1,7 @@
 import { IIcon } from "./IIcon";
 
+export type EventVisibility = 'public' | 'private';
+
 export interface IEvent {
     id: string;
     name: string;
@@ -13,4 +15,5 @@ export interface IEvent {
     shiftsEnabled: boolean;
     description: string;
     shifts: string[];
+    visibility: EventVisibility;
 }

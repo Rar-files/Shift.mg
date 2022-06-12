@@ -61,13 +61,14 @@ const Picker = styled.div`
 const IconTrigger = styled.div`
     margin: 2px;
     padding: 10px;
-    width: 1rem;
+    width: 2rem;
     height: 1rem;
     border-radius: 10%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     font-size: ${props => props.theme.typography.caption.fontSize};
 `;
 
@@ -84,8 +85,8 @@ type Props = {
 const IconPickerInput: FC<Props> = ({ name, label }) => {
     const dispatch = useAppDispatch();
     const iconState = useAppSelector(state => state.eventIcon);
-    
-    const { 
+
+    const {
         control,
         formState: {errors}
     } = useFormContext();
@@ -125,8 +126,8 @@ const IconPickerInput: FC<Props> = ({ name, label }) => {
                                 <Picker>
                                     {iconState.loaded && iconState.data.items.map((element) => (
                                         // eslint-disable-next-line react/jsx-key
-                                        <Icon color={theme.palette.primary} src={element.iconObject.contentUrl} onClick={() => {                                            
-                                            field.onChange(element);                                            
+                                        <Icon color={theme.palette.primary} src={element.iconObject.contentUrl} onClick={() => {
+                                            field.onChange(element);
                                             setShowPicker(false);
                                         }}/>
                                     ))}
@@ -135,13 +136,13 @@ const IconPickerInput: FC<Props> = ({ name, label }) => {
                             </DialogContent>
                         </Dialog>}
                         <IconTrigger onClick={() => setShowPicker(!showPicker)}>
-                            {field.value 
+                            {field.value
                             ? <Icon color={theme.palette.primary} src={field.value.iconObject.contentUrl}/>
                             : "Pick"
                         }
                         </IconTrigger>
                     </IconInputDiv>
-                    
+
                     <ErrorLabel>
                         {errors[name] && errors[name]?.message}
                     </ErrorLabel>

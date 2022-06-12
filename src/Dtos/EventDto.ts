@@ -3,7 +3,6 @@ import { IEvent } from "../interfaces/IEvent";
 export type EventDto = {
     name: string;
     slug: string;
-    owner: string;
     startDate: Date;
     endDate: Date;
     location: string;
@@ -11,13 +10,13 @@ export type EventDto = {
     color: string;
     shiftsEnabled: boolean;
     description: string;
+    visibility: string;
 }
 
 export const ToEventDto = (event: IEvent): EventDto => {
     return {
         name: event.name,
         slug: event.slug,
-        owner: event.owner,
         startDate: event.startDate,
         endDate: event.endDate,
         location: event.location,
@@ -25,5 +24,6 @@ export const ToEventDto = (event: IEvent): EventDto => {
         color: event.color,
         shiftsEnabled: event.shiftsEnabled,
         description: event.description,
+        visibility: event.visibility,
     }
 }
