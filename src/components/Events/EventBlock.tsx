@@ -2,9 +2,10 @@ import { FC, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import { ThemeContext } from "styled-components";
-import { IEvent as Event} from "../../interfaces/IEvent";
+import {IEvent, IEvent as Event} from "../../interfaces/IEvent";
 import { useAppDispatch, useAppSelector } from "../../app";
 import { loadIcons } from "../../features/event/iconSlice";
+import router from "next/router";
 
 const Block = styled.div`
     background-color: ${props => props.theme.palette.background.paper};
@@ -17,6 +18,7 @@ const Block = styled.div`
     border-radius: 14px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     margin: 10px;
+    cursor: pointer;
 `;
 
 const Bar = styled.div<{
@@ -143,8 +145,12 @@ const EventBlock: FC<EventBlockProps> = (props) => {
         dispatch(loadIcons())
     }, [dispatch, iconState.data])
 
+    const goToDetails = () => {
+        router.push(`/events/${props.event.id}`);
+    };
+
     return (
-        <Block>
+        <Block onClick={goToDetails}>
             <Bar color={color}>
 
             </Bar>

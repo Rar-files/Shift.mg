@@ -45,7 +45,7 @@ const CreateEventPage = styled.div`
 `;
 
 const Event: NextPage = () => {
-    const methods = useForm<IFormEvent>({resolver: yupResolver(schema), defaultValues: {icon: null, shifts: false}});
+    const methods = useForm<IFormEvent>({resolver: yupResolver(schema), defaultValues: {icon: null, shifts: false, visibility: "public"}});
     const [formLoading, setFormLoading] = useState<boolean>(false);
 
     const watchEventName = methods.watch('name');

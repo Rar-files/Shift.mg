@@ -1,6 +1,37 @@
 import getApiClient from "./ApiClient";
 import {IUser as User} from "../../interfaces/IUser";
 import {INotify as Notify} from "../../interfaces/INotify";
+import IPaginableResponse from "./IPaginableResponse";
+
+
+//Search users
+interface GetUsersPromise {
+    succeeded: boolean;
+    data: IPaginableResponse<User> | null;
+}
+export async function getUsersByUsername(username : string): Promise<GetUsersPromise> {
+    let getUsersPromise = {succeeded: false} as GetUsersPromise;
+
+    await getApiClient().request(
+        'GET',
+        `/users/search?username=${username}`,
+        {},
+        undefined,
+        {
+            Accept: 'application/json'
+        }
+    )
+        .then((response) => {
+            getUsersPromise.succeeded = true;
+            getUsersPromise.data = response.data;
+        })
+        .catch((error) => {
+            getUsersPromise.succeeded = false;
+        })
+    ;
+
+    return new Promise<GetUsersPromise>(resolve => resolve(getUsersPromise as GetUsersPromise));
+}
 
 
 //Get

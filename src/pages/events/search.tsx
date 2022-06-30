@@ -37,10 +37,10 @@ interface SearchEventState {
 
 
 const SearchEvents: NextPage = () => {
-    const [state, setState] = useState<SearchEventState>({loading: true, keyword: null, list: undefined} as SearchEventState);
+    const [state, setState] = useState<SearchEventState>({loading: true, keyword: null, list: null} as SearchEventState);
 
     useEffect(() => {
-        if (state.list === undefined) {
+        if (state.list === null) {
             getEvents().then((promise) => {
                 setState({...state, loading: false, list: promise.data} as SearchEventState);
             });
@@ -71,7 +71,7 @@ const SearchEvents: NextPage = () => {
                     <Loading/>
                 }
                 {!state.loading &&
-                    <EventsList events={state.list.items} />
+                    <EventsList events={state.list!.items} />
                 }
             </EventsPage>
         </main>

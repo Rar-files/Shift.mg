@@ -14,3 +14,7 @@ export function applyViolationsToForm<Type>(setError: UseFormSetError<Type>, vio
         });
     }
 }
+
+export function emailIsValid (email: string) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}

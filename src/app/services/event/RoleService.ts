@@ -3,20 +3,21 @@ import getApiClient, {IViolation} from "../ApiClient";
 import {setRoleData} from "../../../features/event/roleSlice";
 import {IRole as Role} from "../../../interfaces/IRole";
 import {store} from "../..";
+import IPaginableResponse from "../IPaginableResponse";
 
 
-//Get
+//Get roles for event
 interface GetRolesPromise {
     succeeded: boolean;
-    data: Role[] | null;
+    data: IPaginableResponse<Role> | null;
 }
 
-export async function getRoles(): Promise<GetRolesPromise> {
+export async function getRolesForEvent(eventId: string): Promise<GetRolesPromise> {
     let getRolesPromise = {succeeded: false} as GetRolesPromise;
 
     await getApiClient().request(
         'GET',
-        `/event_roles/`,
+        `/events/${eventId}/roles`,
         {},
         undefined,
         {
