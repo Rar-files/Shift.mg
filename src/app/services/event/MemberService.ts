@@ -1,4 +1,4 @@
-import getApiClient, {IViolation} from "../ApiClient";
+import getApiClient, {IListResponse, IViolation} from "../ApiClient";
 
 import {setMemberData} from "../../../features/event/memberSlice";
 import {IMember as Member} from "../../../interfaces/IMember";
@@ -8,15 +8,15 @@ import {store} from "../..";
 //Get
 interface GetMembersPromise {
     succeeded: boolean;
-    data: Member[] | null;
+    data: IListResponse<Member> | null;
 }
 
-export async function getMembers(): Promise<GetMembersPromise> {
+export async function getMembersForEvent(eventId: string): Promise<GetMembersPromise> {
     let getMembersPromise = {succeeded: false} as GetMembersPromise;
 
     await getApiClient().request(
         'GET',
-        `/event_members/`,
+        `/events/${eventId}/members`,
         {},
         undefined,
         {
