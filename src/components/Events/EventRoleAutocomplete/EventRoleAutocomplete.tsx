@@ -30,7 +30,7 @@ export default function EventRoleAutocomplete(props: EventRoleAutocompleteProps)
         getRolesForEvent(props.eventId).then((promise) => {
             if (promise.data?.items !== undefined) {
                 const retrievedOptions = promise.data?.items.map((role) => {
-                    return {id: role.id, name: role.name};
+                    return {id: role.id, name: role.name} as IRoleOption;
                 });
 
                 setOptions(retrievedOptions);
@@ -46,6 +46,7 @@ export default function EventRoleAutocomplete(props: EventRoleAutocompleteProps)
         setLocalValue(data);
     };
 
+    // @ts-ignore
     return (
         <Controller
             name={props.name}

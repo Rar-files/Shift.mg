@@ -77,9 +77,11 @@ interface CreateRolePromise {
 export async function CreateRole(role: Role): Promise<CreateRolePromise> {
     let roleCreatePromise = {} as CreateRolePromise;
 
+    role.event = `/api/events/${role.event}`;
+
     await getApiClient().request(
         'POST',
-        `/event_roles/`,
+        `/event_roles`,
         role,
         undefined,
         {

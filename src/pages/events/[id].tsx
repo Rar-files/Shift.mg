@@ -22,6 +22,7 @@ import {IRole} from "../../interfaces/IRole";
 import { useAppSelector } from '../../app';
 import EventInviteDialog from "../../components/Events/EventInviteDialog/EventInviteDialog";
 import {getRolesForEvent} from "../../app/services/event/RoleService";
+import EventAddRoleDialog from "../../components/Events/EventAddRoleDialog/EventAddRoleDialog";
 
 
 
@@ -38,13 +39,16 @@ const Event: NextPage = () => {
 
     const [state, setState] = useState<EventDetailsState>({event: null, members: null, roles: null} as EventDetailsState);
 
-    const [open, setOpen] = useState(false);
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+    /* DIALOG OPEN STATES */
+    const [inviteOpen, setInviteOpen] = useState(false);
+    const [addRoleOpen, setAddRoleOpen] = useState(false);
 
-    const handleClose = () => {
-        setOpen(false);
+    const onAddRoleDialogClose = (roleAdded: boolean) => {
+        setAddRoleOpen(false);
+
+        if (roleAdded) {
+            setState({...state, roles: null});
+        }
     };
 
     useEffect(() => {
@@ -162,11 +166,11 @@ const Event: NextPage = () => {
                             <Divider />
                             <Box padding={'20px'} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <Typography color={"secondary"}>Members</Typography>
-                                <Button variant="contained" color="primary" size="small" onClick={handleClickOpen}>
+                                <Button variant="contained" color="primary" size="small" onClick={() => setInviteOpen(true)}>
                                     <AddBoxIcon fontSize="small" />
                                     Invite
                                 </Button>
-                                <EventInviteDialog open={open} eventId={state.event.id} onClose={handleClose} />
+                                <EventInviteDialog open={inviteOpen} eventId={state.event.id} onClose={() => setInviteOpen(false)} />
                             </Box>
                             <Divider />
                             <Box padding={'20px'} style={{height: 250}}>
@@ -185,10 +189,11 @@ const Event: NextPage = () => {
                             <Divider />
                             <Box padding={'20px'} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <Typography color={"secondary"}>Roles</Typography>
-                                <Button variant="contained" color="primary" size="small" onClick={handleClickOpen}>
+                                <Button variant="contained" color="primary" size="small" onClick={() => setAddRoleOpen(true)}>
                                     <AddBoxIcon fontSize="small" />
                                     Create
                                 </Button>
+                                <EventAddRoleDialog open={addRoleOpen} eventId={state.event.id} onClose={onAddRoleDialogClose} />
                             </Box>
                             <Divider />
                             <Box padding={'20px'} style={{height: 250}}>
