@@ -70,8 +70,10 @@ export class ApiClient {
     {
         let violations: IViolation[] = [];
 
-        for(let violationData of data.violations) {
-            violations.push(violationData as IViolation);
+        if (data.violations) {
+            for(let violationData of data.violations) {
+                violations.push(violationData as IViolation);
+            }
         }
 
         return violations;

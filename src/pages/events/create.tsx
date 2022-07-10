@@ -59,8 +59,6 @@ const Event: NextPage = () => {
     const onSubmit = (data : IFormEvent) => {
         setFormLoading(true);
 
-        console.log(data);
-
         const event : IEvent = {
             id: "",
             name: data.name,
@@ -79,8 +77,6 @@ const Event: NextPage = () => {
 
         CreateEvent(event).then(response => {
             setFormLoading(false);
-
-            console.log(response);
 
             if (response.succeeded) {
                 router.push("/events");

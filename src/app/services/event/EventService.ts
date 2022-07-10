@@ -2,6 +2,7 @@ import getApiClient, {IListResponse, IViolation} from "../ApiClient";
 
 import { IEvent as Event, IEvent } from "../../../interfaces/IEvent";
 import { ToEventDto } from "../../../Dtos/EventDto";
+import { EventInviteDto } from "../../../Dtos/EventInviteDto";
 
 //Get for user
 interface GetEventsPromise {
@@ -125,6 +126,46 @@ export async function CreateEvent(event: IEvent): Promise<CreateEventPromise> {
     ;
 
     return new Promise<CreateEventPromise>(resolve => resolve(eventCreatePromise as CreateEventPromise));
+}
+
+//CreateInvite
+interface EventInvitePromise {
+    data: any;
+    succeeded: boolean;
+    violations: IViolation[];
+}
+
+export async function CreateEventInvite(eventId: string, invite : EventInviteDto): Promise<EventInvitePromise> {
+    let eventInvitePromise = {} as EventInvitePromise;
+
+    invite.role = `/api/event_roles/${invite.role}`;
+
+    if (invite.user) {
+        invite.user = `/api/user/${invite.user}`;
+    }
+
+    await getApiClient().request(
+        'POST',
+        `/events/${eventId}/invites`,
+        invite,
+        undefined,
+        {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        }
+    )
+        .then((response) => {
+            console.log(response);
+            eventInvitePromise.succeeded = true;
+            eventInvitePromise.data = response.data;
+        })
+        .catch((error) => {
+            eventInvitePromise.succeeded = false;
+            eventInvitePromise.violations = getApiClient().parseViolations(error.response.data);
+        })
+    ;
+
+    return new Promise<EventInvitePromise>(resolve => resolve(eventInvitePromise as EventInvitePromise));
 }
 
 

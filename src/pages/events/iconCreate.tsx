@@ -39,15 +39,13 @@ const IconCreate: NextPage = () => {
         )
     }
 
-    console.log(methods.watch())
-
     return (
         <main>
             <CreateEventPage>
                 <Form methods={methods} onSubmit={onSubmit}>
                     <TextInput name='name' label='Icon name:'/>
                     <FileInput name='file' label='Icon:'/>
-                    <SubmitButton/>
+                    <SubmitButton />
                 </Form>
             </CreateEventPage>
         </main>
