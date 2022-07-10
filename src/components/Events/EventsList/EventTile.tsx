@@ -1,10 +1,7 @@
-import { FC, useContext, useEffect } from "react";
+import { FC } from "react";
 import styled from "styled-components";
-import { Icon } from "@iconify/react";
-import { ThemeContext } from "styled-components";
-import {IEvent, IEvent as Event} from "../../interfaces/IEvent";
-import { useAppDispatch, useAppSelector } from "../../app";
-import { loadIcons } from "../../features/event/iconSlice";
+import { IEvent as Event} from "../../../interfaces/IEvent";
+import { useAppSelector } from "../../../app";
 import router from "next/router";
 
 const Block = styled.div`
@@ -20,7 +17,7 @@ const Block = styled.div`
     margin: 10px;
     cursor: pointer;
 `;
-
+`   `
 const Bar = styled.div<{
     color: string;
 }>`
@@ -83,7 +80,7 @@ const EventIcon = styled.img<{
     width: 64%;
     color: ${props => props.color};
     cursor: pointer;
-    filter: opacity(0.5) drop-shadow(0em 0 3px ${props => props.color});
+    filter: opacity(0.8) drop-shadow(0em 0 0px ${props => props.color});
 `;
 
 const Title = styled.h1<{
@@ -96,7 +93,7 @@ const Title = styled.h1<{
     color: ${props => props.color};
 `;
 
-const Date = styled.div<{
+const DateDiv = styled.div<{
     color: string;
 }>`
     margin: 0px;
@@ -105,14 +102,20 @@ const Date = styled.div<{
     height: 100%;
     color: ${props => props.color};
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `;
 
 const Day = styled.div`
-    font-size: ${props => props.theme.typography.h5};
+    font-size: ${props => props.theme.typography.h4};
+    margin: 0;
 `;
 
 const RestOfDate = styled.div`
-    font-size: ${props => props.theme.typography.h6};
+    font-size: ${props => props.theme.typography.body2};
+    margin: 0;
 `;
 
 const Description = styled.div`
@@ -130,20 +133,11 @@ type EventBlockProps = {
 };
 
 const EventBlock: FC<EventBlockProps> = (props) => {
-    const dispatch = useAppDispatch();
     const iconState = useAppSelector(state => state.eventIcon)
 
-    const color : string = "red"
+    const color = props.event.color;
 
-    const date = props.event.startDate;
-
-    useEffect(() => {
-        if (iconState.data === undefined) {
-            return;
-        }
-
-        dispatch(loadIcons())
-    }, [dispatch, iconState.data])
+    const date = new Date(props.event.startDate);
 
     const goToDetails = () => {
         router.push(`/events/${props.event.id}`);
@@ -157,7 +151,7 @@ const EventBlock: FC<EventBlockProps> = (props) => {
             <Content>
                 <FirstRow>
                     <LeftColumn>
-                        {/* <EventIcon src={props.event.icon.iconObject.contentUrl} color={color}/> */}
+                        {iconState.loaded && <EventIcon src={iconState.data.items[0].iconObject.contentUrl} color={color}/>}
                     </LeftColumn>
                     <RightColumn>
                         <Title color={color}>
@@ -167,14 +161,14 @@ const EventBlock: FC<EventBlockProps> = (props) => {
                 </FirstRow>
                 <SecondRow>
                     <LeftColumn>
-                        <Date color={color}>
+                        <DateDiv color={color}>
                             <Day>
-                                {date.getDay}
+                                {date.getDate()}
                             </Day>
                             <RestOfDate>
-                                {date.getMonth}.{date.getFullYear}
+                                {date.getMonth()+1}.{date.getFullYear()}
                             </RestOfDate>
-                        </Date>
+                        </DateDiv>
                     </LeftColumn>
                     <RightColumn>
                         <Description>

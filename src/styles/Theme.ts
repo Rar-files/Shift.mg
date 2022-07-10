@@ -84,16 +84,22 @@ const lightTheme = createTheme({
         fontSize: '9.125rem',
       },
       h5: {
+        fontSize: '2.25rem',
+      },
+      h6: {
         fontSize: '2rem',
       },
       h4: {
-        fontSize: '2.25rem',
+        fontSize: '2.40rem',
       },
       h3: {
         fontSize: '3.25rem',
       },
       h2: {
         fontSize: '4rem',
+      },
+      body2: {
+        fontSize: '0.7rem',
       },
       fontFamily: '"Alata","Helvetica" , "Arial", sans-serif',
     },

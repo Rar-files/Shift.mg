@@ -64,7 +64,6 @@ export async function CreateMediaObject(mediaObjectDto: MediaObjectDto): Promise
         })
         .catch((error) => {
             mediaObjectCreatePromise.succeeded = false;
-            console.log(error);
             mediaObjectCreatePromise.violations = getApiClient().parseViolations(error.response.data);
         })
     ;

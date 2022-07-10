@@ -1,14 +1,18 @@
 import type { NextPage } from 'next'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '../../app'
-import EventsList from '../../components/Events/EventsList'
 import Loading from '../../components/Loading'
 import {loadEventsForUser} from '../../features/event/eventSlice'
-import Button from "@material-ui/core/Button";
+import {Button, IconButton} from "@material-ui/core";
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import SearchIcon from '@material-ui/icons/Search'
+import SearchIcon from '@material-ui/icons/Search'; 
+import ViewComfy from '@material-ui/icons/ViewComfy';
+import CalendarViewDay from '@material-ui/icons/CalendarViewDay';
 import router from 'next/router'
+import { loadIcons } from '../../features/event/iconSlice'
+import EventList from "../../components/Events/EventsList/EventList";
+import EventTiles from "../../components/Events/EventsList/EventTiles";
 
 const EventsPage = styled.div`
     margin: 16px;
@@ -30,42 +34,85 @@ const CreateButton = styled(Button)`
 const SearchButton = styled(Button)`
 `;
 
+const ViewButton = styled(IconButton)`
+`;
+
+const EventsDiv = styled.div`
+`;
+
+enum ViewType {
+    list = 1,
+    tiles = 2
+}
+
 
 const Events: NextPage = () => {
-  const dispatch = useAppDispatch();
-  const eventState = useAppSelector(state => state.event);
-  const userState = useAppSelector(state => state.user);
+    const dispatch = useAppDispatch();
+    const eventState = useAppSelector(state => state.event);
+    const userState = useAppSelector(state => state.user);
 
-  useEffect(() => {
-      if (userState.data === undefined) {
-          return;
-      }
+    const [view, setView] = useState(ViewType.tiles);
 
-      dispatch(loadEventsForUser(userState.data!.id))
-  }, [dispatch, userState.data])
+    useEffect(() => {
+        if (userState.data === undefined) {
+            return;
+        }
+        
+        dispatch(loadIcons());
+        dispatch(loadEventsForUser(userState.data!.id))
+    }, [dispatch, userState.data])
 
-  return (
-    <main>
-        <EventsPage>
-            {eventState.loaded
-            ? <>
-                <CreateButtonDiv>
-                    <CreateButton variant="contained" color="primary" size="small" aria-label="Create" onClick={() => router.push("/events/create")}>
-                        <AddBoxIcon fontSize="small" />
-                        Create
-                    </CreateButton>
-                    <SearchButton variant="contained" color="primary" size="small" aria-label="Create" onClick={() => router.push("/events/search")}>
-                        <SearchIcon fontSize="small" />
-                        Search
-                    </SearchButton>
-                </CreateButtonDiv>
-                <EventsList events={eventState.data.items} />
-            </>
-            : <Loading/>
-            }
-        </EventsPage>
-    </main>
-  )
+    return (
+        <main>
+            <EventsPage>
+                {eventState.loaded
+                ? <>
+                    <CreateButtonDiv>
+                        <CreateButton variant="contained" color="primary" size="small" aria-label="Create" startIcon={<AddBoxIcon fontSize="small" />} onClick={() => router.push("/events/create")}>                        
+                            Create
+                        </CreateButton>
+                        <SearchButton variant="contained" color="primary" size="small" aria-label="Search" startIcon={<SearchIcon fontSize="small" />} onClick={() => router.push("/events/search")}>
+                            Search
+                        </SearchButton>
+                        
+                        {view == ViewType.list &&
+                        
+                            <ViewButton  
+                                color="primary" 
+                                size="small" 
+                                onClick={() => setView(ViewType.tiles)}
+                            >
+                                <CalendarViewDay fontSize="small" />
+                            </ViewButton>
+                        }
+
+                        {view == ViewType.tiles && 
+                        
+                            <ViewButton 
+                                color="primary" 
+                                size="small" 
+                                onClick={() => setView(ViewType.list)}
+                            >
+                                <ViewComfy fontSize="small" />
+                            </ViewButton>
+                        }
+
+                    </CreateButtonDiv>
+
+                    { eventState.data.items.length > 0 &&
+                    <EventsDiv>
+                            {view == ViewType.tiles && <EventTiles events={eventState.data.items}/>}
+
+                            {view == ViewType.list && <EventList events={eventState.data.items}/>}
+                    </EventsDiv>
+                    }
+
+                </>
+                : <Loading/>
+                }
+            </EventsPage>
+        </main>
+    )
 }
 
 export async function getStaticProps() {

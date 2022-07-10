@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
-import router, { useRouter } from 'next/router'
-import styled from 'styled-components'
+import { useRouter } from 'next/router'
+
 import {useEffect, useState} from "react";
 import {getEvent} from "../../app/services/event/EventService";
 import {IEvent} from "../../interfaces/IEvent";
@@ -8,31 +8,22 @@ import {
     Box,
     Button,
     Container,
-    Dialog, DialogActions,
-    DialogContent, DialogContentText,
-    DialogTitle,
     Divider,
     Grid,
-    Paper, TextField,
+    Paper,
     Typography
 } from "@material-ui/core";
 import Loading from "../../components/Loading";
-import EventsList from "../../components/Events/EventsList";
 import {IMember} from "../../interfaces/IMember";
 import {getMembersForEvent} from "../../app/services/event/MemberService";
 import {DataGrid, GridColDef, GridRowData} from "@material-ui/data-grid";
 import AddBoxIcon from "@material-ui/icons/AddBox";
-import UserAutocomplete from "../../components/User/UserAutocomplete/UserAutocomplete";
-import EventRoleAutocomplete from "../../components/Events/EventRoleAutocomplete/EventRoleAutocomplete";
 import {IRole} from "../../interfaces/IRole";
+import { useAppSelector } from '../../app';
+import EventInviteDialog from "../../components/Events/EventInviteDialog/EventInviteDialog";
 import {getRolesForEvent} from "../../app/services/event/RoleService";
 
 
-const EventPage = styled.div`
-  padding: 20px;
-  color: white;
-  font-size: 40px;
-`;
 
 interface EventDetailsState {
     event: IEvent | null;
@@ -42,12 +33,12 @@ interface EventDetailsState {
 
 const Event: NextPage = () => {
     const router = useRouter();
+
     const eventId = router.query.id as string;
 
     const [state, setState] = useState<EventDetailsState>({event: null, members: null, roles: null} as EventDetailsState);
 
     const [open, setOpen] = useState(false);
-
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -175,6 +166,7 @@ const Event: NextPage = () => {
                                     <AddBoxIcon fontSize="small" />
                                     Invite
                                 </Button>
+                                <EventInviteDialog open={open} eventId={state.event.id} onClose={handleClose} />
                             </Box>
                             <Divider />
                             <Box padding={'20px'} style={{height: 250}}>
@@ -214,23 +206,6 @@ const Event: NextPage = () => {
                             </Box>
                         </Paper>
                     </Box>
-                    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                        <DialogTitle id="form-dialog-title">Invite member</DialogTitle>
-                        <DialogContent style={{width: '400px'}}>
-                            <Typography>Email address</Typography>
-                            <UserAutocomplete onlyExistingUsers={false} />
-                            <Typography style={{marginTop: '25px'}}>Select a role</Typography>
-                            <EventRoleAutocomplete eventId={state.event.id} />
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleClose} color="primary">
-                                Cancel
-                            </Button>
-                            <Button onClick={handleClose} color="primary">
-                                Invite
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
                 </Container>
             }
         </main>
