@@ -1,10 +1,9 @@
-import type {NextPage} from 'next'
 import styled from 'styled-components';
-import LoginBtn from '../components/Auth/LoginBtn';
+import LoginBtn from '../../components/Auth/LoginBtn';
 import Image from "next/image";
-import {useAppSelector} from "../app";
-import {useEffect} from "react";
-import {AuthStatus} from "../features/authSlice";
+import {useAppSelector} from "../../app";
+import {FC, useEffect} from "react";
+import {AuthStatus} from "../../features/authSlice";
 import {useRouter} from "next/router";
 
 const Background = styled.div`
@@ -45,15 +44,21 @@ const Logo = styled(Image)`
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 
-const Login: NextPage = () => {
+type LoginComponentProps = {
+    pathToPush?: string;
+}
+
+const LoginComponent: FC<LoginComponentProps> = (props) => {
     const router = useRouter();
     const authState = useAppSelector(state => state.auth);
 
+    const path = props.pathToPush ? props.pathToPush : "";
+
     useEffect(() => {
         if (authState.status === AuthStatus.AUTHORIZED) {
-            router.push("/");
+            router.push("/" + path);
         }
-    }, [authState.status, router])
+    }, [authState.status, router, path]);
 
     return (
         <>
@@ -73,4 +78,4 @@ const Login: NextPage = () => {
     )
 }
 
-export default Login;
+export default LoginComponent;

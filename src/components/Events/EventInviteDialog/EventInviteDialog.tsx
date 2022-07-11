@@ -9,7 +9,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {applyViolationsToForm} from "../../../app/helpers/functions";
 
 const schema = yup.object().shape({
-    users: yup.array().of(yup.mixed<IUserOption>()).required(),
+    users: yup.array().of(yup.mixed<IUserOption>()),
     role: yup.mixed<IRoleOption>().required()
 });
 
@@ -40,6 +40,8 @@ const EventInviteDialog = (props: EventInviteDialogProps) => {
                     role: data.role.id
                 };
             }
+
+            console.log(inviteToPost);
 
             CreateEventInvite(props.eventId, inviteToPost).then((response) => {
                 if (!response.succeeded) {

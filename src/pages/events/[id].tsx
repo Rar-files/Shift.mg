@@ -15,9 +15,9 @@ import {
 } from "@material-ui/core";
 import Loading from "../../components/Loading";
 import {IMember} from "../../interfaces/IMember";
-import {getMembersForEvent} from "../../app/services/event/MemberService";
-import {DataGrid, GridColDef, GridRowData} from "@material-ui/data-grid";
-import AddBoxIcon from "@material-ui/icons/AddBox";
+import {DeleteMember, getMembersForEvent} from "../../app/services/event/MemberService";
+import {DataGrid, GridColDef, GridRowData, GridSelectionModel} from "@material-ui/data-grid";
+import {AddBox as AddBoxIcon, Delete as DeleteIcon} from "@material-ui/icons/";
 import {IRole} from "../../interfaces/IRole";
 import { useAppSelector } from '../../app';
 import EventInviteDialog from "../../components/Events/EventInviteDialog/EventInviteDialog";
@@ -38,6 +38,8 @@ const Event: NextPage = () => {
     const eventId = router.query.id as string;
 
     const [state, setState] = useState<EventDetailsState>({event: null, members: null, roles: null} as EventDetailsState);
+
+    const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
 
     /* DIALOG OPEN STATES */
     const [inviteOpen, setInviteOpen] = useState(false);
@@ -90,11 +92,40 @@ const Event: NextPage = () => {
             width: 110,
             editable: true,
         },
+        {
+            field: "delete",
+            width: 75,
+            sortable: false,
+            disableColumnMenu: true,
+            renderHeader: () => {
+                return (
+                    <Button
+                        onClick={() => {
+                            const selectedIDs = new Set(selectionModel);
+                            
+                            selectedIDs.forEach((id) => {
+                                DeleteMember(id as string).then((promise) => {
+                                    if(!promise.succeeded)
+                                    {
+                                        console.log(promise);
+                                    }
+                                });
+                            });
+
+                            window.location.reload()
+                        }}>
+                            
+                        <DeleteIcon />
+                    </Button>
+                );
+            }
+          }
     ];
 
-    let rows: GridRowData[] = [];
+    let memberRows: GridRowData[] = [];
+
     if (state.members !== null) {
-        rows = state.members?.map((member: IMember) => {
+        memberRows = state.members?.map((member: IMember) => {
             return {id: member.id, displayName: member.user.displayName, role: member.role.name};
         });
     }
@@ -103,7 +134,7 @@ const Event: NextPage = () => {
         {field: 'id', headerName: 'ID', width: 90},
         {
             field: 'name',
-            headerName: 'Nazwa',
+            headerName: 'Name',
             width: 150,
             editable: true,
         },
@@ -132,31 +163,31 @@ const Event: NextPage = () => {
                             <Box padding={'20px'}>
                                 <Grid container spacing={3}>
                                     <Grid item xs={6} sm={3}>
-                                        <Typography>Data rozpoczęcia</Typography>
+                                        <Typography>Start time</Typography>
                                     </Grid>
                                     <Grid item xs={6} sm={9}>
                                         <Typography>{state.event?.startDate}</Typography>
                                     </Grid>
                                     <Grid item xs={6} sm={3}>
-                                        <Typography>Data zakończenia</Typography>
+                                        <Typography>End time</Typography>
                                     </Grid>
                                     <Grid item xs={6} sm={9}>
                                         <Typography>{state.event?.endDate}</Typography>
                                     </Grid>
                                     <Grid item xs={6} sm={3}>
-                                        <Typography>Lokalizacja</Typography>
+                                        <Typography>Localization</Typography>
                                     </Grid>
                                     <Grid item xs={6} sm={9}>
                                         <Typography>{state.event?.location}</Typography>
                                     </Grid>
                                     <Grid item xs={6} sm={3}>
-                                        <Typography>Opis</Typography>
+                                        <Typography>Description</Typography>
                                     </Grid>
                                     <Grid item xs={6} sm={9}>
                                         <Typography>{state.event?.description}</Typography>
                                     </Grid>
                                     <Grid item xs={6} sm={3}>
-                                        <Typography>Włączone zmiany?</Typography>
+                                        <Typography>Shifts?</Typography>
                                     </Grid>
                                     <Grid item xs={6} sm={9}>
                                         <Typography>{state.event?.shiftsEnabled ? "Tak" : "Nie"}</Typography>
@@ -179,10 +210,13 @@ const Event: NextPage = () => {
                                 }
                                 {state.members !== null &&
                                     <DataGrid
-                                        rows={rows}
+                                        rows={memberRows}
                                         columns={columns}
                                         checkboxSelection
                                         disableSelectionOnClick
+                                        onSelectionModelChange={(ids) => {
+                                          setSelectionModel(ids);
+                                        }}
                                     />
                                 }
                             </Box>

@@ -56,7 +56,7 @@ export default function EventRoleAutocomplete(props: EventRoleAutocompleteProps)
                     {...field}
                     options={options}
                     onChange={(e, data : IRoleOption | null) => onChange(field, data)}
-                    value={localValue}
+                    value={localValue as IRoleOption}
                     loading={loading}
                     disabled={loading}
                     getOptionSelected={(option, value) => option.id === value.id}

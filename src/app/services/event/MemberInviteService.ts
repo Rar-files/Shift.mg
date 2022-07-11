@@ -36,45 +36,57 @@ export async function getMemberInvite(id: string): Promise<GetMemberInvitePromis
 }
 
 
-//Update
-export interface UpdateMemberInviteProps {
-    memberInvite: MemberInvite;
-    newData: object;
-}
-
-interface UpdateMemberInvitePromise {
-    succeeded: boolean;
+//Update{Id}
+//accept
+export interface UpdateMemberInvitePromise {
+    status: boolean;
     violations: IViolation[];
 }
 
-function parseMemberInviteToRequest(memberInvite: MemberInvite): object
-{
-    // TODO
-    return memberInvite;
-}
-
-export async function updateMemberInvite(props: UpdateMemberInviteProps): Promise<UpdateMemberInvitePromise> {
+export async function memberInviteAccept(id: string): Promise<UpdateMemberInvitePromise> {
     let memberInviteUpdatePromise = {} as UpdateMemberInvitePromise;
 
     await getApiClient().request(
         'PUT',
-        `/event_member_invites/${props.memberInvite.id}`,
-        parseMemberInviteToRequest({
-            ...props.memberInvite,
-            ...props.newData
-        }),
+        `/event_member_invites/${id}/accept`,
+        {},
         undefined,
         {
             Accept: 'application/json',
             'Content-Type': 'application/json'
         }
     )
-        .then((response) => {
-            memberInviteUpdatePromise.succeeded = true;
-            store.dispatch(setMemberInviteData(response.data));
+        .then(() => {
+            memberInviteUpdatePromise.status = true;
         })
         .catch((error) => {
-            memberInviteUpdatePromise.succeeded = false;
+            memberInviteUpdatePromise.status = false;
+            memberInviteUpdatePromise.violations = getApiClient().parseViolations(error.response.data);
+        })
+    ;
+
+    return new Promise<UpdateMemberInvitePromise>(resolve => resolve(memberInviteUpdatePromise as UpdateMemberInvitePromise));
+}
+
+//decline
+export async function memberInviteDecline(id: string): Promise<UpdateMemberInvitePromise> {
+    let memberInviteUpdatePromise = {} as UpdateMemberInvitePromise;
+
+    await getApiClient().request(
+        'PUT',
+        `/event_member_invites/${id}/decline`,
+        {},
+        undefined,
+        {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        }
+    )
+        .then(() => {
+            memberInviteUpdatePromise.status = true;
+        })
+        .catch((error) => {
+            memberInviteUpdatePromise.status = false;
             memberInviteUpdatePromise.violations = getApiClient().parseViolations(error.response.data);
         })
     ;
