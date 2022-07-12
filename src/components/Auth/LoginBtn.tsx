@@ -12,7 +12,7 @@ type Props = {
 const GoogleBtn = styled.button`
     border-radius: 5px;
     border: none;
-    background-color: ${props => props.theme.palette.primary};
+    background-color: ${props => props.theme.palette.primary.main};
     color: ${props => props.theme.palette.background.default};
     padding: 10px;
     text-align: center;

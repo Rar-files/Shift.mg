@@ -153,7 +153,7 @@ export interface DeleteMemberPromise {
     violations: IViolation[];
 }
 
-export async function deleteMember(id: string): Promise<DeleteMemberPromise> {
+export async function DeleteMember(id: string): Promise<DeleteMemberPromise> {
     let deleteMemberPromise = {succeeded: false} as DeleteMemberPromise;
 
     await getApiClient().request(

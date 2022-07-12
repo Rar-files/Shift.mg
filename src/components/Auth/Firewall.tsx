@@ -30,7 +30,7 @@ const Firewall : FC<FirewallProps> = (props) => {
     }
 
     if (props.protected && authState.status !== AuthStatus.AUTHORIZED) {
-        router.push("/login");
+        router.push("/login/");
         return (<></>);
     }
 
