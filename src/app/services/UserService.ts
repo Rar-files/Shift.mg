@@ -67,7 +67,10 @@ export async function getUser(id: string): Promise<GetUserPromise> {
 //Get user notifications
 interface GetUserNotifyPromise {
     succeeded: boolean;
-    data: Notify[] | null;
+    data: {
+        items: Notify[]
+        metadata: object
+    } | null;
 }
 
 export async function getUserNotify(id: string): Promise<GetUserNotifyPromise> {

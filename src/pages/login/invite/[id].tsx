@@ -1,6 +1,6 @@
 import type {NextPage} from 'next'
 import { useRouter } from 'next/router';
-import LoginComponent from '../../components/Auth/LoginComponent';
+import LoginComponent from '../../../components/Auth/LoginComponent';
 
 const Login: NextPage = () => {
     const router = useRouter();
