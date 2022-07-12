@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
-import { Icon } from "@iconify/react";
+import {WbSunnyOutlined as LightModeIcon, NightsStayOutlined as DarkModeIcon} from "@material-ui/icons/"
 import useDarkMode from "use-dark-mode";
 
 const ModeToggler = styled.button`
@@ -25,7 +25,9 @@ const DarkModeToggleBtn : FC = () => {
 
     return (
         <ModeToggler onClick={darkMode.toggle}>
-            <Icon icon={icon} />
+            {darkMode.value 
+            ? <DarkModeIcon/>
+            : <LightModeIcon/>}
         </ModeToggler>
     )
 }
