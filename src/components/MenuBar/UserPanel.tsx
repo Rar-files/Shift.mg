@@ -2,20 +2,24 @@ import { FC, useCallback, useEffect, useState } from "react";
 import {useAppDispatch, useAppSelector} from "../../app";
 import styled from "styled-components";
 import { getUserNotify } from "../../app/services/UserService";
-import DarkModeToggleBtn from "./DarkModeToggleBtn";
 import {Notifications as NotificationsIcon, WbSunnyOutlined as LightModeIcon, NightsStayOutlined as DarkModeIcon} from "@material-ui/icons/"
 import {
   Box,
   IconButton,
   Badge,
-  Container,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
   Grid,
-  Paper,
   Typography
 } from "@material-ui/core";
+import { DataGrid, GridColDef, GridRowData } from "@material-ui/data-grid";
 import useDarkMode from "use-dark-mode";
 import { INotify } from "../../interfaces/INotify";
+import router from "next/router";
 
 const Panel = styled.div`
     border-radius: 4px;
@@ -28,25 +32,53 @@ const Panel = styled.div`
 `;
 
 const UserPanel : FC = () => {
+
+  const columns: GridColDef[] = [
+    {
+        field: 'id',
+        headerName: 'ID',
+        width: 150,
+        editable: false,
+    },
+    {
+        field: 'message',
+        headerName: 'Message',
+        width: 150,
+        editable: false,
+    },
+    {
+        field: 'createdAt',
+        headerName: 'CreatedAt',
+        width: 102,
+        editable: false,
+        type: 'date',
+        valueGetter: ({ value }) => value && new Date(value as string)
+    }
+  ];
+
   const darkMode = useDarkMode();
   const dispatch = useAppDispatch();
   
   const userState = useAppSelector(state => state.user)
 
   const [notifications, setNotifications] = useState<INotify[]>([]);
+  const [notifyDialogOpen, setNotifyDialogOpen] = useState(false);
 
+  const goToInvite = (inviteId : string) => {
+    router.push(`/invite/${inviteId}`);
+  }
+  
   const updateNotify = useCallback(() => {
     if(userState.loaded && userState.data) {
       getUserNotify(userState.data?.id as string).then(res => {
         if(res.succeeded && res.data) {
-          setNotifications(res.data.items)
+          setNotifications(res.data.items);
         }
       });
     }
   }, [userState.loaded, userState.data])
 
-  console.log(notifications);
-  console.log(notifications.length);
+  // console.log(notifications);
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -60,7 +92,7 @@ const UserPanel : FC = () => {
   return (
     <Panel>
       {userState.loaded
-      && <IconButton size="medium">
+      && <IconButton size="medium" onClick={() => setNotifyDialogOpen(true)}>
           <Badge badgeContent={notifications.length} color="secondary" overlap="rectangular">
             <NotificationsIcon/>
           </Badge>
@@ -72,6 +104,27 @@ const UserPanel : FC = () => {
             ? <DarkModeIcon/>
             : <LightModeIcon/>}
       </IconButton>
+
+
+      <Dialog open={notifyDialogOpen}>
+        <DialogTitle>Notifications</DialogTitle>
+        <DialogContent>
+          {notifications.length != 0
+            ? notifications.map((notify, index) => {
+              if(notify.type == "event_invite")
+              {
+                <Box key={index} onClick={() => goToInvite(notify.id)}>
+                  <Typography variant="body1">{notify.message}</Typography>
+                <Divider/>
+                </Box>
+              }})
+            : <Typography variant="body1">No notifications</Typography>
+          }
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setNotifyDialogOpen(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </Panel>
   );
 }
