@@ -9,6 +9,7 @@ import {store} from "../..";
 interface GetMemberInvitePromise {
     succeeded: boolean;
     data: MemberInvite | null;
+    violations: IViolation[];
 }
 
 export async function getMemberInvite(id: string): Promise<GetMemberInvitePromise> {
@@ -29,6 +30,7 @@ export async function getMemberInvite(id: string): Promise<GetMemberInvitePromis
         })
         .catch((error) => {
             getMemberInvitePromise.succeeded = false;
+            getMemberInvitePromise.violations = getApiClient().parseViolations(error.response.data);
         })
     ;
 

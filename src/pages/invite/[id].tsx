@@ -55,7 +55,8 @@ const Invite: NextPage = () => {
         }
 
         getMemberInvite(inviteId).then((promise) => {
-            setInvState(promise.data);
+            if(promise.succeeded)
+                setInvState(promise.data);
         });
     }, [inviteId,invState, setInvState]);
 

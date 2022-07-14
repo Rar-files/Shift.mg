@@ -23,7 +23,7 @@ import router from "next/router";
 
 const Panel = styled.div`
     border-radius: 4px;
-    padding: 10px;
+    /* padding: 10px; */
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
@@ -56,8 +56,37 @@ const UserPanel : FC = () => {
     }
   ];
 
+  const NotifyTests : INotify[] = [
+    {
+      id: "1",
+      message: 'Test 1',
+      type: "event_invite",
+      subject: 'Test 1',
+      user: '1',
+      createdAt: new Date('2020-01-02T03:04:05.678Z'),
+      seenAt: new Date('2020-01-02T03:04:05.678Z')
+    },
+    {
+      id: "2",
+      message: 'Test 2',
+      type: "event_invite",
+      subject: 'Test 2',
+      user: '1',
+      createdAt: new Date('2020-01-02T03:04:05.678Z'),
+      seenAt: new Date('2020-01-02T03:04:05.678Z')
+    },
+    {
+      id: "3",
+      message: 'Test 3',
+      type: "event_invite",
+      subject: 'Test 3',
+      user: '1',
+      createdAt: new Date('2020-01-02T03:04:05.678Z'),
+      seenAt: new Date('2020-01-02T03:04:05.678Z')
+    }
+  ];
+
   const darkMode = useDarkMode();
-  const dispatch = useAppDispatch();
   
   const userState = useAppSelector(state => state.user)
 
@@ -76,7 +105,7 @@ const UserPanel : FC = () => {
         }
       });
     }
-  }, [userState.loaded, userState.data])
+  }, [userState.data, userState.loaded])
 
   // console.log(notifications);
   
@@ -110,14 +139,16 @@ const UserPanel : FC = () => {
         <DialogTitle>Notifications</DialogTitle>
         <DialogContent>
           {notifications.length != 0
-            ? notifications.map((notify, index) => {
-              if(notify.type == "event_invite")
-              {
-                <Box key={index} onClick={() => goToInvite(notify.id)}>
-                  <Typography variant="body1">{notify.message}</Typography>
-                <Divider/>
-                </Box>
-              }})
+            ?notifications.map((notify, index) => {
+                if(notify.type == "event_invite")
+                {
+                  return (
+                    <Box key={index} onClick={() => goToInvite(notify.id)}>
+                      <Typography variant="body1" color="primary">{notify.message}</Typography>
+                    <Divider/>
+                    </Box>
+                  )
+                }})
             : <Typography variant="body1">No notifications</Typography>
           }
         </DialogContent>
