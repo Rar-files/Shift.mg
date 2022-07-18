@@ -70,6 +70,7 @@ const Dashboard: NextPage = () => {
                             startAccessor="start"
                             endAccessor="end"
                             onRangeChange={onRangeChange}
+                            views={["month"]}
                         />
                         {loading && (
                             <Backdrop
