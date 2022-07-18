@@ -1,16 +1,14 @@
-import type { NextPage } from 'next'
+import type {NextPage} from 'next'
 import styled from 'styled-components'
-import { useAppDispatch, useAppSelector } from '../../app'
 import Loading from '../../components/Loading'
 import Button from "@material-ui/core/Button";
 import SearchIcon from '@material-ui/icons/Search'
-import router from 'next/router'
 import {TextField} from "@material-ui/core";
 import {useEffect, useState} from "react";
 import {IListResponse} from "../../app/services/ApiClient";
 import {getEvents} from "../../app/services/event/EventService";
 import {IEvent} from "../../interfaces/IEvent";
-import EventsList from "../../components/Events/EventsList";
+import EventsList, {ViewType} from "../../components/Events/EventsList";
 
 const EventsPage = styled.div`
     margin: 16px;
@@ -71,7 +69,7 @@ const SearchEvents: NextPage = () => {
                     <Loading/>
                 }
                 {!state.loading &&
-                    <EventsList events={state.list!.items} />
+                    <EventsList events={state.list!.items} view={ViewType.list} />
                 }
             </EventsPage>
         </main>

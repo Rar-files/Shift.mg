@@ -3,6 +3,13 @@ import getApiClient, {IListResponse, IViolation} from "../ApiClient";
 import { IEvent as Event, IEvent } from "../../../interfaces/IEvent";
 import { ToEventDto } from "../../../Dtos/EventDto";
 import { EventInviteDto } from "../../../Dtos/EventInviteDto";
+import {dateToYMD} from "../../helpers/functions";
+
+// Get user event filters
+export interface GetUserEventsFilters {
+    startDate: Date;
+    endDate: Date;
+}
 
 //Get for user
 interface GetEventsPromise {
@@ -10,12 +17,18 @@ interface GetEventsPromise {
     data: IListResponse<Event>;
 }
 
-export async function getUserEvents(userId: string): Promise<GetEventsPromise> {
+export async function getUserEvents(userId: string, filters: GetUserEventsFilters|null = null): Promise<GetEventsPromise> {
     let getEventsPromise = {succeeded: false} as GetEventsPromise;
+
+    let preparedUri = `/user/${userId}/events`;
+
+    if (filters !== null) {
+        preparedUri = `${preparedUri}?startDate[after]=${dateToYMD(filters.startDate)}&endDate[before]=${dateToYMD(filters.endDate)}&paginate=false`
+    }
 
     await getApiClient().request(
         'GET',
-        `/user/${userId}/events`,
+        preparedUri,
         {},
         undefined,
         {
@@ -24,6 +37,13 @@ export async function getUserEvents(userId: string): Promise<GetEventsPromise> {
     )
         .then((response) => {
             getEventsPromise.succeeded = true;
+
+            response.data.items = response.data.items.map((item: IEvent) => {
+                item.startDate = new Date(item.startDate);
+                item.endDate = new Date(item.endDate);
+                return item;
+            });
+
             getEventsPromise.data = response.data;
         })
         .catch((error) => {
@@ -40,7 +60,7 @@ export async function getEvents(keyword : string | null = null): Promise<GetEven
 
     await getApiClient().request(
         'GET',
-        keyword != null ? `/events?keyword=${keyword}` : '/events',
+        keyword != null ? `/events?name=${keyword}` : '/events',
         {},
         undefined,
         {
@@ -49,6 +69,13 @@ export async function getEvents(keyword : string | null = null): Promise<GetEven
     )
         .then((response) => {
             getEventsPromise.succeeded = true;
+
+            response.data.items = response.data.items.map((item: IEvent) => {
+                item.startDate = new Date(item.startDate);
+                item.endDate = new Date(item.endDate);
+                return item;
+            });
+
             getEventsPromise.data = response.data;
         })
         .catch((error) => {
