@@ -1,6 +1,8 @@
 import {FC, useEffect} from 'react'
 import type {AppProps} from 'next/app'
 
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+
 import AppThemeProvider from '../app/providers/AppThemeProvider';
 import {Provider} from "react-redux";
 import {store} from "../app";

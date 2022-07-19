@@ -68,44 +68,6 @@ export async function getIcon(id: string): Promise<GetIconPromise> {
     return new Promise<GetIconPromise>(resolve => resolve(getIconPromise as GetIconPromise));
 }
 
-
-//Create
-interface CreateIconPromise {
-    data: Icon;
-    succeeded: boolean;
-    violations: IViolation[];
-}
-
-export async function CreateIcon(icon: IIcon): Promise<CreateIconPromise> {
-    let iconCreatePromise = {} as CreateIconPromise;
-
-    const iconDto = ToIconDto(icon);
-
-    await getApiClient().request(
-        'POST',
-        `/event_icons`,
-        iconDto,
-        undefined,
-        {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-        }
-    )
-        .then((response) => {
-            iconCreatePromise.succeeded = true;
-            iconCreatePromise.data = response.data;
-            store.dispatch(setIconData(response.data));
-        })
-        .catch((error) => {
-            iconCreatePromise.succeeded = false;
-            iconCreatePromise.violations = getApiClient().parseViolations(error.response.data);
-        })
-    ;
-
-    return new Promise<CreateIconPromise>(resolve => resolve(iconCreatePromise as CreateIconPromise));
-}
-
-
 //Update
 export interface UpdateIconProps {
     icon: Icon;

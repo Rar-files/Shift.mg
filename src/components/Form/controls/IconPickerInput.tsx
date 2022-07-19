@@ -131,7 +131,6 @@ const IconPickerInput: FC<Props> = ({ name, label }) => {
                                             setShowPicker(false);
                                         }}/>
                                     ))}
-                                    <Icon color={theme.palette.primary} src={"https://i.imgur.com/xOSbQsS.png"} onClick={() => router.push("/events/iconCreate")}/>
                                  </Picker>
                             </DialogContent>
                         </Dialog>}
