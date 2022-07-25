@@ -8,6 +8,7 @@ import Menu from "./Menu";
 import UserPanel from "./UserPanel";
 
 import logoIcon from "./Icon.png"
+import router from "next/router";
 
 const Content = styled.div`
     background-color: ${props => props.theme.palette.background.paper};
@@ -26,13 +27,16 @@ const Logo = styled(Image)`
 
 
 const MenuBar: FC = () => {
+
+    const onLogoClick = () => {
+        router.push(`/`);
+    }
+
     return (
         <Content>
-            <Link href="/">
-                <>
-                    <Logo src={logoIcon} alt="logo" width={46} height={52}/>
-                </>
-            </Link>
+
+            <Logo src={logoIcon} alt="logo" width={46} height={52} onClick={onLogoClick}/>
+            
             <Menu/>
             <UserPanel/>
         </Content>

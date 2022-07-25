@@ -1,18 +1,60 @@
-import type { NextPage } from 'next'
 import {Backdrop, Box, CircularProgress, Container, Paper} from "@material-ui/core";
 import {Calendar} from "react-big-calendar";
 import {luxonLocalizer} from "react-big-calendar";
 import {DateTime} from "luxon";
-import {getUserEvents, GetUserEventsFilters} from "../app/services/event/EventService";
-import {useAppSelector} from "../app";
-import {useEffect, useState} from "react";
+import {getUserEvents, GetUserEventsFilters} from "../../app/services/event/EventService";
+import {useAppSelector} from "../../app";
+import {FC, useEffect, useState} from "react";
+import { IEvent } from '../../interfaces/IEvent';
+import EventWrapper from './EventWrapper';
+import router from 'next/router';
 
 // @ts-ignore
 const localizer = luxonLocalizer(DateTime, {firstDayOfWeek: 1});
 
-const Dashboard: NextPage = () => {
+export interface ICalendarEvent {
+    id: string;
+    title: string;
+    start: Date;
+    end: Date;
+    color: string;
+}
+
+const toCalendarEvent = (event: IEvent): ICalendarEvent => {
+    return {
+        id: event.id,
+        title: event.name,
+        start: event.startDate,
+        end: event.endDate,
+        color: event.color
+    }
+}
+
+const goToDetails = (id : string) => {
+    router.push(`/events/${id}`);
+};
+
+const eventPropsGetter = (event : ICalendarEvent,start: Date, end: Date, isSelected : boolean) => {
+    var backgroundColor = event.color;
+    var style = {
+        backgroundColor: backgroundColor,
+        borderRadius: '4px',
+        opacity: 0.8,
+        border: '0px',
+        display: 'block'
+    };
+    
+    if(isSelected)
+        goToDetails(event.id);
+
+    return {
+        style: style
+    };
+}
+
+const CalendarComponent: FC = () => {
     const userState = useAppSelector(state => state.user);
-    const [eventsList, setEventsList] = useState<any[]>([]);
+    const [eventsList, setEventsList] = useState<ICalendarEvent[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     const onRangeChange = (range: Date[] | {start: Date, end: Date}) => {
@@ -36,12 +78,7 @@ const Dashboard: NextPage = () => {
             }
 
             setEventsList(promise.data.items.map((item) => {
-                return {
-                    id: item.id,
-                    title: item.name,
-                    start: item.startDate,
-                    end: item.endDate
-                };
+                return toCalendarEvent(item);
             }));
 
             setLoading(false);
@@ -71,6 +108,7 @@ const Dashboard: NextPage = () => {
                             endAccessor="end"
                             onRangeChange={onRangeChange}
                             views={["month"]}
+                            eventPropGetter={eventPropsGetter}
                         />
                         {loading && (
                             <Backdrop
@@ -87,12 +125,4 @@ const Dashboard: NextPage = () => {
     );
 }
 
-export async function getStaticProps() {
-    return {
-        props: {
-            protected: true,
-        },
-    }
-}
-
-export default Dashboard
+export default CalendarComponent
