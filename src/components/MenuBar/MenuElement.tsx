@@ -9,7 +9,7 @@ const Content = styled.div`
 const HrefIcon = styled(Icon)`
     height: 34px;
     width: 34px;
-    color: ${props => props.theme.palette.divider};
+    color: ${props => props.theme.palette.text.secondary};
     cursor: pointer;
     &:hover {
         color: ${props => props.theme.palette.text.hint};

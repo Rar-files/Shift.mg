@@ -30,10 +30,9 @@ const Menu : FC = () => {
   return (
     <Content>
         <Links>
-            <MenuElement href="/dashboard" icon="mdi:monitor-dashboard" title="Dashboard"/>
-            <MenuElement href="/volunteers" icon="carbon:user-favorite" title="Volunteers"/>
+            <MenuElement href="/" icon="mdi:monitor-dashboard" title="Dashboard"/>
             <MenuElement href="/events" icon="ic:baseline-event-available" title="Events"/>
-            <MenuElement href="/settings" icon="ic:outline-settings" title="Settings"/>
+            <MenuElement href="/calendar" icon="ion:calendar-number" title="Settings"/>
         </Links>
     </Content>
   );
