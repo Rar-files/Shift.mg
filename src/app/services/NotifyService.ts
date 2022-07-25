@@ -39,7 +39,6 @@ export async function getNotify(id: string): Promise<GetNotifyPromise> {
 //Update
 export interface UpdateNotifyProps {
     notify: Notify;
-    newData: object;
 }
 
 interface UpdateNotifyPromise {
@@ -47,22 +46,17 @@ interface UpdateNotifyPromise {
     violations: IViolation[];
 }
 
-function parseNotifyToRequest(notify: Notify): object
-{
-    // TODO
-    return notify;
-}
-
 export async function updateNotify(props: UpdateNotifyProps): Promise<UpdateNotifyPromise> {
     let notifyUpdatePromise = {} as UpdateNotifyPromise;
+
+    const toPutNot = {
+        seenAt: props.notify.seenAt,
+    }
 
     await getApiClient().request(
         'PUT',
         `/notifications/${props.notify.id}`,
-        parseNotifyToRequest({
-            ...props.notify,
-            ...props.newData
-        }),
+        toPutNot,
         undefined,
         {
             Accept: 'application/json',

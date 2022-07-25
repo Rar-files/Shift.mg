@@ -29,25 +29,29 @@ const Invite: NextPage = () => {
     const [invState, setInvState] = useState<IMemberInvite | null>(null);
 
     const onAccept = () => {
-        memberInviteAccept(inviteId).then((promise) => {
-            onPutSuccess(promise);
+        memberInviteAccept(inviteId).then((promise) => {   
+
+            if(promise.status) {
+                router.push(`/events/${invState?.event.id}`);
+            }
+            else {
+                console.log("error");
+            }
         });
     };
 
     const onReject = () => {
         memberInviteDecline(inviteId).then((promise) => {
-            onPutSuccess(promise);
+
+            if(promise.status) {
+                router.push(`/`);
+            }
+            else {
+                console.log("error");
+            }
         })
     };
 
-    const onPutSuccess = (promise : UpdateMemberInvitePromise) => {
-        if(promise.status) {
-            router.push(`/events/${invState?.event.id}`);
-        }
-        else {
-            console.log("error");
-        }
-    };
 
     useEffect(() => {
         if (invState !== null || inviteId === undefined) {
@@ -55,7 +59,8 @@ const Invite: NextPage = () => {
         }
 
         getMemberInvite(inviteId).then((promise) => {
-            setInvState(promise.data);
+            if(promise.succeeded)
+                setInvState(promise.data);
         });
     }, [inviteId,invState, setInvState]);
 

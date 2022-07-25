@@ -124,9 +124,8 @@ const IconPickerInput: FC<Props> = ({ name, label }) => {
                             </DialogTitle>
                             <DialogContent>
                                 <Picker>
-                                    {iconState.loaded && iconState.data.items.map((element) => (
-                                        // eslint-disable-next-line react/jsx-key
-                                        <Icon color={theme.palette.primary} src={element.iconObject.contentUrl} onClick={() => {
+                                    {iconState.loaded && iconState.data.items.map((element, index) => (
+                                        <Icon key={index} color={theme.palette.primary} src={element.iconObject.contentUrl} onClick={() => {
                                             field.onChange(element);
                                             setShowPicker(false);
                                         }}/>

@@ -20,9 +20,6 @@ const Content = styled.div`
     align-items: center;    
 `;
 
-const LogoDiv = styled.div`
-`;
-
 const Logo = styled(Image)`
     cursor: pointer;
 `;
