@@ -20,6 +20,7 @@ import { DataGrid, GridColDef, GridRowData } from "@material-ui/data-grid";
 import useDarkMode from "use-dark-mode";
 import { INotify } from "../../interfaces/INotify";
 import router from "next/router";
+import { updateNotify } from "../../app/services/NotifyService";
 
 const Panel = styled.div`
     border-radius: 4px;
@@ -56,35 +57,23 @@ const UserPanel : FC = () => {
     }
   ];
 
-  const NotifyTests : INotify[] = [
-    {
-      id: "1",
-      message: 'Test 1',
-      type: "event_invite",
-      subject: 'Test 1',
-      user: '1',
-      createdAt: new Date('2020-01-02T03:04:05.678Z'),
-      seenAt: new Date('2020-01-02T03:04:05.678Z')
-    },
-    {
-      id: "2",
-      message: 'Test 2',
-      type: "event_invite",
-      subject: 'Test 2',
-      user: '1',
-      createdAt: new Date('2020-01-02T03:04:05.678Z'),
-      seenAt: new Date('2020-01-02T03:04:05.678Z')
-    },
-    {
-      id: "3",
-      message: 'Test 3',
-      type: "event_invite",
-      subject: 'Test 3',
-      user: '1',
-      createdAt: new Date('2020-01-02T03:04:05.678Z'),
-      seenAt: new Date('2020-01-02T03:04:05.678Z')
-    }
-  ];
+  const toUniqueNotifies = (notifies: INotify[]) => {
+    const result: INotify[] = [];
+
+    notifies.forEach(notify => {
+      if (!result.find(n => n.context === notify.context)) {
+        result.push(notify);
+      }
+      else{
+        deleteNotify(notify);
+      }
+    });
+    return result;
+  }
+
+  const deleteNotify = (notify: INotify) => {
+    return updateNotify({notify});
+  }
 
   const darkMode = useDarkMode();
   
@@ -93,11 +82,37 @@ const UserPanel : FC = () => {
   const [notifications, setNotifications] = useState<INotify[]>([]);
   const [notifyDialogOpen, setNotifyDialogOpen] = useState(false);
 
-  const goToInvite = (inviteId : string) => {
-    router.push(`/invite/${inviteId}`);
+  const getNotifiesCount = () => {
+    return notifications.filter(x => x.seenAt == null).length;
+  }
+
+  const goToInvite = (notify : INotify) => {
+
+    setNotifyDialogOpen(false);
+
+    const inviteRef = notify.context.invite_id;
+
+    if(inviteRef == "")
+      return;
+
+    const inviteID = inviteRef.split("/")[3];
+    
+    notify = {
+      ...notify, 
+      seenAt: new Date()
+    };
+
+    deleteNotify(notify).then((promise) => {
+      if(promise.succeeded)
+      {
+        router.push(`/invite/${inviteID}`);
+      }
+    });
+
+    console.log(notify);
   }
   
-  const updateNotify = useCallback(() => {
+  const updateNotifies = useCallback(() => {
     if(userState.loaded && userState.data) {
       getUserNotify(userState.data?.id as string).then(res => {
         if(res.succeeded && res.data) {
@@ -111,18 +126,18 @@ const UserPanel : FC = () => {
   
   useEffect(() => {
     const interval = setInterval(() => {
-      updateNotify();
+      updateNotifies();
     }, 5000);
     return () => {
       clearInterval(interval);
     }
-  }, [notifications.length, updateNotify])
+  }, [notifications.length, updateNotifies])
 
   return (
     <Panel>
       {userState.loaded
       && <IconButton size="medium" onClick={() => setNotifyDialogOpen(true)}>
-          <Badge badgeContent={notifications.length} color="secondary" overlap="rectangular">
+          <Badge badgeContent={getNotifiesCount()} color="secondary" overlap="rectangular">
             <NotificationsIcon/>
           </Badge>
         </IconButton> 
@@ -138,12 +153,12 @@ const UserPanel : FC = () => {
       <Dialog open={notifyDialogOpen}>
         <DialogTitle>Notifications</DialogTitle>
         <DialogContent>
-          {notifications.length != 0
-            ?notifications.map((notify, index) => {
-                if(notify.type == "event_invite")
+          {getNotifiesCount() != 0
+            ?toUniqueNotifies(notifications).map((notify, index) => {
+                if(notify.type == "event_invite" && notify.seenAt == null)
                 {
                   return (
-                    <Box key={index} onClick={() => goToInvite(notify.id)}>
+                    <Box key={index} onClick={() => goToInvite(notify)}>
                       <Typography variant="body1" color="primary">{notify.message}</Typography>
                     <Divider/>
                     </Box>
@@ -161,3 +176,7 @@ const UserPanel : FC = () => {
 }
 
 export default UserPanel;
+
+function UpdateNotifyProps(arg0: { notify: INotify; }, UpdateNotifyProps: any) {
+  throw new Error("Function not implemented.");
+}
