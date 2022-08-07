@@ -3,10 +3,10 @@ import {useGoogleLogin} from 'react-google-login';
 import styled from 'styled-components';
 import {auth} from "../../app/services/AuthService";
 import {useAppDispatch} from "../../app";
-import {authorize} from "../../features/authSlice";
+import {AuthCredentials, authorize} from "../../features/authSlice";
 
-type Props = {
-    setLoginData: Dispatch<SetStateAction<any>>
+interface LoginBtnProps {
+    inviteId? : string;
 }
 
 const GoogleBtn = styled.button`
@@ -27,14 +27,19 @@ const GoogleBtn = styled.button`
     }
 `;
 
-const LoginBtn = () => {
+const LoginBtn = (props: LoginBtnProps) => {
     const dispatch = useAppDispatch();
 
     const onFailure = (result : any) => {
     };
 
     const onSuccess = async (googleData : any) => {
-        dispatch(authorize(googleData.code));
+        const credentials = {authorizationCode: googleData.code} as AuthCredentials;
+        if (props.inviteId) {
+            credentials.inviteId = props.inviteId;
+        }
+
+        dispatch(authorize(credentials));
     };
 
     const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string;

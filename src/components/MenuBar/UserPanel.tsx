@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react"; 
+import { FC, useCallback, useEffect, useState } from "react";
 import {useAppDispatch, useAppSelector} from "../../app";
 import styled from "styled-components";
 import { getUserNotify } from "../../app/services/UserService";
@@ -14,13 +14,14 @@ import {
   DialogTitle,
   Divider,
   Grid,
-  Typography
+  Typography, Avatar, Tooltip
 } from "@material-ui/core";
 import { DataGrid, GridColDef, GridRowData } from "@material-ui/data-grid";
 import useDarkMode from "use-dark-mode";
 import { INotify } from "../../interfaces/INotify";
 import router from "next/router";
 import { updateNotify } from "../../app/services/NotifyService";
+import AccountMenu from "./UserPanel/AccountMenu";
 
 const Panel = styled.div`
     border-radius: 4px;
@@ -76,7 +77,7 @@ const UserPanel : FC = () => {
   }
 
   const darkMode = useDarkMode();
-  
+
   const userState = useAppSelector(state => state.user)
 
   const [notifications, setNotifications] = useState<INotify[]>([]);
@@ -96,9 +97,9 @@ const UserPanel : FC = () => {
       return;
 
     const inviteID = inviteRef.split("/")[3];
-    
+
     notify = {
-      ...notify, 
+      ...notify,
       seenAt: new Date()
     };
 
@@ -111,7 +112,7 @@ const UserPanel : FC = () => {
 
     console.log(notify);
   }
-  
+
   const updateNotifies = useCallback(() => {
     if(userState.loaded && userState.data) {
       getUserNotify(userState.data?.id as string).then(res => {
@@ -123,7 +124,7 @@ const UserPanel : FC = () => {
   }, [userState.data, userState.loaded])
 
   // console.log(notifications);
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       updateNotifies();
@@ -133,44 +134,53 @@ const UserPanel : FC = () => {
     }
   }, [notifications.length, updateNotifies])
 
+  let userPart = null;
+
+  if (userState.loaded) {
+    userPart = (
+        <>
+          <AccountMenu />
+
+          <IconButton size="medium" onClick={() => setNotifyDialogOpen(true)}>
+            <Badge badgeContent={getNotifiesCount()} color="secondary" overlap="rectangular">
+              <NotificationsIcon/>
+            </Badge>
+          </IconButton>
+
+          <Dialog open={notifyDialogOpen}>
+            <DialogTitle>Notifications</DialogTitle>
+            <DialogContent>
+              {getNotifiesCount() != 0
+                  ?toUniqueNotifies(notifications).map((notify, index) => {
+                    if(notify.type == "event_invite" && notify.seenAt == null)
+                    {
+                      return (
+                          <Box key={index} onClick={() => goToInvite(notify)}>
+                            <Typography variant="body1" color="primary">{notify.message}</Typography>
+                            <Divider/>
+                          </Box>
+                      )
+                    }})
+                  : <Typography variant="body1">No notifications</Typography>
+              }
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setNotifyDialogOpen(false)}>Close</Button>
+            </DialogActions>
+          </Dialog>
+        </>
+    );
+  }
+
   return (
     <Panel>
-      {userState.loaded
-      && <IconButton size="medium" onClick={() => setNotifyDialogOpen(true)}>
-          <Badge badgeContent={getNotifiesCount()} color="secondary" overlap="rectangular">
-            <NotificationsIcon/>
-          </Badge>
-        </IconButton> 
-      }
+      {userPart}
 
       <IconButton size="medium" onClick={darkMode.toggle}>
-      {darkMode.value 
+      {darkMode.value
             ? <DarkModeIcon/>
             : <LightModeIcon/>}
       </IconButton>
-
-
-      <Dialog open={notifyDialogOpen}>
-        <DialogTitle>Notifications</DialogTitle>
-        <DialogContent>
-          {getNotifiesCount() != 0
-            ?toUniqueNotifies(notifications).map((notify, index) => {
-                if(notify.type == "event_invite" && notify.seenAt == null)
-                {
-                  return (
-                    <Box key={index} onClick={() => goToInvite(notify)}>
-                      <Typography variant="body1" color="primary">{notify.message}</Typography>
-                    <Divider/>
-                    </Box>
-                  )
-                }})
-            : <Typography variant="body1">No notifications</Typography>
-          }
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setNotifyDialogOpen(false)}>Close</Button>
-        </DialogActions>
-      </Dialog>
     </Panel>
   );
 }

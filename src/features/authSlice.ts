@@ -13,6 +13,7 @@ export enum AuthStatus {
 
 export interface AuthCredentials {
     authorizationCode: string;
+    inviteId?: string;
 }
 
 interface AuthState {
@@ -82,10 +83,9 @@ export const checkIsTokenStored = (): ThunkAction<Promise<void>, TAppState, any,
     }
 }
 
-export const authorize = (authorizationCode: string): ThunkAction<Promise<void>, TAppState, any, AnyAction> => {
+export const authorize = (credentials: AuthCredentials): ThunkAction<Promise<void>, TAppState, any, AnyAction> => {
     return async (dispatch: TDispatch): Promise<void> => {
         return new Promise<void>((resolve) => {
-            const credentials = {authorizationCode: authorizationCode};
             dispatch(setCredentials(credentials));
 
             AuthService.auth(credentials).then((value => {

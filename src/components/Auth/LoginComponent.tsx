@@ -45,14 +45,14 @@ const Logo = styled(Image)`
 `;
 
 type LoginComponentProps = {
-    pathToPush?: string;
+    inviteId? : string;
 }
 
 const LoginComponent: FC<LoginComponentProps> = (props) => {
     const router = useRouter();
     const authState = useAppSelector(state => state.auth);
 
-    const path = props.pathToPush ? props.pathToPush : "";
+    const path = props.inviteId ? `invite/${props.inviteId}` : '';
 
     useEffect(() => {
         if (authState.status === AuthStatus.AUTHORIZED) {
@@ -69,7 +69,7 @@ const LoginComponent: FC<LoginComponentProps> = (props) => {
                                 <Logo src="/images/IconWithName.svg" alt="logo" width={128} height={128}/>
                             </GridMember>
                             <GridMember>
-                                <LoginBtn/>
+                                <LoginBtn inviteId={props.inviteId && props.inviteId}/>
                             </GridMember>
                         </Content>
                     </Background>

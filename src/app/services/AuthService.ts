@@ -20,10 +20,15 @@ export interface JwtTokenData {
 export async function auth(credentials: AuthCredentials): Promise<AuthPromise> {
     let authPromise = {succeeded: false} as AuthPromise;
 
+    const data = {authorization_code: credentials.authorizationCode} as any;
+    if (credentials.inviteId) {
+        data.invite_id = credentials.inviteId;
+    }
+
     await getApiClient().request(
         'POST',
         '/auth/login',
-        {authorization_code: credentials.authorizationCode},
+        data,
         {noAuth: true}
     )
         .then((response) => {
