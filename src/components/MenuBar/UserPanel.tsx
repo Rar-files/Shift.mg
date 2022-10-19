@@ -136,10 +136,10 @@ const UserPanel : FC = () => {
 
   let userPart = null;
 
-  if (userState.loaded) {
+  if (userState.loaded && userState.data) {
     userPart = (
         <>
-          <AccountMenu />
+          <AccountMenu user={userState.data} />
 
           <IconButton size="medium" onClick={() => setNotifyDialogOpen(true)}>
             <Badge badgeContent={getNotifiesCount()} color="secondary" overlap="rectangular">
