@@ -21,10 +21,21 @@ const Content = styled.div`
     align-items: center;    
 `;
 
+const MenuBarDiv = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+`;
+
+const LogoDiv = styled.div`
+    height: 90%;
+    width: 90%;
+`;
+
 const Logo = styled(Image)`
     cursor: pointer;
 `;
-
 
 const MenuBar: FC = () => {
 
@@ -34,11 +45,18 @@ const MenuBar: FC = () => {
 
     return (
         <Content>
-
-            <Logo src={logoIcon} alt="logo" width={46} height={52} onClick={onLogoClick}/>
             
-            <Menu/>
-            <UserPanel/>
+            <MenuBarDiv>
+                <LogoDiv>
+                    <Logo src={logoIcon} alt="logo" width="100%" height="100%" layout="responsive" objectFit="contain" onClick={onLogoClick}/>
+                </LogoDiv>
+
+                <Menu/>
+            </MenuBarDiv>
+            
+            <MenuBarDiv>
+                <UserPanel/>
+            </MenuBarDiv>
         </Content>
     )
 };
