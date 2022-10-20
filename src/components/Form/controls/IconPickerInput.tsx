@@ -8,6 +8,7 @@ import InputContainer from "./InputContainer";
 import { ThemeContext } from "styled-components";
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import router from "next/router";
+import Image from "next/image";
 
 const IconInputWithErrorDiv = styled(InputContainer)`
     display: flex;
@@ -38,7 +39,7 @@ const Icon = styled.img<{
     height: 2.2rem;
     margin: 0.2rem;
     cursor: pointer;
-    filter: opacity(0.5) drop-shadow(0em 0 3px ${props => props.color});
+    filter: contrast(0%) brightness(200%) drop-shadow(0em 0 3px ${props => props.color});
 `;
 
 const Picker = styled.div`
@@ -113,26 +114,28 @@ const IconPickerInput: FC<Props> = ({ name, label }) => {
                                 {label}
                             </IconLabel>
                         </FormLabel>
+
                         {showPicker &&
-                        <Dialog
-                            open={showPicker}
-                            onClose={() => setShowPicker(false)}
-                            aria-labelledby="ColorPicker"
-                        >
-                            <DialogTitle>
-                                {"Choose icon"}
-                            </DialogTitle>
-                            <DialogContent>
-                                <Picker>
-                                    {iconState.loaded && iconState.data.items.map((element, index) => (
-                                        <Icon key={index} color={theme.palette.primary} src={element.iconObject.contentUrl} onClick={() => {
-                                            field.onChange(element);
-                                            setShowPicker(false);
-                                        }}/>
-                                    ))}
-                                 </Picker>
-                            </DialogContent>
-                        </Dialog>}
+                            <Dialog
+                                open={showPicker}
+                                onClose={() => setShowPicker(false)}
+                                aria-labelledby="ColorPicker"
+                            >
+                                <DialogTitle>
+                                    {"Choose icon"}
+                                </DialogTitle>
+                                <DialogContent>
+                                    <Picker>
+                                        {iconState.loaded && iconState.data.items.map((element, index) => (
+                                            <Icon key={index} color={theme.palette.primary} src={element.iconObject.contentUrl} onClick={() => {
+                                                field.onChange(element);
+                                                setShowPicker(false);
+                                            }}/>
+                                        ))}
+                                    </Picker>
+                                </DialogContent>
+                            </Dialog>
+                        }
                         <IconTrigger onClick={() => setShowPicker(!showPicker)}>
                             {field.value
                             ? <Icon color={theme.palette.primary} src={field.value.iconObject.contentUrl}/>

@@ -58,7 +58,6 @@ const CalendarComponent: FC = () => {
     const [eventsList, setEventsList] = useState<ICalendarEvent[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const onRangeChange = (range: Date[] | {start: Date, end: Date}) => {
         setLoading(true);
         let filters: GetUserEventsFilters = {
@@ -96,7 +95,8 @@ const CalendarComponent: FC = () => {
         const lastVisibleDay = DateTime.fromJSDate(new Date()).endOf('month').endOf('week');
 
         onRangeChange({start: firstVisibleDay.toJSDate(), end: lastVisibleDay.toJSDate()});
-    }, [onRangeChange, userState.loaded]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userState.loaded]);
 
     return (
         <main>

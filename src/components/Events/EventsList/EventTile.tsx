@@ -80,7 +80,7 @@ const EventIcon = styled.img<{
     width: 64%;
     color: ${props => props.color};
     cursor: pointer;
-    filter: opacity(0.8) drop-shadow(0em 0 0px ${props => props.color});
+    filter: contrast(0%) brightness(0%) opacity(45%) drop-shadow(0em 0 0px ${props => props.color});
 `;
 
 const Title = styled.h1<{

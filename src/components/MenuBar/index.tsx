@@ -48,7 +48,7 @@ const MenuBar: FC = () => {
             
             <MenuBarDiv>
                 <LogoDiv>
-                    <Logo src={logoIcon} alt="logo" width="100%" height="100%" layout="responsive" objectFit="contain" onClick={onLogoClick}/>
+                    <Logo src={logoIcon} priority alt="logo" width="100%" height="100%" layout="responsive" objectFit="contain" onClick={onLogoClick}/>
                 </LogoDiv>
 
                 <Menu/>

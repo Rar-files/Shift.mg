@@ -23,8 +23,12 @@ import { useAppSelector } from '../../app';
 import EventInviteDialog from "../../components/Events/EventInviteDialog/EventInviteDialog";
 import {getRolesForEvent} from "../../app/services/event/RoleService";
 import EventAddRoleDialog from "../../components/Events/EventAddRoleDialog/EventAddRoleDialog";
+import styled from 'styled-components';
 
-
+const EventDiv = styled.div`
+    overflow: auto;
+    height: 100vh;
+`;
 
 interface EventDetailsState {
     event: IEvent | null;
@@ -119,7 +123,7 @@ const Event: NextPage = () => {
                     </Button>
                 );
             }
-          }
+        }
     ];
 
     let memberRows: GridRowData[] = [];
@@ -149,104 +153,107 @@ const Event: NextPage = () => {
 
     return (
         <main>
-            {state.event === null &&
-                <Loading/>
-            }
-            {state.event !== null &&
-                <Container>
-                    <Box marginTop={'20px'}>
-                        <Paper elevation={3}>
-                            <Box padding={'20px'}>
-                                <Typography>{state.event?.name}</Typography>
-                            </Box>
-                            <Divider />
-                            <Box padding={'20px'}>
-                                <Grid container spacing={3}>
-                                    <Grid item xs={6} sm={3}>
-                                        <Typography>Start time</Typography>
+            <EventDiv>
+                {state.event === null &&
+                    <Loading/>
+                }
+                {state.event !== null &&
+                    <Container>
+                        <Box marginTop={'20px'} marginBottom={'20px'}>
+                            <Paper elevation={3}>
+                                <Box padding={'20px'}>
+                                    <Typography>{state.event?.name}</Typography>
+                                </Box>
+                                <Divider />
+                                <Box padding={'20px'}>
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={6} sm={3}>
+                                            <Typography>Start time</Typography>
+                                        </Grid>
+                                        <Grid item xs={6} sm={9}>
+                                            <Typography>{state.event?.startDate}</Typography>
+                                        </Grid>
+                                        <Grid item xs={6} sm={3}>
+                                            <Typography>End time</Typography>
+                                        </Grid>
+                                        <Grid item xs={6} sm={9}>
+                                            <Typography>{state.event?.endDate}</Typography>
+                                        </Grid>
+                                        <Grid item xs={6} sm={3}>
+                                            <Typography>Localization</Typography>
+                                        </Grid>
+                                        <Grid item xs={6} sm={9}>
+                                            <Typography>{state.event?.location}</Typography>
+                                        </Grid>
+                                        <Grid item xs={6} sm={3}>
+                                            <Typography>Description</Typography>
+                                        </Grid>
+                                        <Grid item xs={6} sm={9}>
+                                            <Typography>{state.event?.description}</Typography>
+                                        </Grid>
+                                        <Grid item xs={6} sm={3}>
+                                            <Typography>Shifts?</Typography>
+                                        </Grid>
+                                        <Grid item xs={6} sm={9}>
+                                            <Typography>{state.event?.shiftsEnabled ? "Tak" : "Nie"}</Typography>
+                                        </Grid>
                                     </Grid>
-                                    <Grid item xs={6} sm={9}>
-                                        <Typography>{state.event?.startDate}</Typography>
-                                    </Grid>
-                                    <Grid item xs={6} sm={3}>
-                                        <Typography>End time</Typography>
-                                    </Grid>
-                                    <Grid item xs={6} sm={9}>
-                                        <Typography>{state.event?.endDate}</Typography>
-                                    </Grid>
-                                    <Grid item xs={6} sm={3}>
-                                        <Typography>Localization</Typography>
-                                    </Grid>
-                                    <Grid item xs={6} sm={9}>
-                                        <Typography>{state.event?.location}</Typography>
-                                    </Grid>
-                                    <Grid item xs={6} sm={3}>
-                                        <Typography>Description</Typography>
-                                    </Grid>
-                                    <Grid item xs={6} sm={9}>
-                                        <Typography>{state.event?.description}</Typography>
-                                    </Grid>
-                                    <Grid item xs={6} sm={3}>
-                                        <Typography>Shifts?</Typography>
-                                    </Grid>
-                                    <Grid item xs={6} sm={9}>
-                                        <Typography>{state.event?.shiftsEnabled ? "Tak" : "Nie"}</Typography>
-                                    </Grid>
-                                </Grid>
-                            </Box>
-                            <Divider />
-                            <Box padding={'20px'} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Typography color={"secondary"}>Members</Typography>
-                                <Button variant="contained" color="primary" size="small" onClick={() => setInviteOpen(true)}>
-                                    <AddBoxIcon fontSize="small" />
-                                    Invite
-                                </Button>
-                                <EventInviteDialog open={inviteOpen} eventId={state.event.id} onClose={() => setInviteOpen(false)} />
-                            </Box>
-                            <Divider />
-                            <Box padding={'20px'} style={{height: 250}}>
-                                {state.members === null &&
-                                    <Loading/>
-                                }
-                                {state.members !== null &&
-                                    <DataGrid
-                                        rows={memberRows}
-                                        columns={columns}
-                                        checkboxSelection
-                                        disableSelectionOnClick
-                                        onSelectionModelChange={(ids) => {
-                                          setSelectionModel(ids);
-                                        }}
-                                    />
-                                }
-                            </Box>
-                            <Divider />
-                            <Box padding={'20px'} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Typography color={"secondary"}>Roles</Typography>
-                                <Button variant="contained" color="primary" size="small" onClick={() => setAddRoleOpen(true)}>
-                                    <AddBoxIcon fontSize="small" />
-                                    Create
-                                </Button>
-                                <EventAddRoleDialog open={addRoleOpen} eventId={state.event.id} onClose={onAddRoleDialogClose} />
-                            </Box>
-                            <Divider />
-                            <Box padding={'20px'} style={{height: 250}}>
-                                {state.roles === null &&
-                                    <Loading/>
-                                }
-                                {state.roles !== null &&
-                                    <DataGrid
-                                        rows={roleRows}
-                                        columns={roleColumns}
-                                        checkboxSelection
-                                        disableSelectionOnClick
-                                    />
-                                }
-                            </Box>
-                        </Paper>
-                    </Box>
-                </Container>
-            }
+                                </Box>
+                                <Divider />
+                                <Box padding={'20px'} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                                    <Typography color={"secondary"}>Members</Typography>
+                                    <Button variant="contained" color="primary" size="small" onClick={() => setInviteOpen(true)}>
+                                        <AddBoxIcon fontSize="small" />
+                                        Invite
+                                    </Button>
+                                    <EventInviteDialog open={inviteOpen} eventId={state.event.id} onClose={() => setInviteOpen(false)} />
+                                </Box>
+                                <Divider />
+                                <Box padding={'20px'} style={{height: 250}}>
+                                    {state.members === null &&
+                                        <Loading/>
+                                    }
+                                    {state.members !== null &&
+                                        <DataGrid
+                                            rows={memberRows}
+                                            columns={columns}
+                                            checkboxSelection
+                                            disableSelectionOnClick
+                                            onSelectionModelChange={(ids) => {
+                                                setSelectionModel(ids);
+                                            }}
+                                        />
+                                    }
+                                </Box>
+                                <Divider />
+                                <Box padding={'20px'} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                                    <Typography color={"secondary"}>Roles</Typography>
+                                    <Button variant="contained" color="primary" size="small" onClick={() => setAddRoleOpen(true)}>
+                                        <AddBoxIcon fontSize="small" />
+                                        Create
+                                    </Button>
+                                    <EventAddRoleDialog open={addRoleOpen} eventId={state.event.id} onClose={onAddRoleDialogClose} />
+                                </Box>
+                                <Divider />
+                                <Box padding={'20px'} style={{height: 250}}>
+                                    {state.roles === null &&
+                                        <Loading/>
+                                    }
+                                    {state.roles !== null &&
+                                        <DataGrid
+                                            rows={roleRows}
+                                            columns={roleColumns}
+                                            checkboxSelection
+                                            disableSelectionOnClick
+                                        />
+                                    }
+                                </Box>
+                            </Paper>
+                        </Box>
+                    </Container>
+                }
+            
+            </EventDiv>
         </main>
     )
 }

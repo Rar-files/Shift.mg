@@ -13,8 +13,8 @@ type AccountMenuProps = {
 const UserAvatar = styled(Avatar)<{
     color: string;
 }>`
-    width: 32;
-    height: 32;
+    width: 28;
+    height: 28;
     padding: 4;
     border: 3px solid ${props => props.color};
 `;
@@ -31,8 +31,6 @@ const AccountMenu: FC<AccountMenuProps> = (props) => {
     };
 
     const userBackgroundColor = '#' + props.user.id.slice(0, 6);
-
-    console.log(userBackgroundColor);
 
     const displayName = props.user.displayName.toUpperCase().split(' ');
     let initials = displayName[0][0];
