@@ -156,7 +156,7 @@ export interface DeleteRolePromise {
     violations: IViolation[];
 }
 
-export async function deleteRole(id: string): Promise<DeleteRolePromise> {
+export async function DeleteRole(id: string): Promise<DeleteRolePromise> {
     let deleteRolePromise = {succeeded: false} as DeleteRolePromise;
 
     await getApiClient().request(

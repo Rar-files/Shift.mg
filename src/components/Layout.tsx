@@ -21,7 +21,8 @@ const Content = styled.div`
   align-items: center;
   width: 100%;
   min-height: 100vh;
-  font-family: &{props => props.theme.typography.fontFamily};
+  overflow: auto;
+  font-family: ${props => props.theme.typography.fontFamily};
 `;
 
 const Layout : FC = ({children}) => {

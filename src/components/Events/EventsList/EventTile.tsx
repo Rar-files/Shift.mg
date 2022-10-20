@@ -57,6 +57,7 @@ const Column = styled.div`
 
 const LeftColumn = styled(Column)`
     width: 24%;
+    padding-right: 6px;
     border-right: 1px solid ${props => props.theme.palette.divider};
 `;
 
@@ -80,7 +81,7 @@ const EventIcon = styled.img<{
     width: 64%;
     color: ${props => props.color};
     cursor: pointer;
-    filter: contrast(0%) brightness(0%) opacity(45%) drop-shadow(0em 0 0px ${props => props.color});
+    filter: contrast(0%) brightness(40%) opacity(50%) drop-shadow(0em 0 0px ${props => props.color});
 `;
 
 const Title = styled.h1<{
@@ -120,6 +121,8 @@ const RestOfDate = styled.div`
 
 const Description = styled.div`
     margin: 0.2rem 0.4rem;
+    display:flex;
+    align-items: center;
     padding: 0px;
     width: 100%;
     height: 100%;

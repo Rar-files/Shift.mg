@@ -19,15 +19,18 @@ import {DeleteMember, getMembersForEvent} from "../../app/services/event/MemberS
 import {DataGrid, GridColDef, GridRowData, GridSelectionModel} from "@material-ui/data-grid";
 import {AddBox as AddBoxIcon, Delete as DeleteIcon} from "@material-ui/icons/";
 import {IRole} from "../../interfaces/IRole";
-import { useAppSelector } from '../../app';
 import EventInviteDialog from "../../components/Events/EventInviteDialog/EventInviteDialog";
-import {getRolesForEvent} from "../../app/services/event/RoleService";
+import {DeleteRole, getRolesForEvent} from "../../app/services/event/RoleService";
 import EventAddRoleDialog from "../../components/Events/EventAddRoleDialog/EventAddRoleDialog";
 import styled from 'styled-components';
 
 const EventDiv = styled.div`
     overflow: auto;
     height: 100vh;
+`;
+
+const ButtonSeperator = styled.div`
+    padding: 6px;
 `;
 
 interface EventDetailsState {
@@ -43,8 +46,9 @@ const Event: NextPage = () => {
 
     const [state, setState] = useState<EventDetailsState>({event: null, members: null, roles: null} as EventDetailsState);
 
-    const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
-
+    const [selectionMembers, setSelectionMembers] = useState<GridSelectionModel>([]);
+    const [selectionRoles, setSelectionRoles] = useState<GridSelectionModel>([]);
+    
     /* DIALOG OPEN STATES */
     const [inviteOpen, setInviteOpen] = useState(false);
     const [addRoleOpen, setAddRoleOpen] = useState(false);
@@ -56,6 +60,38 @@ const Event: NextPage = () => {
             setState({...state, roles: null});
         }
     };
+
+    const deleteSelectedMembers = () => {
+        const selectedIDs = new Set(selectionMembers);
+        
+        selectedIDs.forEach((id) => {
+            DeleteMember(id as string).then((promise) => {
+                if(!promise.succeeded)
+                {
+                    console.log(promise);
+                }
+            });
+        });
+
+        window.location.reload()
+    }
+
+    const deleteSelectedRoles = () => {
+        const selectedIDs = new Set(selectionRoles);
+        
+        selectedIDs.forEach((id) => {
+            DeleteRole(id as string).then((promise) => {
+                if(!promise.succeeded)
+                {
+                    console.log(promise);
+                }
+            });
+        });
+
+        window.location.reload()
+    }
+
+    console.log(selectionRoles)
 
     useEffect(() => {
         if (state.event !== null || eventId === undefined) {
@@ -96,34 +132,34 @@ const Event: NextPage = () => {
             width: 110,
             editable: true,
         },
-        {
-            field: "delete",
-            width: 75,
-            sortable: false,
-            disableColumnMenu: true,
-            renderHeader: () => {
-                return (
-                    <Button
-                        onClick={() => {
-                            const selectedIDs = new Set(selectionModel);
+        // {
+        //     field: "delete",
+        //     width: 75,
+        //     sortable: false,
+        //     disableColumnMenu: true,
+        //     renderHeader: () => {
+        //         return (
+        //             <Button
+        //                 onClick={() => {
+        //                     const selectedIDs = new Set(selectionModel);
                             
-                            selectedIDs.forEach((id) => {
-                                DeleteMember(id as string).then((promise) => {
-                                    if(!promise.succeeded)
-                                    {
-                                        console.log(promise);
-                                    }
-                                });
-                            });
+        //                     selectedIDs.forEach((id) => {
+        //                         DeleteMember(id as string).then((promise) => {
+        //                             if(!promise.succeeded)
+        //                             {
+        //                                 console.log(promise);
+        //                             }
+        //                         });
+        //                     });
 
-                            window.location.reload()
-                        }}>
+        //                     window.location.reload()
+        //                 }}>
                             
-                        <DeleteIcon />
-                    </Button>
-                );
-            }
-        }
+        //                 <DeleteIcon />
+        //             </Button>
+        //         );
+        //     }
+        // }
     ];
 
     let memberRows: GridRowData[] = [];
@@ -195,18 +231,27 @@ const Event: NextPage = () => {
                                             <Typography>Shifts?</Typography>
                                         </Grid>
                                         <Grid item xs={6} sm={9}>
-                                            <Typography>{state.event?.shiftsEnabled ? "Tak" : "Nie"}</Typography>
+                                            <Typography>{state.event?.shiftsEnabled ? "Yes" : "No"}</Typography>
                                         </Grid>
                                     </Grid>
                                 </Box>
                                 <Divider />
                                 <Box padding={'20px'} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                                     <Typography color={"secondary"}>Members</Typography>
-                                    <Button variant="contained" color="primary" size="small" onClick={() => setInviteOpen(true)}>
-                                        <AddBoxIcon fontSize="small" />
-                                        Invite
-                                    </Button>
-                                    <EventInviteDialog open={inviteOpen} eventId={state.event.id} onClose={() => setInviteOpen(false)} />
+                                    <Box style={{display: 'flex', flexDirection: 'row'}}>
+                                        {selectionMembers.length > 0 && <Button variant="contained" color="primary" size="small" onClick={() => deleteSelectedMembers()}>
+                                            <DeleteIcon fontSize="small" />
+                                            Delete
+                                        </Button>
+                                        }
+                                        <ButtonSeperator/>
+
+                                        <Button variant="contained" color="primary" size="small" onClick={() => setInviteOpen(true)}>
+                                            <AddBoxIcon fontSize="small" />
+                                            Invite
+                                        </Button>
+                                        <EventInviteDialog open={inviteOpen} eventId={state.event.id} onClose={() => setInviteOpen(false)} />
+                                    </Box>
                                 </Box>
                                 <Divider />
                                 <Box padding={'20px'} style={{height: 250}}>
@@ -220,7 +265,7 @@ const Event: NextPage = () => {
                                             checkboxSelection
                                             disableSelectionOnClick
                                             onSelectionModelChange={(ids) => {
-                                                setSelectionModel(ids);
+                                                setSelectionMembers(ids);
                                             }}
                                         />
                                     }
@@ -228,10 +273,19 @@ const Event: NextPage = () => {
                                 <Divider />
                                 <Box padding={'20px'} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                                     <Typography color={"secondary"}>Roles</Typography>
-                                    <Button variant="contained" color="primary" size="small" onClick={() => setAddRoleOpen(true)}>
-                                        <AddBoxIcon fontSize="small" />
-                                        Create
-                                    </Button>
+                                    <Box style={{display: 'flex', flexDirection: 'row'}}>
+                                        {selectionRoles.length > 0 && <Button variant="contained" color="primary" size="small" onClick={() => deleteSelectedRoles()}>
+                                            <DeleteIcon fontSize="small" />
+                                            Delete
+                                        </Button>
+                                        }
+                                        <ButtonSeperator/>
+
+                                        <Button variant="contained" color="primary" size="small" onClick={() => setAddRoleOpen(true)}>
+                                            <AddBoxIcon fontSize="small" />
+                                            Create
+                                        </Button>
+                                    </Box>
                                     <EventAddRoleDialog open={addRoleOpen} eventId={state.event.id} onClose={onAddRoleDialogClose} />
                                 </Box>
                                 <Divider />
@@ -245,6 +299,9 @@ const Event: NextPage = () => {
                                             columns={roleColumns}
                                             checkboxSelection
                                             disableSelectionOnClick
+                                            onSelectionModelChange={(ids) => {
+                                                setSelectionRoles(ids);
+                                            }}
                                         />
                                     }
                                 </Box>
