@@ -35,7 +35,6 @@ const Invite: NextPage = () => {
                 router.push(`/events/${invState?.event.id}`);
             }
             else {
-                console.log("error");
             }
         });
     };
@@ -47,7 +46,6 @@ const Invite: NextPage = () => {
                 router.push(`/`);
             }
             else {
-                console.log("error");
             }
         })
     };

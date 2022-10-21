@@ -67,7 +67,7 @@ const Event: NextPage = () => {
             color: data.color.toUpperCase(),
             shiftsEnabled: data.shifts,
             description: data.description,
-            icon: data.icon!,
+            icon: "/api/event_icons/" + data.icon!.id,
             startDate: data.startDate,
             endDate: data.endDate,
             location: data.location,

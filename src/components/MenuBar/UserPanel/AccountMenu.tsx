@@ -62,7 +62,7 @@ const AccountMenu: FC<AccountMenuProps> = (props) => {
                 transformOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
             >
-                <MenuItem>
+                <MenuItem onClick={() => router.push('/user/settings')}>
                     <ListItemIcon>
                         <Settings fontSize="small" />
                     </ListItemIcon>

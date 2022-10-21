@@ -182,7 +182,6 @@ export async function CreateEventInvite(eventId: string, invite : EventInviteDto
         }
     )
         .then((response) => {
-            console.log(response);
             eventInvitePromise.succeeded = true;
             eventInvitePromise.data = response.data;
         })

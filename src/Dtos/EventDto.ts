@@ -20,7 +20,7 @@ export const ToEventDto = (event: IEvent): EventDto => {
         startDate: event.startDate,
         endDate: event.endDate,
         location: event.location,
-        icon:  "/api/event_icons/" + event.icon.id,
+        icon: event.icon,
         color: event.color,
         shiftsEnabled: event.shiftsEnabled,
         description: event.description,

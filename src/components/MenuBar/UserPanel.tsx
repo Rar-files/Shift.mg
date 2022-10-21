@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useState } from "react";
-import {useAppDispatch, useAppSelector} from "../../app";
+import {useAppSelector} from "../../app";
 import styled from "styled-components";
 import { getUserNotify } from "../../app/services/UserService";
 import {Notifications as NotificationsIcon, WbSunnyOutlined as LightModeIcon, NightsStayOutlined as DarkModeIcon} from "@material-ui/icons/"
@@ -16,7 +16,6 @@ import {
   Grid,
   Typography, Avatar, Tooltip
 } from "@material-ui/core";
-import { DataGrid, GridColDef, GridRowData } from "@material-ui/data-grid";
 import useDarkMode from "use-dark-mode";
 import { INotify } from "../../interfaces/INotify";
 import router from "next/router";
@@ -34,29 +33,6 @@ const Panel = styled.div`
 `;
 
 const UserPanel : FC = () => {
-
-  const columns: GridColDef[] = [
-    {
-        field: 'id',
-        headerName: 'ID',
-        width: 150,
-        editable: false,
-    },
-    {
-        field: 'message',
-        headerName: 'Message',
-        width: 150,
-        editable: false,
-    },
-    {
-        field: 'createdAt',
-        headerName: 'CreatedAt',
-        width: 102,
-        editable: false,
-        type: 'date',
-        valueGetter: ({ value }) => value && new Date(value as string)
-    }
-  ];
 
   const toUniqueNotifies = (notifies: INotify[]) => {
     const result: INotify[] = [];
@@ -109,8 +85,6 @@ const UserPanel : FC = () => {
         router.push(`/invite/${inviteID}`);
       }
     });
-
-    console.log(notify);
   }
 
   const updateNotifies = useCallback(() => {
@@ -122,8 +96,6 @@ const UserPanel : FC = () => {
       });
     }
   }, [userState.data, userState.loaded])
-
-  // console.log(notifications);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -178,8 +150,8 @@ const UserPanel : FC = () => {
 
       <IconButton size="medium" onClick={darkMode.toggle}>
       {darkMode.value
-            ? <DarkModeIcon/>
-            : <LightModeIcon/>}
+      ? <DarkModeIcon/>
+      : <LightModeIcon/>}
       </IconButton>
     </Panel>
   );

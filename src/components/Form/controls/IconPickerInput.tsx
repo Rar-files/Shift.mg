@@ -39,7 +39,7 @@ const Icon = styled.img<{
     height: 2.2rem;
     margin: 0.2rem;
     cursor: pointer;
-    filter: contrast(0%) brightness(200%) drop-shadow(0em 0 3px ${props => props.color});
+    filter: contrast(0%) brightness(40%) opacity(50%) drop-shadow(0em 0 0px ${props => props.color});
 `;
 
 const Picker = styled.div`
@@ -127,7 +127,7 @@ const IconPickerInput: FC<Props> = ({ name, label }) => {
                                 <DialogContent>
                                     <Picker>
                                         {iconState.loaded && iconState.data.items.map((element, index) => (
-                                            <Icon key={index} color={theme.palette.primary} src={element.iconObject.contentUrl} onClick={() => {
+                                            <Icon key={index} color={theme.palette.primary.main} src={element.iconObject.contentUrl} onClick={() => {
                                                 field.onChange(element);
                                                 setShowPicker(false);
                                             }}/>
@@ -138,7 +138,7 @@ const IconPickerInput: FC<Props> = ({ name, label }) => {
                         }
                         <IconTrigger onClick={() => setShowPicker(!showPicker)}>
                             {field.value
-                            ? <Icon color={theme.palette.primary} src={field.value.iconObject.contentUrl}/>
+                            ? <Icon color={theme.palette.primary.main} src={field.value.iconObject.contentUrl}/>
                             : "Pick"
                         }
                         </IconTrigger>

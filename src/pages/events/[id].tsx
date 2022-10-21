@@ -68,7 +68,6 @@ const Event: NextPage = () => {
             DeleteMember(id as string).then((promise) => {
                 if(!promise.succeeded)
                 {
-                    console.log(promise);
                 }
             });
         });
@@ -83,15 +82,12 @@ const Event: NextPage = () => {
             DeleteRole(id as string).then((promise) => {
                 if(!promise.succeeded)
                 {
-                    console.log(promise);
                 }
             });
         });
 
         window.location.reload()
     }
-
-    console.log(selectionRoles)
 
     useEffect(() => {
         if (state.event !== null || eventId === undefined) {
@@ -131,35 +127,7 @@ const Event: NextPage = () => {
             type: 'number',
             width: 110,
             editable: true,
-        },
-        // {
-        //     field: "delete",
-        //     width: 75,
-        //     sortable: false,
-        //     disableColumnMenu: true,
-        //     renderHeader: () => {
-        //         return (
-        //             <Button
-        //                 onClick={() => {
-        //                     const selectedIDs = new Set(selectionModel);
-                            
-        //                     selectedIDs.forEach((id) => {
-        //                         DeleteMember(id as string).then((promise) => {
-        //                             if(!promise.succeeded)
-        //                             {
-        //                                 console.log(promise);
-        //                             }
-        //                         });
-        //                     });
-
-        //                     window.location.reload()
-        //                 }}>
-                            
-        //                 <DeleteIcon />
-        //             </Button>
-        //         );
-        //     }
-        // }
+        }
     ];
 
     let memberRows: GridRowData[] = [];

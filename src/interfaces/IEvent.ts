@@ -10,7 +10,7 @@ export interface IEvent {
     startDate: Date;
     endDate: Date;
     location: string;
-    icon: IIcon;
+    icon: string;
     color: string;
     shiftsEnabled: boolean;
     description: string;
