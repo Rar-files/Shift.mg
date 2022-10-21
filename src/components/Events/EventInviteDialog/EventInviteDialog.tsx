@@ -41,8 +41,6 @@ const EventInviteDialog = (props: EventInviteDialogProps) => {
                 };
             }
 
-            console.log(inviteToPost);
-
             CreateEventInvite(props.eventId, inviteToPost).then((response) => {
                 if (!response.succeeded) {
                     applyViolationsToForm<IFormInvite>(methods.setError, response.violations);

@@ -1,9 +1,25 @@
-import {useState, MouseEvent} from "react";
+import {useState, MouseEvent, FC} from "react";
 import {Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip} from "@material-ui/core";
 import {PersonAdd, Settings, Lock} from "@material-ui/icons";
 import {useRouter} from "next/router";
+import { IUser } from "../../../interfaces/IUser";
+import {deepOrange} from "@material-ui/core/colors";
+import styled from "styled-components";
 
-export default function AccountMenu() {
+type AccountMenuProps = {
+    user: IUser;
+}
+
+const UserAvatar = styled(Avatar)<{
+    color: string;
+}>`
+    width: 28;
+    height: 28;
+    padding: 4;
+    border: 3px solid ${props => props.color};
+`;
+
+const AccountMenu: FC<AccountMenuProps> = (props) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const router = useRouter();
     const open = Boolean(anchorEl);
@@ -14,11 +30,20 @@ export default function AccountMenu() {
         setAnchorEl(null);
     };
 
+    const userBackgroundColor = '#' + props.user.id.slice(0, 6);
+
+    const displayName = props.user.displayName.toUpperCase().split(' ');
+    let initials = displayName[0][0];
+    if(displayName.length>1)
+        initials = initials + displayName[1][0];
+
     return (
         <>
             <Tooltip title="Account settings">
                 <IconButton size="small" onClick={handleClick}>
-                    <Avatar style={{ width: 32, height: 32 }}>M</Avatar>
+                    <UserAvatar color={userBackgroundColor}>
+                        {initials}
+                    </UserAvatar>
                 </IconButton>
             </Tooltip>
             <Menu
@@ -37,7 +62,7 @@ export default function AccountMenu() {
                 transformOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
             >
-                <MenuItem>
+                <MenuItem onClick={() => router.push('/user/settings')}>
                     <ListItemIcon>
                         <Settings fontSize="small" />
                     </ListItemIcon>
@@ -53,3 +78,5 @@ export default function AccountMenu() {
         </>
     );
 }
+
+export default AccountMenu;

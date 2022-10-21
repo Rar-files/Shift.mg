@@ -8,6 +8,7 @@ import {FC, useEffect, useState} from "react";
 import { IEvent } from '../../interfaces/IEvent';
 import EventWrapper from './EventWrapper';
 import router from 'next/router';
+import Loading from "../Loading";
 
 // @ts-ignore
 const localizer = luxonLocalizer(DateTime, {firstDayOfWeek: 1});
@@ -94,6 +95,7 @@ const CalendarComponent: FC = () => {
         const lastVisibleDay = DateTime.fromJSDate(new Date()).endOf('month').endOf('week');
 
         onRangeChange({start: firstVisibleDay.toJSDate(), end: lastVisibleDay.toJSDate()});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userState.loaded]);
 
     return (
@@ -115,8 +117,10 @@ const CalendarComponent: FC = () => {
                                 style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', zIndex: 1000, position: "absolute" }}
                                 open={true}
                             >
-                                <CircularProgress color="inherit" />
+                                {/* <CircularProgress color="inherit" /> */}
+                                <Loading/>
                             </Backdrop>
+                            
                         )}
                     </Paper>
                 </Box>

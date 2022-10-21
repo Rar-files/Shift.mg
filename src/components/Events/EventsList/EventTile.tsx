@@ -1,8 +1,12 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import styled from "styled-components";
 import { IEvent as Event} from "../../../interfaces/IEvent";
+import {IIcon} from "../../../interfaces/IIcon";
 import { useAppSelector } from "../../../app";
 import router from "next/router";
+import { getMediaObject } from "../../../app/services/MediaObjectService";
+import { getIcon } from "../../../app/services/event/IconService";
+import Loading from "../../Loading";
 
 const Block = styled.div`
     background-color: ${props => props.theme.palette.background.paper};
@@ -57,6 +61,7 @@ const Column = styled.div`
 
 const LeftColumn = styled(Column)`
     width: 24%;
+    padding-right: 6px;
     border-right: 1px solid ${props => props.theme.palette.divider};
 `;
 
@@ -80,7 +85,7 @@ const EventIcon = styled.img<{
     width: 64%;
     color: ${props => props.color};
     cursor: pointer;
-    filter: opacity(0.8) drop-shadow(0em 0 0px ${props => props.color});
+    filter: contrast(0%) brightness(40%) opacity(50%) drop-shadow(0em 0 0px ${props => props.color});
 `;
 
 const Title = styled.h1<{
@@ -120,12 +125,16 @@ const RestOfDate = styled.div`
 
 const Description = styled.div`
     margin: 0.2rem 0.4rem;
+    display:flex;
+    align-items: center;
     padding: 0px;
     width: 100%;
     height: 100%;
     color: ${props => props.theme.palette.text.secondary};
     background-color: ${props => props.theme.palette.background.paper};
-    overflow: clip;
+    /* overflow: clip; */
+    overflow-wrap: break-word;
+    overflow: hidden;
 `;
 
 type EventBlockProps = {
@@ -133,11 +142,19 @@ type EventBlockProps = {
 };
 
 const EventBlock: FC<EventBlockProps> = (props) => {
-    const iconState = useAppSelector(state => state.eventIcon)
+    const [iconUrl, setIconUrl] = useState<string>();
 
     const color = props.event.color;
 
     const date = new Date(props.event.startDate);
+
+
+    getIcon(props.event.icon.substring(17)).then(iconPromise => {
+        if(!iconPromise.succeeded)
+            return;
+
+        setIconUrl(iconPromise.data?.iconObject.contentUrl);
+    })
 
     const goToDetails = () => {
         router.push(`/events/${props.event.id}`);
@@ -151,7 +168,9 @@ const EventBlock: FC<EventBlockProps> = (props) => {
             <Content>
                 <FirstRow>
                     <LeftColumn>
-                        {iconState.loaded && <EventIcon src={iconState.data.items[0].iconObject.contentUrl} color={color}/>}
+                        {iconUrl
+                        ? <EventIcon src={iconUrl} color={color}/>
+                        : <Loading/>}
                     </LeftColumn>
                     <RightColumn>
                         <Title color={color}>
