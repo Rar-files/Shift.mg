@@ -2,22 +2,25 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
 import {useEffect, useState} from "react";
-import {getEvent} from "../../app/services/event/EventService";
+import {DeleteEvent, getEvent} from "../../app/services/event/EventService";
 import {IEvent} from "../../interfaces/IEvent";
 import {
     Box,
     Button,
     Container,
+    Dialog,
+    DialogTitle,
+    DialogContent,
     Divider,
     Grid,
     Paper,
-    Typography
+    Typography,
 } from "@material-ui/core";
 import Loading from "../../components/Loading";
 import {IMember} from "../../interfaces/IMember";
 import {DeleteMember, getMembersForEvent} from "../../app/services/event/MemberService";
 import {DataGrid, GridColDef, GridRowData, GridSelectionModel} from "@material-ui/data-grid";
-import {AddBox as AddBoxIcon, Delete as DeleteIcon} from "@material-ui/icons/";
+import {AddBox as AddBoxIcon, Delete as DeleteIcon, Edit as EditIcon} from "@material-ui/icons/";
 import {IRole} from "../../interfaces/IRole";
 import EventInviteDialog from "../../components/Events/EventInviteDialog/EventInviteDialog";
 import {DeleteRole, getRolesForEvent} from "../../app/services/event/RoleService";
@@ -52,6 +55,25 @@ const Event: NextPage = () => {
     /* DIALOG OPEN STATES */
     const [inviteOpen, setInviteOpen] = useState(false);
     const [addRoleOpen, setAddRoleOpen] = useState(false);
+    const [failedDeleteOpen, setfailedDeleteOpen] = useState(false);
+
+    const editEvent = () =>{
+        router.push(`/events/edit/${eventId}`)
+    }
+
+    const deleteEvent = () =>{
+        DeleteEvent(eventId).then(deletePromise => {
+            if(deletePromise.succeeded)
+                router.push(`/events`)
+            else
+                onDeleteFailed();
+        })
+    }
+
+    const onDeleteFailed = () =>{
+        setfailedDeleteOpen(true);
+        setTimeout(() => setfailedDeleteOpen(false),2000);
+    }
 
     const onAddRoleDialogClose = (roleAdded: boolean) => {
         setAddRoleOpen(false);
@@ -165,8 +187,29 @@ const Event: NextPage = () => {
                     <Container>
                         <Box marginTop={'20px'} marginBottom={'20px'}>
                             <Paper elevation={3}>
-                                <Box padding={'20px'}>
+                                <Box padding={'20px'} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                                     <Typography>{state.event?.name}</Typography>
+                                    <Box style={{display: 'flex', flexDirection: 'row'}}>
+
+                                        <Button variant="contained" color="primary" size="small" onClick={() => editEvent()}>
+                                            <EditIcon fontSize="small" />
+                                            Edit
+                                        </Button>
+                                        
+                                        <ButtonSeperator/>
+
+                                        <Button variant="contained" color="primary" size="small" onClick={() => deleteEvent()}>
+                                            <DeleteIcon fontSize="small" />
+                                            Delete
+                                        </Button>
+                                        
+                                        <Dialog open={failedDeleteOpen}>
+                                            <DialogTitle>Couldn&apos;t delete event</DialogTitle>
+                                            <DialogContent style={{width: '400px'}}>
+                                                <Typography>You are not authorized</Typography>
+                                            </DialogContent>
+                                        </Dialog>
+                                    </Box>
                                 </Box>
                                 <Divider />
                                 <Box padding={'20px'}>
