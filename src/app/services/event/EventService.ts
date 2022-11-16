@@ -1,9 +1,11 @@
 import getApiClient, {IListResponse, IViolation} from "../ApiClient";
 
 import { IEvent as Event, IEvent } from "../../../interfaces/IEvent";
+import { IMember as EventMember } from "../../../interfaces/IMember";
 import { ToEventDto } from "../../../Dtos/EventDto";
 import { EventInviteDto } from "../../../Dtos/EventInviteDto";
 import {dateToYMD} from "../../helpers/functions";
+import { IRole } from "../../../interfaces/IRole";
 
 // Get user event filters
 export interface GetUserEventsFilters {
@@ -93,7 +95,7 @@ interface GetEventPromise {
     data: Event | null;
 }
 
-export async function getEvent(id: string): Promise<GetEventPromise> {
+export async function GetEvent(id: string): Promise<GetEventPromise> {
     let getEventPromise = {succeeded: false} as GetEventPromise;
 
     await getApiClient().request(
@@ -115,6 +117,59 @@ export async function getEvent(id: string): Promise<GetEventPromise> {
     ;
 
     return new Promise<GetEventPromise>(resolve => resolve(getEventPromise as GetEventPromise));
+}
+
+//GetMembers{Id}
+interface GetEventMembersPromise {
+    succeeded: boolean;
+    data: EventMember[] | null;
+}
+
+interface EventMemberDto{
+        id: string;
+        event: string;
+        user: {
+            id: string;
+            username: string;
+            displayName: string;
+        }
+        role: IRole;
+        joinedAt: Date;
+}
+
+const ToEventMemberFromDto = (eventMemberDto : EventMemberDto) : EventMember => {
+    
+    return({
+    ...eventMemberDto,
+    user: {
+        ...eventMemberDto.user,
+        roles: []
+    }
+    })
+}
+
+export async function GetEventMembers(id: string): Promise<GetEventMembersPromise> {
+    let getEventMembersPromise = {succeeded: false} as GetEventMembersPromise;
+
+    await getApiClient().request(
+        'GET',
+        `/events/${id}`,
+        {},
+        undefined,
+        {
+            Accept: 'application/json'
+        }
+    )
+        .then((response) => {
+            getEventMembersPromise.succeeded = true;
+            getEventMembersPromise.data = (response.data as EventMemberDto[]).map((element) => <EventMember>ToEventMemberFromDto(element));
+        })
+        .catch((error) => {
+            getEventMembersPromise.succeeded = false;
+        })
+    ;
+
+    return new Promise<GetEventMembersPromise>(resolve => resolve(getEventMembersPromise as GetEventMembersPromise));
 }
 
 

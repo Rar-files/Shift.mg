@@ -6,9 +6,13 @@ import SearchIcon from '@material-ui/icons/Search'
 import {TextField} from "@material-ui/core";
 import {useEffect, useState} from "react";
 import {IListResponse} from "../../app/services/ApiClient";
-import {getEvents} from "../../app/services/event/EventService";
+import {CreateEventInvite, getEvents} from "../../app/services/event/EventService";
 import {IEvent} from "../../interfaces/IEvent";
 import EventsList, {ViewType} from "../../components/Events/EventsList";
+import { getMembersForEvent } from '../../app/services/event/MemberService';
+import router from 'next/router';
+import { EventInviteDto } from '../../Dtos/EventInviteDto';
+import { useAppSelector } from '../../app';
 
 const EventsPage = styled.div`
     margin: 16px;
@@ -36,6 +40,7 @@ interface SearchEventState {
 
 const SearchEvents: NextPage = () => {
     const [state, setState] = useState<SearchEventState>({loading: true, keyword: null, list: null} as SearchEventState);
+    const userState = useAppSelector(state => state.user)
 
     useEffect(() => {
         if (state.list === null) {
@@ -51,6 +56,32 @@ const SearchEvents: NextPage = () => {
         getEvents(state.keyword).then((promise) => {
             setState({...state, loading: false, list: promise.data} as SearchEventState);
         });
+    };
+
+    const inviteMe = (eventId : string) => {
+        console.log(`Invite me: ${eventId}`);
+
+        getMembersForEvent(eventId).then((promise) =>{
+            goToDetails(eventId);
+        }).catch((error) => {
+            let inviteToPost : EventInviteDto = {
+                userEmail: userState.data.email,
+                role: userState.data.role.id
+            }
+
+            CreateEventInvite(eventId, inviteToPost).then((response) => {
+                if (!response.succeeded) {
+                    applyViolationsToForm<IFormInvite>(methods.setError, response.violations);
+                } else {
+                    onClose();
+                }
+            });
+        })
+        
+    }
+
+    const goToDetails = (id: string) => {
+        router.push(`/events/${id}`);
     };
 
     return (
@@ -69,7 +100,7 @@ const SearchEvents: NextPage = () => {
                     <Loading/>
                 }
                 {!state.loading &&
-                    <EventsList events={state.list!.items} view={ViewType.list} />
+                    <EventsList events={state.list!.items} view={ViewType.list} onEventClick={(eventId) => inviteMe(eventId)}/>
                 }
             </EventsPage>
         </main>

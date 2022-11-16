@@ -3,13 +3,13 @@ import router, { useRouter } from 'next/router';
 import styled from 'styled-components'
 import * as yup from 'yup';
 import { useAppSelector } from '../../../app';
-import { UpdateEvent, getEvent } from '../../../app/services/event/EventService';
+import { UpdateEvent, GetEvent } from '../../../app/services/event/EventService';
 import {TextInput, CheckBoxInput, DateRangeInput, SubmitButton, ColorPickerInput, IconPickerInput} from '../../../components/Form'
 import {EventVisibility, IEvent} from '../../../interfaces/IEvent';
 import { IIcon } from '../../../interfaces/IIcon';
 import {useForm, FormProvider} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {Form, FormContainer} from "../../../styles/form";
+import {Form, FormContainer} from "../../../components/Form/styles";
 import {useEffect, useState} from "react";
 import {applyViolationsToForm} from "../../../app/helpers/functions";
 import slugify from "slugify";
@@ -64,7 +64,7 @@ const EditEvent: NextPage = () => {
             return;
         }
 
-        getEvent(eventId).then((promise) => {
+        GetEvent(eventId).then((promise) => {
             setEventState(promise.data);
         });
     }, [eventId, eventState]);

@@ -139,6 +139,7 @@ const Description = styled.div`
 
 type EventBlockProps = {
     event: Event;
+    onEventClick: (eventId : string) => void;
 };
 
 const EventBlock: FC<EventBlockProps> = (props) => {
@@ -156,12 +157,12 @@ const EventBlock: FC<EventBlockProps> = (props) => {
         setIconUrl(iconPromise.data?.iconObject.contentUrl);
     })
 
-    const goToDetails = () => {
-        router.push(`/events/${props.event.id}`);
+    const onEventClick = () => {
+        props.onEventClick(props.event.id);
     };
 
     return (
-        <Block onClick={goToDetails}>
+        <Block onClick={onEventClick}>
             <Bar color={color}>
 
             </Bar>
