@@ -27,7 +27,7 @@ const schema = yup.object().shape({
     visibility: yup.mixed<EventVisibility>().required('This field is required')
 });
 
-type IFormEvent = {
+export type IFormEvent = {
     name: string;
     slug: string;
     shifts: boolean;

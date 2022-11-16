@@ -196,11 +196,6 @@ export async function CreateEventInvite(eventId: string, invite : EventInviteDto
 
 
 //Update
-export interface UpdateEventProps {
-    event: Event;
-    newData: object;
-}
-
 interface UpdateEventPromise {
     succeeded: boolean;
     violations: IViolation[];
@@ -212,16 +207,15 @@ function parseEventToRequest(event: Event): object
     return event;
 }
 
-export async function updateEvent(props: UpdateEventProps): Promise<UpdateEventPromise> {
+export async function UpdateEvent(event: IEvent): Promise<UpdateEventPromise> {
     let eventUpdatePromise = {} as UpdateEventPromise;
+
+    const eventDto = ToEventDto(event);
 
     await getApiClient().request(
         'PUT',
-        `/events/${props.event.id}`,
-        parseEventToRequest({
-            ...props.event,
-            ...props.newData
-        }),
+        `/events/${event.id}`,
+        eventDto,
         undefined,
         {
             Accept: 'application/json',
@@ -249,7 +243,7 @@ export interface DeleteEventPromise {
     violations: IViolation[];
 }
 
-export async function deleteEvent(id: string): Promise<DeleteEventPromise> {
+export async function DeleteEvent(id: string): Promise<DeleteEventPromise> {
     let deleteEventPromise = {succeeded: false} as DeleteEventPromise;
 
     await getApiClient().request(
