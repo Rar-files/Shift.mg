@@ -4,8 +4,7 @@ import styled from "styled-components";
 import {
     Box, 
     Button, 
-    Divider, 
-    Typography 
+    Divider,  
 } from "@material-ui/core";
 import {
     AddBox as AddBoxIcon, 
@@ -18,7 +17,7 @@ import {
     GridSelectionModel
 } from "@material-ui/data-grid";
 
-import EventInviteDialog from "../EventInviteDialog/EventInviteDialog";
+import EventInviteDialog from "../Dialogs/EventInviteDialog";
 import { IMember } from "../../../interfaces/IMember";
 import Loading from "../../Loading";
 import { DeleteMember, getMembersForEvent } from "../../../app/services/event/MemberService";
@@ -85,6 +84,7 @@ const Members : FC<MembersListProps> = (props) => {
         if (state === null) {
             getMembersForEvent(props.eventId).then((promise) => {
                 setState(promise.data?.items as IMember[]);
+                console.log(promise.data?.items as IMember[]);
             });
         }
     }, [props.eventId, state]);

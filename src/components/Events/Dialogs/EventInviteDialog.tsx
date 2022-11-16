@@ -1,7 +1,7 @@
 import {FormProvider, useForm} from "react-hook-form";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography} from "@material-ui/core";
 import UserAutocomplete, {IUserOption} from "../../User/UserAutocomplete/UserAutocomplete";
-import EventRoleAutocomplete, {IRoleOption} from "../EventRoleAutocomplete/EventRoleAutocomplete";
+import EventRoleAutocomplete, {IRoleOption} from "../AutoCompleters/EventRoleAutocomplete";
 import {EventInviteDto} from "../../../Dtos/EventInviteDto";
 import {CreateEventInvite} from "../../../app/services/event/EventService";
 import * as yup from 'yup';

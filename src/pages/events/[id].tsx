@@ -21,8 +21,6 @@ import {
 import Loading from "../../components/Loading";
 import {Delete as DeleteIcon, Edit as EditIcon} from "@material-ui/icons/";
 import moment from 'moment';
-// import Members from '../../components/Events/EventDetail/Members';
-// import Roles from '../../components/Events/EventDetail/Roles';
 
 const EventDiv = styled.div`
     overflow: auto;
@@ -33,24 +31,35 @@ const ButtonSeperator = styled.div`
     padding: 6px;
 `;
 
-const Event: NextPage = () => {
-    const router = useRouter();
+enum listViewStates {
+    members,
+    roles,
+    shifts
+}
 
+const Event: NextPage = () => {
+
+    /* DYNAMIC IMPORTS */
+    const Roles = dynamic(() => import('../../components/Events/EventDetailLists/Roles'));
+    const Members = dynamic(() => import('../../components/Events/EventDetailLists/Members'));
+    const Shifts = dynamic(() => import('../../components/Events/EventDetailLists/Shifts'));
+
+    /* PROPS GETTER */
+    const router = useRouter();
     const eventId = router.query.id as string;
 
+    /* COMPONENT DATA STATES */
     const [state, setState] = useState<IEvent | null>(null);
     
     /* DIALOG OPEN STATES */
     const [failedDeleteOpen, setfailedDeleteOpen] = useState(false);
-    const [membersListView, setMembersListView] = useState(true);
-    const [rolesListView, setRolesListView] = useState(false);
+    const [listView, setListView] = useState<listViewStates>(listViewStates.members);
 
+
+    /* FUNCTIONS */
     const editEvent = () =>{
         router.push(`/events/edit/${eventId}`)
     }
-
-    const DynamicRoles = dynamic(() => import('../../components/Events/EventDetail/Roles'));
-    const DynamicMembers = dynamic(() => import('../../components/Events/EventDetail/Members'));
 
     const deleteEvent = () =>{
         DeleteEvent(eventId).then(deletePromise => {
@@ -66,6 +75,7 @@ const Event: NextPage = () => {
         setTimeout(() => setfailedDeleteOpen(false),2000);
     }
 
+    /* AFTER RENDER */
     useEffect(() => {
         if (state !== null || eventId === undefined) {
             return;
@@ -147,23 +157,29 @@ const Event: NextPage = () => {
 
                                 <Box padding={'10px'} style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
 
-                                    <Button variant="text" color={membersListView ? "secondary" : "default"} size="medium" onClick={() => {setMembersListView(true); setRolesListView(false)}}>
+                                    <Button variant="text" color={listView == listViewStates.members ? "secondary" : "default"} size="medium" onClick={() => setListView(listViewStates.members)}>
                                         Members
                                     </Button>
 
-                                    <Divider orientation='vertical' />
-
-                                    <Button variant="text" color={rolesListView ? "secondary" : "default"} size="medium" onClick={() => {setMembersListView(false); setRolesListView(true)}}>
+                                    <Button variant="text" color={listView == listViewStates.roles ? "secondary" : "default"} size="medium" onClick={() => setListView(listViewStates.roles)}>
                                         Roles
                                     </Button>
+
+                                    {state?.shiftsEnabled && 
+                                        <Button variant="text" color={listView == listViewStates.shifts ? "secondary" : "default"} size="medium" onClick={() => setListView(listViewStates.shifts)}>
+                                            Shifts
+                                        </Button>
+                                    }
 
                                 </Box>
                                 
                                 <Divider />
 
-                                {membersListView && <DynamicMembers eventId={eventId}/>}
+                                {listView == listViewStates.members && <Members eventId={eventId}/>}
 
-                                {rolesListView && <DynamicRoles eventId={eventId}/>}
+                                {listView == listViewStates.roles && <Roles eventId={eventId}/>}
+
+                                {listView == listViewStates.shifts && state?.shiftsEnabled && <Shifts eventId={eventId}/>}
 
                             </Paper>
                         </Box>

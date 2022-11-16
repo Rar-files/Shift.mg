@@ -4,8 +4,7 @@ import styled from "styled-components";
 import {
     Box, 
     Button, 
-    Divider, 
-    Typography 
+    Divider,  
 } from "@material-ui/core";
 import {
     AddBox as AddBoxIcon, 
@@ -18,27 +17,27 @@ import {
     GridSelectionModel
 } from "@material-ui/data-grid";
 
-import EventAddRoleDialog from "../EventAddRoleDialog/EventAddRoleDialog";
-import { IRole } from "../../../interfaces/IRole";
-import { DeleteRole, getRolesForEvent } from "../../../app/services/event/RoleService";
 import Loading from "../../Loading";
+import { IShift } from "../../../interfaces/IShift";
+import { deleteShift, getShiftsForEvent } from "../../../app/services/event/ShiftService";
+import EventAddShiftDialog from "../Dialogs/EventAddShiftDialog";
 
 const ButtonSeperator = styled.div`
     padding: 6px;
 `;
 
-type RolesListProps = {
+type ShiftsListProps = {
     eventId: string;
 }
 
-const Roles : FC<RolesListProps> = (props) => {
+const Shifts : FC<ShiftsListProps> = (props) => {
 
     /* COMPONENT DATA STATES */
-    const [state, setState] = useState<IRole[] | null>(null);
-    const [selectionRoles, setSelectionRoles] = useState<GridSelectionModel>([]);
+    const [state, setState] = useState<IShift[] | null>(null);
+    const [selectionShifts, setSelectionShifts] = useState<GridSelectionModel>([]);
 
-    /* DIALOG OPEN STATES */
-    const [addRoleOpen, setAddRoleOpen] = useState(false);
+    /* DIALOGS OPEN STATES */
+    const [addShiftOpen, setAddShiftOpen] = useState(false);
 
     const columns: GridColDef[] = [
         {field: 'id', headerName: 'ID', width: 90},
@@ -53,26 +52,27 @@ const Roles : FC<RolesListProps> = (props) => {
     let rows: GridRowData[] = [];
 
     if (state !== null) {
-        rows = state?.map((role: IRole) => {
-            return {id: role.id, name: role.name};
+        rows = state?.map((shift: IShift) => {
+            return {id: shift.id, name: shift.name};
         });
     }
 
-    const onAddRoleDialogClose = (roleAdded: boolean) => {
-        setAddRoleOpen(false);
+    const onAddShiftDialogClose = (shiftAdded: boolean) => {
+        setAddShiftOpen(false);
 
-        if (roleAdded) {
+        if (shiftAdded) {
             setState(null);
         }
     };
 
-    const deleteSelectedRoles = () => {
-        const selectedIDs = new Set(selectionRoles);
+    const deleteSelectedShifts = () => {
+        const selectedIDs = new Set(selectionShifts);
         
         selectedIDs.forEach((id) => {
-            DeleteRole(id as string).then((promise) => {
+            deleteShift(id as string).then((promise) => {
                 if(!promise.succeeded)
                 {
+                    //TODO: Add action if issue with delete event shift
                 }
             });
         });
@@ -84,28 +84,30 @@ const Roles : FC<RolesListProps> = (props) => {
     useEffect(() => {
 
         if (state === null) {
-            getRolesForEvent(props.eventId).then((promise) => {
-                setState(promise.data?.items as IRole[]);
+            getShiftsForEvent(props.eventId).then((promise) => {
+                setState(promise.data);
             });
         }
     }, [props.eventId, state]);
 
+
     return (
         <>
             <Box padding={'10px'} style={{display: 'flex', flexDirection: 'row', justifyContent: 'end'}}>
-                {selectionRoles.length > 0 && <Button variant="contained" color="primary" size="small" onClick={() => deleteSelectedRoles()}>
+                {selectionShifts.length > 0 && <Button variant="contained" color="primary" size="small" onClick={() => deleteSelectedShifts()}>
                     <DeleteIcon fontSize="small" />
                     Delete
                 </Button>
                 }
+
                 <ButtonSeperator/>
 
-                <Button variant="contained" color="primary" size="small" onClick={() => setAddRoleOpen(true)}>
+                <Button variant="contained" color="primary" size="small" onClick={() => setAddShiftOpen(true)}>
                     <AddBoxIcon fontSize="small" />
                     Create
                 </Button>
 
-                <EventAddRoleDialog open={addRoleOpen} eventId={props.eventId} onClose={onAddRoleDialogClose} />
+                <EventAddShiftDialog open={addShiftOpen} eventId={props.eventId} onClose={onAddShiftDialogClose} />
             </Box>
 
             <Divider />
@@ -121,7 +123,7 @@ const Roles : FC<RolesListProps> = (props) => {
                         checkboxSelection
                         disableSelectionOnClick
                         onSelectionModelChange={(ids) => {
-                            setSelectionRoles(ids);
+                            setSelectionShifts(ids);
                         }}
                     />
                 }
@@ -131,4 +133,5 @@ const Roles : FC<RolesListProps> = (props) => {
 }
 
 
-export default Roles;
+
+export default Shifts;
