@@ -18,6 +18,7 @@ export enum ViewType {
 
 type EventListProps = {
     events: IEvent[];
+    onEventClick: (eventId : string) => void;
 };
 
 const EventsList: FC<EventListProps> = (props) => {
@@ -94,7 +95,7 @@ const EventsList: FC<EventListProps> = (props) => {
                                         rows={rows}
                                         columns={columns}
                                         disableSelectionOnClick
-                                        onRowClick={(row) => goToDetails(row.id as string)}
+                                        onRowClick={(row) => props.onEventClick(row.id as string)}
                                     />
                                 }
                             </Box>

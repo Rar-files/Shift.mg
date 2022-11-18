@@ -35,6 +35,31 @@ export async function getShifts(): Promise<GetShiftsPromise> {
     return new Promise<GetShiftsPromise>(resolve => resolve(getShiftsPromise as GetShiftsPromise));
 }
 
+//GetForEvent
+
+export async function getShiftsForEvent(eventId: string): Promise<GetShiftsPromise> {
+    let getShiftsPromise = {succeeded: false} as GetShiftsPromise;
+
+    await getApiClient().request(
+        'GET',
+        `/event_shifts/`,
+        {},
+        undefined,
+        {
+            Accept: 'application/json'
+        }
+    )
+        .then((response) => {
+            getShiftsPromise.succeeded = true;
+            getShiftsPromise.data = (response.data as Shift[]).filter(shift => shift.event == `/api/events/${eventId}`);
+        })
+        .catch((error) => {
+            getShiftsPromise.succeeded = false;
+        })
+    ;
+
+    return new Promise<GetShiftsPromise>(resolve => resolve(getShiftsPromise as GetShiftsPromise));
+}
 
 //Get{Id}
 interface GetShiftPromise {
@@ -75,6 +100,8 @@ interface CreateShiftPromise {
 
 export async function CreateShift(shift: Shift): Promise<CreateShiftPromise> {
     let shiftCreatePromise = {} as CreateShiftPromise;
+
+    shift.event = `/api/events/${shift.event}`;
 
     await getApiClient().request(
         'POST',

@@ -15,7 +15,7 @@ import {applyViolationsToForm} from "../../../app/helpers/functions";
 import {TextInput} from "../../Form";
 import {IRole} from "../../../interfaces/IRole";
 import {CreateRole} from "../../../app/services/event/RoleService";
-import {useState} from "react";
+import {FC, useState} from "react";
 
 const schema = yup.object().shape({
     name: yup.string().required().min(4)
@@ -25,7 +25,7 @@ interface IFormAddRole {
     name: string;
 }
 
-interface EventAddRoleDialogProps {
+type EventAddRoleDialogProps = {
     open: boolean;
     eventId: string;
     onClose: (roleAdded: boolean) => void;
@@ -35,7 +35,7 @@ interface IPermissions {
     [key: string]: boolean;
 }
 
-const EventAddRoleDialog = (props: EventAddRoleDialogProps) => {
+const EventAddRoleDialog : FC<EventAddRoleDialogProps> = (props) => {
     const methods = useForm<IFormAddRole>({resolver: yupResolver(schema)});
     const [permissions, setPermissions] = useState<IPermissions>({write: false, invite: false});
 

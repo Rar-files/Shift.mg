@@ -14,7 +14,8 @@ export enum ViewType {
 
 type EventListProps = {
     events: IEvent[];
-    view: ViewType
+    view: ViewType;
+    onEventClick: (eventId : string) => void;
 };
 
 const Events: FC<EventListProps> = (props) => {
@@ -23,9 +24,9 @@ const Events: FC<EventListProps> = (props) => {
         <>
             { props.events.length > 0 &&
                 <EventsDiv>
-                        {props.view == ViewType.tiles && <EventTiles events={props.events}/>}
+                        {props.view == ViewType.tiles && <EventTiles events={props.events} onEventClick={props.onEventClick}/>}
 
-                        {props.view == ViewType.list && <EventsList events={props.events}/>}
+                        {props.view == ViewType.list && <EventsList events={props.events} onEventClick={props.onEventClick}/>}
                 </EventsDiv>
             }
         </>

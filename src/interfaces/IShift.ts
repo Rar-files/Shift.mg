@@ -1,5 +1,5 @@
 export interface IShift {
-    id: string;
+    id?: string;
     name: string;
     code: string;
     startDate: Date;

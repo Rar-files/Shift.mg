@@ -9,13 +9,14 @@ const TilesDiv = styled.div`
 
 type EventListProps = {
     events: IEvent[];
+    onEventClick: (eventId : string) => void;
 };
 
 const EventTiles: FC<EventListProps> = (props) => {
     return (
         <TilesDiv>
             {props.events.map((element, index) => (
-                <EventTile key={index} event={element}/>
+                <EventTile key={index} event={element} onEventClick={props.onEventClick}/>
             ))}
         </TilesDiv>
     )

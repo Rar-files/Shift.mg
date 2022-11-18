@@ -9,7 +9,7 @@ import {EventVisibility, IEvent} from '../../interfaces/IEvent';
 import { IIcon } from '../../interfaces/IIcon';
 import {useForm, FormProvider} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {Form, FormContainer} from "../../styles/form";
+import {Form, FormContainer} from "../../components/Form/styles";
 import {useEffect, useState} from "react";
 import {applyViolationsToForm} from "../../app/helpers/functions";
 import slugify from "slugify";

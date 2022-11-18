@@ -62,6 +62,10 @@ const Events: NextPage = () => {
         dispatch(loadEventsForUser(userState.data!.id))
     }, [dispatch, userState.data])
 
+    const goToDetails = (id: string) => {
+        router.push(`/events/${id}`);
+    };
+
     return (
         <main>
             <EventsPage>
@@ -101,9 +105,9 @@ const Events: NextPage = () => {
 
                     { eventState.data.items.length > 0 &&
                     <EventsDiv>
-                            {view == ViewType.tiles && <EventTiles events={eventState.data.items}/>}
+                            {view == ViewType.tiles && <EventTiles events={eventState.data.items} onEventClick={goToDetails} />}
 
-                            {view == ViewType.list && <EventList events={eventState.data.items}/>}
+                            {view == ViewType.list && <EventList events={eventState.data.items} onEventClick={goToDetails} />}
                     </EventsDiv>
                     }
 
