@@ -12,6 +12,7 @@ import EventsList, { ViewType } from '../components/Events/EventsList';
 import { loadIcons } from '../features/event/iconSlice'
 import { loadEventsForUser } from '../features/event/eventSlice';
 import Loading from '../components/Loading';
+import router from 'next/router';
 
 const HomeDiv = styled.div`
     margin: 16px;
@@ -24,6 +25,10 @@ const Dashboard: NextPage = () => {
     const dispatch = useAppDispatch();
     const userState = useAppSelector(state => state.user);
     const eventState = useAppSelector(state => state.event);
+
+    const goToDetails = (id: string) => {
+        router.push(`/events/${id}`);
+    };
 
     useEffect(() => {
         if (userState.data === undefined) {
@@ -38,7 +43,7 @@ const Dashboard: NextPage = () => {
         <HomeDiv>
             <Container>
                 {eventState.loaded
-                    ?<EventsList view={ViewType.tiles} events={eventState.data.items}/>
+                    ?<EventsList view={ViewType.tiles} events={eventState.data.items} onEventClick={goToDetails}/>
                     :<Loading/>
                 }
             </Container>

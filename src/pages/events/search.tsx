@@ -61,22 +61,22 @@ const SearchEvents: NextPage = () => {
     const inviteMe = (eventId : string) => {
         console.log(`Invite me: ${eventId}`);
 
-        getMembersForEvent(eventId).then((promise) =>{
-            goToDetails(eventId);
-        }).catch((error) => {
-            let inviteToPost : EventInviteDto = {
-                userEmail: userState.data.email,
-                role: userState.data.role.id
-            }
+        // getMembersForEvent(eventId).then((promise) =>{
+        //     goToDetails(eventId);
+        // }).catch((error) => {
+        //     let inviteToPost : EventInviteDto = {
+        //         userEmail: userState.data.email,
+        //         role: userState.data.role.id
+        //     }
 
-            CreateEventInvite(eventId, inviteToPost).then((response) => {
-                if (!response.succeeded) {
-                    applyViolationsToForm<IFormInvite>(methods.setError, response.violations);
-                } else {
-                    onClose();
-                }
-            });
-        })
+        //     CreateEventInvite(eventId, inviteToPost).then((response) => {
+        //         if (!response.succeeded) {
+        //             applyViolationsToForm<IFormInvite>(methods.setError, response.violations);
+        //         } else {
+        //             onClose();
+        //         }
+        //     });
+        // })
         
     }
 
