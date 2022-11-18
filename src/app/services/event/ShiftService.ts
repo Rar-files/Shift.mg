@@ -3,6 +3,7 @@ import getApiClient, {IViolation} from "../ApiClient";
 import {setShiftData} from "../../../features/event/shiftSlice";
 import {IShift as Shift} from "../../../interfaces/IShift";
 import {store} from "../..";
+import { ShiftDto } from "../../../Dtos/ShiftDto";
 
 
 //Get
@@ -98,7 +99,7 @@ interface CreateShiftPromise {
     violations: IViolation[];
 }
 
-export async function CreateShift(shift: Shift): Promise<CreateShiftPromise> {
+export async function CreateShift(shift: ShiftDto): Promise<CreateShiftPromise> {
     let shiftCreatePromise = {} as CreateShiftPromise;
 
     shift.event = `/api/events/${shift.event}`;

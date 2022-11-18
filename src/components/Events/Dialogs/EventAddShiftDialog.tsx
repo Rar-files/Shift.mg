@@ -13,15 +13,17 @@ import * as yup from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
 import {applyViolationsToForm} from "../../../app/helpers/functions";
 import {DateRangeInput, TextInput} from "../../Form";
-import { IShift } from "../../../interfaces/IShift";
 import { CreateShift } from "../../../app/services/event/ShiftService";
+import { ShiftDto } from "../../../Dtos/ShiftDto";
 
 const schema = yup.object().shape({
-    name: yup.string().required().min(4)
+    name: yup.string().required().min(4),
+    code: yup.string().required().min(4)
 });
 
 interface IFormAddShift {
     name: string;
+    code: string;
     startDate: Date;
     endDate: Date;
 }
@@ -36,11 +38,9 @@ const EventAddShiftDialog : FC<EventAddShiftDialogProps> = (props) => {
     const methods = useForm<IFormAddShift>({resolver: yupResolver(schema)});
 
     const handleCreate = (data: IFormAddShift) => {
-        let shift : IShift = {
+        let shift : ShiftDto = {
             ...data,
             event: props.eventId,
-            code: '',
-            members: [],
         }
 
         CreateShift(shift).then((response) => {
@@ -63,6 +63,7 @@ const EventAddShiftDialog : FC<EventAddShiftDialogProps> = (props) => {
                 <DialogTitle id="form-dialog-title">Add shift</DialogTitle>
                 <DialogContent style={{width: '400px'}}>
                     <TextInput name='name' label='Shift name'/>
+                    <TextInput name='code' label='Shift code'/>
                     <DateRangeInput startName="startDate" endName="endDate" label="Shift time:" />
                 </DialogContent>
                 <DialogActions>
