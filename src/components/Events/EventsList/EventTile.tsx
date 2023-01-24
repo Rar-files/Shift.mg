@@ -11,6 +11,7 @@ import Loading from "../../Loading";
 const Block = styled.div`
     background-color: ${props => props.theme.palette.background.paper};
     height: 99%;
+    min-width: 280px;
     width: 280px;
     display: flex;
     flex-direction: column;
