@@ -12,8 +12,7 @@ const Background = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 10px;
-    height: 100%;
+    height: 100vh;
     width: 100%;
 `;
 
@@ -23,7 +22,6 @@ const Content = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 10px;
     height: 600px;
     width: 400px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
