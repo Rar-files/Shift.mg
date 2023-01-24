@@ -1,1 +1,1 @@
-# Shift.mg
+mam dość
