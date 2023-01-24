@@ -13,9 +13,10 @@ import router from 'next/router'
 import { loadIcons } from '../../features/event/iconSlice'
 import EventList from "../../components/Events/EventsList/EventList";
 import EventTiles from "../../components/Events/EventsList/EventTiles";
+import EventsList from '../../components/Events/EventsList'
 
 const EventsPage = styled.div`
-    margin: 16px;
+    margin: 0 16px;
 `;
 
 const CreateButtonDiv = styled.div`
@@ -104,11 +105,7 @@ const Events: NextPage = () => {
                     </CreateButtonDiv>
 
                     { eventState.data.items.length > 0 &&
-                    <EventsDiv>
-                            {view == ViewType.tiles && <EventTiles events={eventState.data.items} onEventClick={goToDetails} />}
-
-                            {view == ViewType.list && <EventList events={eventState.data.items} onEventClick={goToDetails} />}
-                    </EventsDiv>
+                        <EventsList wrap view={view} events={eventState.data.items} onEventClick={goToDetails}/>
                     }
 
                 </>
